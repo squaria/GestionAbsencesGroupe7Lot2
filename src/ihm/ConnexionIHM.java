@@ -141,7 +141,7 @@ public class ConnexionIHM extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("test");
 		switch(res[0]) {
 		case -1:
 			lblNewLabel_3.setText("Mauvais mot de passe ou email !");
