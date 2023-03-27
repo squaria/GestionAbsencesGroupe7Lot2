@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class ihmGESTIONNEUR {
+public class GestionnaireIHM {
 
 	private JFrame frame;
 
@@ -15,7 +15,7 @@ public class ihmGESTIONNEUR {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ihmGESTIONNEUR window = new ihmGESTIONNEUR();
+					GestionnaireIHM window = new GestionnaireIHM();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -27,7 +27,7 @@ public class ihmGESTIONNEUR {
 	/**
 	 * Create the application.
 	 */
-	public ihmGESTIONNEUR() {
+	public GestionnaireIHM() {
 		initialize();
 	}
 
