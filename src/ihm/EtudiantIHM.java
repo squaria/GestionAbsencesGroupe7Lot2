@@ -45,7 +45,8 @@ public class EtudiantIHM extends JFrame {
 		FlowLayout fl_panel = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panel.setLayout(fl_panel);
 		
-		JLabel lblNewLabel = new JLabel("Etudiant");
+		JLabel lblNewLabel = new JLabel("Menu - Etudiant");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		panel.add(lblNewLabel);
 		
@@ -57,7 +58,7 @@ public class EtudiantIHM extends JFrame {
 		panel_1.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_1);
 		
-		JButton btnNewButton_2 = new JButton("Planning");
+		JButton btnNewButton_2 = new JButton("Planning de groupe");
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_2);

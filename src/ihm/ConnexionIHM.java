@@ -103,7 +103,6 @@ public class ConnexionIHM extends JFrame {
 		panel_3.add(passwordField);
 		
 		JPanel panel_4 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
 		panel_4.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_4);
 		
