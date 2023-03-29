@@ -15,4 +15,8 @@ public class Administratif extends Profil {
 	public Administratif(String nom, String prenom, String email) {
 		super(nom, prenom, email);
 	}
+	
+	public void display() {
+		super.display();
+	}
 }

@@ -4,28 +4,32 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.SpringLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Color;
 
 public class EnseignantIHM {
 
 	private JFrame frmMenuPrincipal;
-
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EnseignantIHM window = new EnseignantIHM();
+					window.frmMenuPrincipal.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	/**
 	 * Create the application.
 	 */

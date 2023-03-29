@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -18,13 +19,29 @@ public class EtudiantIHM extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frmMenuPrincipalEtu;
-	private int id;
-
+	private static int id;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EtudiantIHM window = new EtudiantIHM(id);
+					window.frmMenuPrincipalEtu.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Create the application.
 	 */
 	public EtudiantIHM(int id) {
-		this.id = id;
+		EtudiantIHM.id = id;
 		initialize();
 	}
 

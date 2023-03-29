@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Classe modele java d'un cours
  * @author Loic OUASSA, Mael PAROT
@@ -14,18 +16,32 @@ public class Cours {
 	 * 
 	 */
 	private String enseignant;
+
+	/**
+	 * 
+	 */
+	private ArrayList<String> planningCours;
+	
+	/**
+	 * 
+	 */
+	private ArrayList<Integer> groupe; 
+	
 	/**
 	 * 
 	 */
 	private int nbHeuresAmphi;
+	
 	/**
 	 * 
 	 */
 	private int nbHeuresTD;
+	
 	/**
 	 * 
 	 */
 	private int nbHeuresTP;
+	
 	/**
 	 * 
 	 */
@@ -39,9 +55,12 @@ public class Cours {
 	 * @param nbHeuresTP
 	 * @param nbHeuresExamen
 	 */
-	public Cours(String nom, String enseignant, int nbHeuresAmphi, int nbHeuresTD, int nbHeuresTP, int nbHeuresExamen) {
+	public Cours(String nom, String enseignant, ArrayList<String> planningCours, ArrayList<Integer> groupe,
+			int nbHeuresAmphi, int nbHeuresTD, int nbHeuresTP, int nbHeuresExamen) {
 		this.nom = nom;
 		this.enseignant = enseignant;
+		this.planningCours = new ArrayList<>();
+		this.groupe = new ArrayList<>();
 		this.nbHeuresAmphi = nbHeuresAmphi;
 		this.nbHeuresTD = nbHeuresTD;
 		this.nbHeuresTP = nbHeuresTP;
@@ -74,6 +93,34 @@ public class Cours {
 	 */
 	public void setEnseignant(String enseignant) {
 		this.enseignant = enseignant;
+	}
+
+	/**
+	 * @return
+	 */
+	public ArrayList<String> getPlanningCours() {
+		return planningCours;
+	}
+
+	/**
+	 * @param planningCours
+	 */
+	public void setPlanningCours(ArrayList<String> planningCours) {
+		this.planningCours = planningCours;
+	}
+
+	/**
+	 * @return
+	 */
+	public ArrayList<Integer> getGroupe() {
+		return groupe;
+	}
+
+	/**
+	 * @param groupe
+	 */
+	public void setGroupe(ArrayList<Integer> groupe) {
+		this.groupe = groupe;
 	}
 
 	/**
@@ -132,5 +179,19 @@ public class Cours {
 		this.nbHeuresExamen = nbHeuresExamen;
 	}
 	
-	
+	public void modifierCours(String nom,String enseignant,ArrayList<String> planningCours,ArrayList<Integer> groupe,
+			int nbHeuresAmphi,int nbHeuresTD,int nbHeuresTP,int nbHeuresExamen) {
+		setNom(nom);
+		setEnseignant(enseignant);
+		setPlanningCours(planningCours);
+		setGroupe(groupe);
+		setNbHeuresAmphi(nbHeuresAmphi);
+		setNbHeuresTD(nbHeuresTD);
+		setNbHeuresTP(nbHeuresTP);
+		setNbHeuresExamen(nbHeuresExamen);
+		
+	}
+	public void display() {
+		System.out.println("Le cours de "+nom+ " donné par Mr/Mme "+enseignant+" a pour nombre d'heures en amphi"+nbHeuresAmphi+" heures,pour nombre d'heures de td "+nbHeuresTD+" heures, pour nombre d'heures de tp"+nbHeuresTP+" et a pour nombre d'heures d'examen "+nbHeuresExamen+"heures.");
+	}
 }

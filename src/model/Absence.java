@@ -91,7 +91,17 @@ public class Absence {
 	public void setType(String type) {
 		this.type = type;
 	}
-
+	
+	public void detectionDuType() {
+		if (type=="Absence classique")
+			System.out.println("C'est une absence classique à un cours, un Td ou un Tp en présentiel");
+		else {
+			if (type=="Absence à distance")
+				System.out.println("C'est une absence à un cours, un Td ou un Tp lors de la periode de fermeture de l'école");
+			else
+				System.out.println("Votre absence n'est pas répertoriéé");
+		}
+	}
 	/**
 	 * @return
 	 */

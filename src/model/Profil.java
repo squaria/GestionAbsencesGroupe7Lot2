@@ -72,4 +72,8 @@ public class Profil {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public void display() {
+		System.out.println("Votre nom: "+nom+", prenom:"+prenom);
+	}
 }
