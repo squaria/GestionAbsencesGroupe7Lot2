@@ -18,7 +18,7 @@ public class ConnexionUtilisateurDAO extends IdentificationBdd {
 				"SELECT * FROM LOT2_Gestionnaire WHERE gest_email = ? AND gest_pwd = ?"
 			};
 			
-			for(int i = 0; i<3; i++) {
+			for(int i = 0; i<4; i++) {
 				PreparedStatement ps = con.prepareStatement(tabStatement[i]);
 				ps.setString(1, email);
 				ps.setString(2, pwd);

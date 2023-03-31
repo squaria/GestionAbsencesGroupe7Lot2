@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestionnaireIHM {
 
@@ -68,10 +70,36 @@ public class GestionnaireIHM {
 		panel_1.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_1);
 		
-		JButton btnNewButton_2 = new JButton("Planning");
+		JButton btnNewButton_2 = new JButton("Gestion profil etudiant");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GestionProfilEtudiantIHM();
+			}
+		});
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_2);
+		
+		JButton btnNewButton_2_1 = new JButton("Gestion profil professeur");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GestionProfilProfesseurIHM();
+			}
+		});
+		btnNewButton_2_1.setForeground(Color.BLACK);
+		btnNewButton_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(btnNewButton_2_1);
+		
+		JButton btnNewButton_2_2 = new JButton("Gestion profil administratif");
+		btnNewButton_2_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GestionProfilAdministratifIHM();
+			}
+		});
+		
+		btnNewButton_2_2.setForeground(Color.BLACK);
+		btnNewButton_2_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(btnNewButton_2_2);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(0, 128, 255));

@@ -110,7 +110,7 @@ public class ConnexionIHM extends JFrame {
 		btnProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (textField.getText().length() > 0) {
+				if (textField.getText().length() > 0 && passwordField.getPassword().length > 0) {
 					connexion(textField.getText(), String.valueOf(passwordField.getPassword()));
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(), "Vous devez entrer un email et un mot de passe.", "Dialog",
@@ -159,6 +159,8 @@ public class ConnexionIHM extends JFrame {
 			break;
 		case 3:
 			lblNewLabel_3.setText("Connecté en tant que gestionnaire !");
+			frmConnexion.dispose();
+			new GestionnaireIHM();
 			break;
 		}
 	}

@@ -5,11 +5,20 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import dao.ActionsGestionnaireDAO;
+import model.Etudiant;
+import model.Profil;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestionProfilEtudiantIHM {
 	private JFrame frmMenuPrincipalEtu;
@@ -34,6 +43,17 @@ public class GestionProfilEtudiantIHM {
 	private JTextField textField_15;
 	private JTextField textField_16;
 	private JTextField textField_17;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_3_1;
+	private JLabel lblNewLabel_13;
+	private JLabel lblNewLabel_15;
+	private JLabel lblNewLabel_17;
+	private JLabel lblNewLabel_19;
+	private JLabel lblNewLabel_21;
+	private JPanel panel_10;
+	private JLabel lblNewLabel_3_2;
+	private JLabel lblNewLabel_3_3;
+	private JPanel panel_12;
 
 	
 	/**
@@ -66,7 +86,7 @@ public class GestionProfilEtudiantIHM {
 		frmMenuPrincipalEtu = new JFrame();
 		frmMenuPrincipalEtu.setVisible(true);
 		frmMenuPrincipalEtu.setTitle("Gestion Profil - Etudiant");
-		frmMenuPrincipalEtu.setBounds(100, 100, 1258, 1079);
+		frmMenuPrincipalEtu.setBounds(100, 100, 1408, 977);
 		frmMenuPrincipalEtu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenuPrincipalEtu.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -126,9 +146,25 @@ public class GestionProfilEtudiantIHM {
 		panel_2_1_2.add(textField_20);
 		
 		JButton btnNewButton_2_1_1_2 = new JButton("Supprimer");
+		btnNewButton_2_1_1_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField_18.getText().length() > 0 && textField_19.getText().length() > 0 
+						&& textField_20.getText().length() > 0) {
+					supprEtudiant(textField_18.getText(), textField_19.getText(), textField_20.getText());
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes.", "Dialog",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnNewButton_2_1_1_2.setForeground(Color.BLACK);
 		btnNewButton_2_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1_2.add(btnNewButton_2_1_1_2);
+		
+		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setForeground(new Color(255, 0, 0));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_2_1_2.add(lblNewLabel_3);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(0, 128, 255));
@@ -198,7 +234,7 @@ public class GestionProfilEtudiantIHM {
 		textField_4.setColumns(12);
 		panel_9.add(textField_4);
 		
-		JLabel lblNewLabel_2_4_1 = new JLabel("Numero filiere : ");
+		JLabel lblNewLabel_2_4_1 = new JLabel("Filiere (Classique/Apprentissage) : ");
 		lblNewLabel_2_4_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2_4_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_9.add(lblNewLabel_2_4_1);
@@ -207,10 +243,28 @@ public class GestionProfilEtudiantIHM {
 		textField_5.setColumns(12);
 		panel_9.add(textField_5);
 		
-		JButton btnNewButton_2_1 = new JButton("Créer");
+		JButton btnNewButton_2_1 = new JButton("Creer");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField.getText().length() > 0 && textField_1.getText().length() > 0 
+						&& textField_2.getText().length() > 0 && textField_3.getText().length() > 0
+						&& textField_4.getText().length() > 0) {
+					creerEtudiant(new Etudiant(textField.getText(), textField_1.getText(), textField_3.getText(),
+							textField_5.getText(),Integer.parseInt(textField_4.getText())), textField_2.getText());
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes.", "Dialog",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnNewButton_2_1.setForeground(Color.BLACK);
 		btnNewButton_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_9.add(btnNewButton_2_1);
+		
+		lblNewLabel_3_1 = new JLabel("");
+		lblNewLabel_3_1.setForeground(Color.RED);
+		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_9.add(lblNewLabel_3_1);
 		
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
@@ -260,9 +314,89 @@ public class GestionProfilEtudiantIHM {
 		panel_2_1.add(textField_8);
 		
 		JButton btnNewButton_2_1_1 = new JButton("Afficher");
+		btnNewButton_2_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField_6.getText().length() > 0 && textField_7.getText().length() > 0 
+						&& textField_8.getText().length() > 0) {
+					affEtudiant(new Profil(textField_6.getText(), textField_7.getText(), textField_8.getText()));
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes.", "Dialog",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnNewButton_2_1_1.setForeground(Color.BLACK);
 		btnNewButton_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1.add(btnNewButton_2_1_1);
+		
+		panel_10 = new JPanel();
+		panel_10.setBackground(new Color(0, 128, 255));
+		panel_1.add(panel_10);
+		panel_10.setVisible(false);
+		
+		JLabel lblNewLabel_12 = new JLabel("Nom : ");
+		lblNewLabel_12.setForeground(Color.WHITE);
+		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_12);
+		
+		lblNewLabel_13 = new JLabel("");
+		lblNewLabel_13.setBackground(new Color(255, 255, 255));
+		lblNewLabel_13.setForeground(new Color(255, 128, 0));
+		lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_13);
+		
+		JLabel lblNewLabel_14 = new JLabel("| Prenom : ");
+		lblNewLabel_14.setForeground(Color.WHITE);
+		lblNewLabel_14.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_14);
+		
+		lblNewLabel_15 = new JLabel("");
+		lblNewLabel_15.setBackground(new Color(255, 255, 255));
+		lblNewLabel_15.setForeground(new Color(255, 128, 0));
+		lblNewLabel_15.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_15);
+		
+		JLabel lblNewLabel_16 = new JLabel("| Email : ");
+		lblNewLabel_16.setForeground(Color.WHITE);
+		lblNewLabel_16.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_16);
+		
+		lblNewLabel_17 = new JLabel("");
+		lblNewLabel_17.setBackground(new Color(255, 255, 255));
+		lblNewLabel_17.setForeground(new Color(255, 128, 0));
+		lblNewLabel_17.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_17);
+		
+		JLabel lblNewLabel_18 = new JLabel("| Numero groupe : ");
+		lblNewLabel_18.setForeground(Color.WHITE);
+		lblNewLabel_18.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_18);
+		
+		lblNewLabel_19 = new JLabel("");
+		lblNewLabel_19.setBackground(new Color(255, 255, 255));
+		lblNewLabel_19.setForeground(new Color(255, 128, 0));
+		lblNewLabel_19.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_19);
+		
+		JLabel lblNewLabel_20 = new JLabel("| Filiere : ");
+		lblNewLabel_20.setForeground(Color.WHITE);
+		lblNewLabel_20.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_20);
+		
+		lblNewLabel_21 = new JLabel("");
+		lblNewLabel_21.setBackground(new Color(255, 255, 255));
+		lblNewLabel_21.setForeground(new Color(255, 128, 0));
+		lblNewLabel_21.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_10.add(lblNewLabel_21);
+		
+		panel_12 = new JPanel();
+		panel_12.setBackground(new Color(0, 128, 255));
+		panel_1.add(panel_12);
+		
+		lblNewLabel_3_3 = new JLabel("");
+		lblNewLabel_3_3.setForeground(Color.RED);
+		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_12.add(lblNewLabel_3_3);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
@@ -310,11 +444,6 @@ public class GestionProfilEtudiantIHM {
 		textField_11 = new JTextField();
 		textField_11.setColumns(20);
 		panel_2_1_1.add(textField_11);
-		
-		JButton btnNewButton_2_1_1_1 = new JButton("Selectionner");
-		btnNewButton_2_1_1_1.setForeground(Color.BLACK);
-		btnNewButton_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_2_1_1.add(btnNewButton_2_1_1_1);
 		
 		JPanel panel_2_2 = new JPanel();
 		panel_2_2.setBackground(new Color(0, 128, 255));
@@ -367,21 +496,115 @@ public class GestionProfilEtudiantIHM {
 		panel_9_1.add(lblNewLabel_2_4_2);
 		
 		textField_16 = new JTextField();
-		textField_16.setColumns(12);
+		textField_16.setColumns(4);
 		panel_9_1.add(textField_16);
 		
-		JLabel lblNewLabel_2_4_1_1 = new JLabel("Nv Numero filiere : ");
+		JLabel lblNewLabel_2_4_1_1 = new JLabel("Nv filiere (Classique/Apprentissage) : ");
 		lblNewLabel_2_4_1_1.setForeground(Color.WHITE);
 		lblNewLabel_2_4_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_9_1.add(lblNewLabel_2_4_1_1);
 		
 		textField_17 = new JTextField();
-		textField_17.setColumns(12);
+		textField_17.setColumns(15);
 		panel_9_1.add(textField_17);
 		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(new Color(0, 128, 255));
+		panel_3.add(panel_4);
+		
 		JButton btnNewButton_2_1_2 = new JButton("Modifier");
+		btnNewButton_2_1_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField_9.getText().length() > 0 && textField_10.getText().length() > 0 
+						&& textField_11.getText().length() > 0) {
+					int numGroupe = 1;
+					if(!textField_16.getText().equals(""))
+						numGroupe = Integer.parseInt(textField_16.getText());
+					
+					modEtudiant(new Profil(textField_9.getText(), textField_10.getText(), textField_11.getText()), 
+							new Etudiant(textField_12.getText(), textField_13.getText(), textField_15.getText(),
+							textField_17.getText(), numGroupe), textField_14.getText());
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "Tous les champs de selection de profil ne sont pas completes.", "Dialog",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnNewButton_2_1_2.setForeground(Color.BLACK);
 		btnNewButton_2_1_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_9_1.add(btnNewButton_2_1_2);
+		panel_4.add(btnNewButton_2_1_2);
+		
+		JPanel panel_11 = new JPanel();
+		panel_11.setBackground(new Color(0, 128, 255));
+		panel_3.add(panel_11);
+		
+		lblNewLabel_3_2 = new JLabel("");
+		lblNewLabel_3_2.setForeground(Color.RED);
+		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_11.add(lblNewLabel_3_2);
+	}
+	
+	public void supprEtudiant(String nom, String prenom, String email)
+	{
+		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
+		try {
+			int effectuee = actionGest.suppr(new Profil(nom, prenom, email), 0);
+			if (effectuee == 1)
+				lblNewLabel_3.setText("Etudiant supprime !");
+			else
+				lblNewLabel_3.setText("Erreur cet etudiant n'existe pas !");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	public void creerEtudiant(Etudiant etudiant, String pwd) {
+		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
+		try {
+			int effectuee = actionGest.creerEtudiant(etudiant, pwd);
+			if (effectuee == 1)
+				lblNewLabel_3_1.setText("Etudiant cree !");
+			else
+				lblNewLabel_3_1.setText("Erreur cet etudiant n'existe pas !");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void affEtudiant(Profil profil) {
+		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
+		try {
+			Etudiant etudiant = actionGest.getEtudiant(profil);
+			if (etudiant != null)
+			{
+				lblNewLabel_13.setText(etudiant.getNom());
+				lblNewLabel_15.setText(etudiant.getPrenom());
+				lblNewLabel_17.setText(etudiant.getEmail());
+				lblNewLabel_19.setText(String.valueOf(etudiant.getGroupe()));
+				lblNewLabel_21.setText(etudiant.getFiliere());
+				panel_10.setVisible(true);
+				panel_12.setVisible(false);
+			}
+			else {
+				panel_10.setVisible(false);
+				panel_12.setVisible(true);
+				lblNewLabel_3_3.setText("Erreur cet etudiant n'existe pas !");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void modEtudiant(Profil profil, Etudiant etudiant, String pwd) {
+		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
+		try {
+			int effectuee = actionGest.modEtudiant(profil, etudiant, pwd);
+			if (effectuee == 1)
+				lblNewLabel_3_2.setText("Etudiant modifie !");
+			else
+				lblNewLabel_3_2.setText("Erreur cet etudiant n'existe pas !");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
