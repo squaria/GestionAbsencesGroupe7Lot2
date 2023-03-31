@@ -517,7 +517,7 @@ public class GestionProfilEtudiantIHM {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_9.getText().length() > 0 && textField_10.getText().length() > 0 
 						&& textField_11.getText().length() > 0) {
-					int numGroupe = 1;
+					int numGroupe = 0;
 					if(!textField_16.getText().equals(""))
 						numGroupe = Integer.parseInt(textField_16.getText());
 					

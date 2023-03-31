@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 /**
  * Classe modele java d'un cours
  * @author Loic OUASSA, Mael PAROT
@@ -15,37 +13,27 @@ public class Cours {
 	/**
 	 * 
 	 */
-	private String enseignant;
-
-	/**
-	 * 
-	 */
-	private ArrayList<String> planningCours;
+	private int enseignantId;
 	
 	/**
 	 * 
 	 */
-	private ArrayList<Integer> groupe; 
+	private float nbHeuresAmphi;
 	
 	/**
 	 * 
 	 */
-	private int nbHeuresAmphi;
+	private float nbHeuresTD;
 	
 	/**
 	 * 
 	 */
-	private int nbHeuresTD;
+	private float nbHeuresTP;
 	
 	/**
 	 * 
 	 */
-	private int nbHeuresTP;
-	
-	/**
-	 * 
-	 */
-	private int nbHeuresExamen;
+	private float nbHeuresExamen;
 	
 	/**
 	 * @param nom
@@ -55,12 +43,10 @@ public class Cours {
 	 * @param nbHeuresTP
 	 * @param nbHeuresExamen
 	 */
-	public Cours(String nom, String enseignant, ArrayList<String> planningCours, ArrayList<Integer> groupe,
-			int nbHeuresAmphi, int nbHeuresTD, int nbHeuresTP, int nbHeuresExamen) {
+	public Cours(String nom, int enseignantId,
+			float nbHeuresAmphi, float nbHeuresTD, float nbHeuresTP, float nbHeuresExamen) {
 		this.nom = nom;
-		this.enseignant = enseignant;
-		this.planningCours = new ArrayList<>();
-		this.groupe = new ArrayList<>();
+		this.enseignantId = enseignantId;
 		this.nbHeuresAmphi = nbHeuresAmphi;
 		this.nbHeuresTD = nbHeuresTD;
 		this.nbHeuresTP = nbHeuresTP;
@@ -84,107 +70,78 @@ public class Cours {
 	/**
 	 * @return
 	 */
-	public String getEnseignant() {
-		return enseignant;
+	public int getEnseignantId() {
+		return enseignantId;
 	}
 
 	/**
 	 * @param enseignant
 	 */
-	public void setEnseignant(String enseignant) {
-		this.enseignant = enseignant;
+	public void setEnseignantId(int enseignantId) {
+		this.enseignantId = enseignantId;
 	}
-
+	
 	/**
 	 * @return
 	 */
-	public ArrayList<String> getPlanningCours() {
-		return planningCours;
-	}
-
-	/**
-	 * @param planningCours
-	 */
-	public void setPlanningCours(ArrayList<String> planningCours) {
-		this.planningCours = planningCours;
-	}
-
-	/**
-	 * @return
-	 */
-	public ArrayList<Integer> getGroupe() {
-		return groupe;
-	}
-
-	/**
-	 * @param groupe
-	 */
-	public void setGroupe(ArrayList<Integer> groupe) {
-		this.groupe = groupe;
-	}
-
-	/**
-	 * @return
-	 */
-	public int getNbHeuresAmphi() {
+	public float getNbHeuresAmphi() {
 		return nbHeuresAmphi;
 	}
 
 	/**
 	 * @param nbHeuresAmphi
 	 */
-	public void setNbHeuresAmphi(int nbHeuresAmphi) {
+	public void setNbHeuresAmphi(float nbHeuresAmphi) {
 		this.nbHeuresAmphi = nbHeuresAmphi;
 	}
 
 	/**
 	 * @return
 	 */
-	public int getNbHeuresTD() {
+	public float getNbHeuresTD() {
 		return nbHeuresTD;
 	}
 
 	/**
 	 * @param nbHeuresTD
 	 */
-	public void setNbHeuresTD(int nbHeuresTD) {
+	public void setNbHeuresTD(float nbHeuresTD) {
 		this.nbHeuresTD = nbHeuresTD;
 	}
 
 	/**
 	 * @return
 	 */
-	public int getNbHeuresTP() {
+	public float getNbHeuresTP() {
 		return nbHeuresTP;
 	}
 
 	/**
 	 * @param nbHeuresTP
 	 */
-	public void setNbHeuresTP(int nbHeuresTP) {
+	public void setNbHeuresTP(float nbHeuresTP) {
 		this.nbHeuresTP = nbHeuresTP;
 	}
 
 	/**
 	 * @return
 	 */
-	public int getNbHeuresExamen() {
+	public float getNbHeuresExamen() {
 		return nbHeuresExamen;
 	}
 
 	/**
 	 * @param nbHeuresExamen
 	 */
-	public void setNbHeuresExamen(int nbHeuresExamen) {
+	public void setNbHeuresExamen(float nbHeuresExamen) {
 		this.nbHeuresExamen = nbHeuresExamen;
 	}
 	
-	public void modifierCours(String nom,String enseignant,ArrayList<String> planningCours,ArrayList<Integer> groupe,
+	/*
+	public void modifierCours(String nom,int enseignantId, 
 			int nbHeuresAmphi,int nbHeuresTD,int nbHeuresTP,int nbHeuresExamen) {
 		setNom(nom);
-		setEnseignant(enseignant);
-		setPlanningCours(planningCours);
-		setGroupe(groupe);
+		setEnseignantId(enseignantId);
 		setNbHeuresAmphi(nbHeuresAmphi);
 		setNbHeuresTD(nbHeuresTD);
 		setNbHeuresTP(nbHeuresTP);
@@ -192,6 +149,6 @@ public class Cours {
 		
 	}
 	public void display() {
-		System.out.println("Le cours de "+nom+ " donné par Mr/Mme "+enseignant+" a pour nombre d'heures en amphi"+nbHeuresAmphi+" heures,pour nombre d'heures de td "+nbHeuresTD+" heures, pour nombre d'heures de tp"+nbHeuresTP+" et a pour nombre d'heures d'examen "+nbHeuresExamen+"heures.");
-	}
+		System.out.println("Le cours de "+nom+ " donné par Mr/Mme "+enseignantId+" a pour nombre d'heures en amphi"+nbHeuresAmphi+" heures,pour nombre d'heures de td "+nbHeuresTD+" heures, pour nombre d'heures de tp"+nbHeuresTP+" et a pour nombre d'heures d'examen "+nbHeuresExamen+"heures.");
+	}*/
 }

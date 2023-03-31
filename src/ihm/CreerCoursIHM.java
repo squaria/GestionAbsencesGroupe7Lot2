@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-public class CreerLesCoursIhm extends JFrame {
+public class CreerCoursIHM extends JFrame {
 	private JTextField txtBmww;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -16,8 +16,13 @@ public class CreerLesCoursIhm extends JFrame {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField;
-	public CreerLesCoursIhm() {
-		
+	
+	
+	public CreerCoursIHM() {
+		initialize();
+	}
+	
+	private void initialize() {
 		this.setTitle("CREATION");
 		this.setSize(730, 427);
 		this.setLocation(null);

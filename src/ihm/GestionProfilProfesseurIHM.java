@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dao.ActionsGestionnaireDAO;
-import model.Etudiant;
 import model.Professeur;
 import model.Profil;
 
@@ -21,7 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class GestionProfilProfesseurIHM {
-	private JFrame frmMenuPrincipalAdmin;
+	private JFrame frmMenuPrincipalProf;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -61,7 +60,7 @@ public class GestionProfilProfesseurIHM {
 			public void run() {
 				try {
 					GestionProfilProfesseurIHM window = new GestionProfilProfesseurIHM();
-					window.frmMenuPrincipalAdmin.setVisible(true);
+					window.frmMenuPrincipalProf.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -80,16 +79,16 @@ public class GestionProfilProfesseurIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmMenuPrincipalAdmin = new JFrame();
-		frmMenuPrincipalAdmin.setVisible(true);
-		frmMenuPrincipalAdmin.setTitle("Gestion Profil - Professeur");
-		frmMenuPrincipalAdmin.setBounds(100, 100, 1258, 1079);
-		frmMenuPrincipalAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmMenuPrincipalAdmin.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frmMenuPrincipalProf = new JFrame();
+		frmMenuPrincipalProf.setVisible(true);
+		frmMenuPrincipalProf.setTitle("Gestion Profil - Professeur");
+		frmMenuPrincipalProf.setBounds(100, 100, 1258, 1079);
+		frmMenuPrincipalProf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmMenuPrincipalProf.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
-		frmMenuPrincipalAdmin.getContentPane().add(panel);
+		frmMenuPrincipalProf.getContentPane().add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 20));
 		
 		JPanel panel_6 = new JPanel();
@@ -165,7 +164,7 @@ public class GestionProfilProfesseurIHM {
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(0, 128, 255));
-		frmMenuPrincipalAdmin.getContentPane().add(panel_5);
+		frmMenuPrincipalProf.getContentPane().add(panel_5);
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 		
 		JPanel panel_8 = new JPanel();
@@ -258,7 +257,7 @@ public class GestionProfilProfesseurIHM {
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
 		flowLayout_1.setVgap(20);
 		panel_1.setBackground(new Color(0, 128, 255));
-		frmMenuPrincipalAdmin.getContentPane().add(panel_1);
+		frmMenuPrincipalProf.getContentPane().add(panel_1);
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(new Color(0, 128, 255));
@@ -379,7 +378,7 @@ public class GestionProfilProfesseurIHM {
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setVgap(10);
 		panel_3.setBackground(new Color(0, 128, 255));
-		frmMenuPrincipalAdmin.getContentPane().add(panel_3);
+		frmMenuPrincipalProf.getContentPane().add(panel_3);
 		
 		JPanel panel_7_1 = new JPanel();
 		panel_7_1.setBackground(new Color(0, 128, 255));

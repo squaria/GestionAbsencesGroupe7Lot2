@@ -79,7 +79,7 @@ public class GestionProfilAdministratifIHM {
 		frmMenuPrincipalAdmin = new JFrame();
 		frmMenuPrincipalAdmin.setVisible(true);
 		frmMenuPrincipalAdmin.setTitle("Gestion Profil - Etudiant");
-		frmMenuPrincipalAdmin.setBounds(100, 100, 1258, 1079);
+		frmMenuPrincipalAdmin.setBounds(100, 100, 1408, 977);
 		frmMenuPrincipalAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenuPrincipalAdmin.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
