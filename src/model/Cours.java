@@ -15,6 +15,8 @@ public class Cours {
 	 */
 	private int enseignantId;
 	
+	private String enseignantNom;
+	
 	/**
 	 * 
 	 */
@@ -47,6 +49,24 @@ public class Cours {
 			float nbHeuresAmphi, float nbHeuresTD, float nbHeuresTP, float nbHeuresExamen) {
 		this.nom = nom;
 		this.enseignantId = enseignantId;
+		this.nbHeuresAmphi = nbHeuresAmphi;
+		this.nbHeuresTD = nbHeuresTD;
+		this.nbHeuresTP = nbHeuresTP;
+		this.nbHeuresExamen = nbHeuresExamen;
+	}
+	
+	/**
+	 * @param nom
+	 * @param enseignant
+	 * @param nbHeuresAmphi
+	 * @param nbHeuresTD
+	 * @param nbHeuresTP
+	 * @param nbHeuresExamen
+	 */
+	public Cours(String nom, String enseignantNom,
+			float nbHeuresAmphi, float nbHeuresTD, float nbHeuresTP, float nbHeuresExamen) {
+		this.nom = nom;
+		this.setEnseignantNom(enseignantNom);
 		this.nbHeuresAmphi = nbHeuresAmphi;
 		this.nbHeuresTD = nbHeuresTD;
 		this.nbHeuresTP = nbHeuresTP;
@@ -135,6 +155,20 @@ public class Cours {
 	 */
 	public void setNbHeuresExamen(float nbHeuresExamen) {
 		this.nbHeuresExamen = nbHeuresExamen;
+	}
+
+	/**
+	 * @return the enseignantNom
+	 */
+	public String getEnseignantNom() {
+		return enseignantNom;
+	}
+
+	/**
+	 * @param enseignantNom the enseignantNom to set
+	 */
+	public void setEnseignantNom(String enseignantNom) {
+		this.enseignantNom = enseignantNom;
 	}
 	
 	/*

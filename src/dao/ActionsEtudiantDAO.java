@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import model.Absence;
@@ -26,12 +28,30 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			
-				while (rs.next()) {
-					listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getDouble("abs_nbHeures"), rs.getString("cours_nom"),
-					rs.getString("abs_type"), rs.getString("abs_justificatif"), rs.getString("abs_valideeAdmin")));
-				}
-
-				return listeAbsence;
+			while (rs.next()) {
+				listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getDouble("abs_nbHeures"), rs.getString("cours_nom"),
+				rs.getString("abs_type"), rs.getString("abs_justificatif"), rs.getString("abs_valideeAdmin")));
 			}
+			
+			return listeAbsence;
 		}
 	}
+	
+	public int deposerJustificatif(int absenceId, String justificatif) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			int effectuee = 0;
+			PreparedStatement ps = con.prepareStatement("UPDATE Lot2_Absence "
+					+ "SET abs_justificatif = ? "
+					+ "WHERE abs_id = ?");
+
+			ps.setString(1, justificatif);
+			ps.setInt(2, absenceId);
+			
+			effectuee = ps.executeUpdate();
+			
+			return effectuee;
+		}
+	}
+
+}

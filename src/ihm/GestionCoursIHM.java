@@ -70,9 +70,9 @@ public class GestionCoursIHM {
 		frmModificationDunCours = new JFrame();
 		frmModificationDunCours.setTitle("Gestion des Cours");
 		frmModificationDunCours.setBounds(100, 100, 1127, 731);
-		frmModificationDunCours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmModificationDunCours.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmModificationDunCours.getContentPane().setLayout(new BoxLayout(frmModificationDunCours.getContentPane(), BoxLayout.Y_AXIS));
-		
+		frmModificationDunCours.setVisible(true);
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_4.getLayout();
 		flowLayout_2.setHgap(500);

@@ -1,43 +1,136 @@
 package ihm;
 
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import javax.swing.JEditorPane;
-import java.awt.Color;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
-public class DeposerJustificatifIHM extends JFrame {
+import dao.ActionsEtudiantDAO;
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+public class DeposerJustificatifIHM {
+
+	private JFrame frame;
 	
+	private static int ligneNum;
+	private JTextField textField;
 
-	public DeposerJustificatifIHM() {
-	
-		this.setTitle("JUSTIFICATION");
-		this.setSize(730, 427);
-		this.setLocation(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setLayout(null);
+	private JLabel lblNewLabel_3_4;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DeposerJustificatifIHM window = new DeposerJustificatifIHM(ligneNum);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public DeposerJustificatifIHM(int ligneNum) {
+		DeposerJustificatifIHM.ligneNum = ligneNum;
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setVisible(true);
+		frame.setTitle("JUSTIFICATION");
+		frame.setBounds(100, 100, 1156, 656);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
+		frame.getContentPane().add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		JLabel Arriere = new JLabel("");
-		Arriere.setIcon(new ImageIcon("C:\\Users\\46426223\\Downloads\\OIP.jfif"));
+		Arriere.setIcon(new ImageIcon("/img/OIP.jfif"));
 		Arriere.setBounds(0, 0, 434, 261);
-		Arriere.add(Arriere);
+		panel.add(Arriere);
 		
-		JLabel lblNewLabel = new JLabel("Faites glissez votre justificatif");
+		JLabel lblNewLabel = new JLabel("Entrez l'url de telechargement de votre justificatif : ");
+		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblNewLabel.setForeground(Color.BLUE);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		lblNewLabel.setBounds(113, 93, 212, 20);
-		Arriere.add(lblNewLabel);
-		
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(162, 148, 107, 50);
-		Arriere.add(editorPane);
+		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Depot de justificatif");
 		Arriere.add(lblNewLabel_1);
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(160, 27, 117, 14);
-		this.setVisible(true);
+		
+		textField = new JTextField();
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		flowLayout.setVgap(20);
+		panel.add(panel_1);
+		
+		JButton btnDeposer = new JButton("Deposer");
+		btnDeposer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField.getText().length() > 0) {
+					deposerJustificatif(textField.getText());
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "Le justificatif n'est pas entre.", "Dialog",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnDeposer.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(btnDeposer);
+		
+		lblNewLabel_3_4 = new JLabel("");
+		lblNewLabel_3_4.setForeground(Color.RED);
+		lblNewLabel_3_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_1.add(lblNewLabel_3_4);
+
 	}
+
+	public void deposerJustificatif(String justificatif) {
+		ActionsEtudiantDAO actionEtu = new ActionsEtudiantDAO();
+		try {
+			int effectuee = actionEtu.deposerJustificatif(ligneNum, justificatif);
+			if (effectuee == 1)
+				lblNewLabel_3_4.setText("Justificatif envoye !");
+			else
+				lblNewLabel_3_4.setText("Erreur l'absence selectionnee n'existe pas !");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }

@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
 import model.Administratif;
 import model.Cours;
 import model.Etudiant;
+import model.Groupe;
+import model.PlanningGroupe;
 import model.Professeur;
 import model.Profil;
 
@@ -59,6 +63,48 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 			return effectuee;
 			}
 		}
+	
+	public ArrayList<Cours> listeCours() throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			ArrayList<Cours> listeCours = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT cours_nom, prof_nom, "
+					+ "cours_NbHeuresAmphi, cours_NbHeuresTD, "
+					+ "cours_NbHeuresTP, cours_NbHeuresExamen "
+					+ "FROM Lot2_Cours "
+					+ "JOIN Lot2_Professeur ON cours_prof_id = prof_id");
+
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				listeCours.add(new Cours(rs.getString("cours_nom"), rs.getString("prof_nom"), 
+						rs.getFloat("cours_NbHeuresAmphi"), rs.getFloat("cours_NbHeuresTD"), 
+						rs.getFloat("cours_NbHeuresTP"), rs.getFloat("cours_NbHeuresExamen")));
+			}
+			
+			return listeCours;
+			}
+		}
+	
+public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
+		
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			ArrayList<Groupe> listeGroupe = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT grp_numero, grp_capaciteMax "
+					+ "FROM Lot2_Cours "
+					+ "JOIN Lot2_PlanningGroupe ON Lot2_PlanningGroupe.cours_id = Lot2_Cours.cours_id "
+					+ "JOIN Lot2_Groupe ON Lot2_PlanningGroupe.grp_id = Lot2_Groupe.grp_id "
+					+ "WHERE Lot2_Cours.cours_id = ?");
+			ps.setInt(1, coursId);
+
+			
+			ResultSet rs = ps.executeQuery();
+
+			while(rs.next()) {
+				listeGroupe.add(new Groupe(rs.getInt("grp_numero"), rs.getInt("grp_capaciteMax")));
+			}
+		return listeGroupe;
+		}
+	}
 	
 	public Etudiant getEtudiant(Profil profil) throws Exception {
 		
@@ -214,13 +260,6 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 					+ "cours_NbHeuresTP = NVL(NULLIF(?,0.0), cours_NbHeuresTP), cours_NbHeuresExamen = NVL(NULLIF(?,0.0), cours_NbHeuresExamen) "
 					+ "WHERE cours_nom = ?");
 
-			System.out.println("+" + cours.getNom() + "+");
-			System.out.println("+" + cours.getEnseignantId() + "+");
-			System.out.println("+" + cours.getNbHeuresAmphi() + "+");
-			System.out.println("+" + cours.getNbHeuresTD() + "+");
-			System.out.println("+" + cours.getNbHeuresTP() + "+");
-			System.out.println("+" + cours.getNbHeuresExamen() + "+");
-			System.out.println("+" + nomCours + "+");
 			ps.setString(1, cours.getNom());
 			ps.setInt(2, cours.getEnseignantId());
 			ps.setFloat(3, cours.getNbHeuresAmphi());
@@ -359,4 +398,21 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 			}
 		}
 	
+	public int ajouterCoursPlanning(PlanningGroupe planningGroupe) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			int effectuee = 0;
+			PreparedStatement ps = con.prepareStatement("INSERT INTO Lot2_PlanningGroupe "
+					+ "VALUES (?,?,?,?,?)");
+			
+			ps.setInt(1, planningGroupe.getCoursId());
+			ps.setInt(2, planningGroupe.getGrpId());
+			ps.setDate(3, java.sql.Date.valueOf(planningGroupe.getDate()));
+			ps.setFloat(4, planningGroupe.getHeureDebut());
+			ps.setFloat(5, planningGroupe.getHeureFin());
+			
+			effectuee = ps.executeUpdate();
+			
+			return effectuee;
+			}
+		}
 }

@@ -3,6 +3,8 @@ package ihm;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -20,6 +22,8 @@ import model.Absence;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListeAbsencesEtuIHM {
 
@@ -60,7 +64,7 @@ public class ListeAbsencesEtuIHM {
 		frmAbsencesClassiquesEt = new JFrame();
 		frmAbsencesClassiquesEt.setVisible(true);
 		frmAbsencesClassiquesEt.setTitle("Absences classiques et physiques");
-		frmAbsencesClassiquesEt.setBounds(100, 100, 1075, 758);
+		frmAbsencesClassiquesEt.setBounds(100, 100, 1405, 899);
 		frmAbsencesClassiquesEt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAbsencesClassiquesEt.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEt.getContentPane(), BoxLayout.Y_AXIS));
 		
@@ -79,26 +83,53 @@ public class ListeAbsencesEtuIHM {
 		
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
-		table.setColumnSelectionAllowed(true);
-		table.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		table.setColumnSelectionAllowed(false);
+		table.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		table.setForeground(Color.DARK_GRAY);
 		table.setToolTipText("");
-		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		DefaultTableModel model = new DefaultTableModel(
-				new Object[][] {
-					{"DATE", "NBHEURES", "COURS", "TYPE", "JUSTIFICATIF", "VALIDEE ADMIN"}
-				},
-				new String[] {
-					"New column", "New column", "New column", "New column", "New column", "New column"
-				});
+		table.setDragEnabled(true);
+		
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{Boolean.FALSE, "DATE", "NBHEURES", "COURS", "TYPE", "JUSTIFICATIF", "VALIDEE ADMIN"}
+			},
+			new String[] {
+				"New column", "New column", "New column", "New column", "New column", "New column", "New column"
+			}
+		) {
+			private static final long serialVersionUID = 1L;
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			
+			boolean[] isCellEditable = new boolean[]{
+                    true, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return isCellEditable[columnIndex];
+            }
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		table.getColumnModel().getColumn(0).setMinWidth(5);
+		table.getColumnModel().getColumn(1).setPreferredWidth(40);
+		table.getColumnModel().getColumn(2).setPreferredWidth(60);
+		table.getColumnModel().getColumn(3).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(40);
+		table.getColumnModel().getColumn(5).setPreferredWidth(220);
 		
 		for(int i = 0; i<listeAbsences.size(); i++) {
-			model.addRow(new Object[]{listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),
+			((DefaultTableModel) table.getModel()).addRow(new Object[]{Boolean.FALSE, listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),
 									listeAbsences.get(i).getNomCours(),listeAbsences.get(i).getType(),
 									listeAbsences.get(i).getJustificatif(), listeAbsences.get(i).getValideeAdmin()});
 		}
-		table.setEnabled(false);
-		table.setModel(model);
+		ListSelectionModel tableSelectionModel = table.getSelectionModel();
+		tableSelectionModel.setSelectionInterval(0, 0);
+		table.setSelectionModel(tableSelectionModel);
+		table.repaint();
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.gridheight = 2;
 		gbc_table.gridwidth = 2;
@@ -112,10 +143,28 @@ public class ListeAbsencesEtuIHM {
 		frmAbsencesClassiquesEt.getContentPane().add(panel_1);
 		
 		JButton btnNewButton = new JButton("Declarer une absence physique");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		btnNewButton.setForeground(Color.BLACK);
 		panel_1.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Deposer une justificatif");
+		JButton btnNewButton_1 = new JButton("Deposer un justificatif");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int ligneNum = -1;
+				for(int i = 0; i < table.getRowCount(); i++) {
+					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
+					if(CaseCochee)
+						ligneNum = i;
+				}
+				if(ligneNum != -1)
+					new DeposerJustificatifIHM(ligneNum);
+				else {
+					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_1);
 	}
 }

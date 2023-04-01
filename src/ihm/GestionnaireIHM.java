@@ -105,15 +105,26 @@ public class GestionnaireIHM {
 		panel_3.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_3);
 		
-		JButton btnNewButton_1 = new JButton("Absences");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_3.add(btnNewButton_1);
+		JButton btnNewButton_2_2_1 = new JButton("Gestion cours");
+		btnNewButton_2_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GestionCoursIHM();
+			}
+		});
+		btnNewButton_2_2_1.setForeground(Color.BLACK);
+		btnNewButton_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_3.add(btnNewButton_2_2_1);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_4);
 		
-		JButton btnGroupe = new JButton("Groupe");
+		JButton btnGroupe = new JButton("Gestion planning de Groupe");
+		btnGroupe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GestionPlanningIHM();
+			}
+		});
 		btnGroupe.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_4.add(btnGroupe);
 	}

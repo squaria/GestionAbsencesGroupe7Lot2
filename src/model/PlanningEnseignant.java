@@ -1,12 +1,16 @@
 package model;
 
-import java.util.ArrayList;
 
 public class PlanningEnseignant extends Planning {
 
+	public PlanningEnseignant(int grpId, int coursId, String date, float heureDebut, float heureFin) {
+		super(grpId, coursId, date, heureDebut, heureFin);
+		// TODO Auto-generated constructor stub
+	}
+/*
 	public PlanningEnseignant(ArrayList<Cours> listeCours) {
 		super(listeCours);
-	}
+	}*/
 	
 	/*
 	public void consulterPlanningEn(String nomDuProf) {

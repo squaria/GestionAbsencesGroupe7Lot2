@@ -76,6 +76,15 @@ public class EtudiantIHM extends JFrame {
 		panel_2.add(panel_1);
 		
 		JButton btnNewButton_2 = new JButton("Planning de groupe");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new PlanningGrpIHM(id);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_2);
