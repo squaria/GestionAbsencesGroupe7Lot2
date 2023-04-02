@@ -120,7 +120,7 @@ public class GestionPlanningIHM {
 			}
 			
 			boolean[] isCellEditable = new boolean[]{
-                    true, false, false, false, false, false, false
+                    true, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

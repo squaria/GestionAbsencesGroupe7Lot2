@@ -2,6 +2,8 @@ package model;
 
 
 public class PlanningGroupe extends Planning {
+	
+	private String profNom;
 
 	public PlanningGroupe(int grpId, int coursId, String date, float heureDebut, float heureFin) {
 		super(grpId, coursId, date, heureDebut, heureFin);
@@ -11,6 +13,25 @@ public class PlanningGroupe extends Planning {
 	public PlanningGroupe(int grpId, String coursNom, String date, int jour, float heureDebut, float heureFin) {
 		super(grpId, coursNom, date, jour, heureDebut, heureFin);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public PlanningGroupe(String coursNom, String profNom, String date, float heureDebut, float heureFin) {
+		super(coursNom, date, heureDebut, heureFin);
+		this.profNom = profNom;
+	}
+
+	/**
+	 * @return the profNom
+	 */
+	public String getProfNom() {
+		return profNom;
+	}
+
+	/**
+	 * @param profNom the profNom to set
+	 */
+	public void setProfNom(String profNom) {
+		this.profNom = profNom;
 	}
 
 	/*

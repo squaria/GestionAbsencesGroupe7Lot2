@@ -10,10 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class EnseignantIHM {
 
 	private JFrame frmMenuPrincipal;
+	private static int profId;
 	
 	/**
 	 * Launch the application.
@@ -22,7 +25,7 @@ public class EnseignantIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EnseignantIHM window = new EnseignantIHM();
+					EnseignantIHM window = new EnseignantIHM(profId);
 					window.frmMenuPrincipal.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +36,8 @@ public class EnseignantIHM {
 	/**
 	 * Create the application.
 	 */
-	public EnseignantIHM() {
+	public EnseignantIHM(int profId) {
+		EnseignantIHM.profId = profId;
 		initialize();
 	}
 
@@ -67,6 +71,11 @@ public class EnseignantIHM {
 		panel_2.add(panel_1);
 		
 		JButton btnNewButton_2 = new JButton("Planning");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PlanningEnseignantIHM(profId);
+			}
+		});
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_2);

@@ -7,27 +7,29 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.Absence;
+import model.Cours;
 
-public class ActionsEtudiantDAO extends IdentificationBdd {
-
-	public ActionsEtudiantDAO() {
-		super();
+public class ActionsAdministratifDAO extends IdentificationBdd {
+	
+	public ActionsAdministratifDAO () {
+		
 	}
 	
-	public ArrayList<Absence> listeAbsences(int id) throws Exception {
+	public ArrayList<Absence> listeAbsencesAdmin() throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
 			ArrayList<Absence> listeAbsence = new ArrayList<>();
-			PreparedStatement ps = con.prepareStatement("SELECT abs_date, abs_nbHeures, cours_nom, abs_type, abs_justificatif, abs_valideeAdmin "
+			PreparedStatement ps = con.prepareStatement("SELECT abs_date, abs_nbHeures, etu_nom, etu_prenom, cours_nom, abs_type, abs_justificatif, abs_valideeAdmin "
 					+ "FROM Lot2_Absence "
 					+ "JOIN Lot2_Cours ON Lot2_Absence.abs_cours_id = Lot2_Cours.cours_id "
 					+ "JOIN Lot2_AbsenceParEtudiant ON Lot2_Absence.abs_id = Lot2_AbsenceParEtudiant.abs_id "
-					+ "WHERE Lot2_AbsenceParEtudiant.etu_id = ?");
-			ps.setInt(1, id);
+					+ "JOIN Lot2_Etudiant ON Lot2_AbsenceParEtudiant.etu_id = Lot2_Etudiant.etu_id "
+					+ "WHERE abs_valideeAdmin IS NULL");
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getFloat("abs_nbHeures"), rs.getString("cours_nom"),
+				listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getFloat("abs_nbHeures"), 
+				rs.getString("cours_nom"), rs.getString("etu_nom"), rs.getString("etu_prenom"),
 				rs.getString("abs_type"), rs.getString("abs_justificatif"), rs.getString("abs_valideeAdmin")));
 			}
 			
@@ -35,21 +37,23 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 		}
 	}
 	
-	public int deposerJustificatif(int absenceId, String justificatif) throws Exception {
+	public int validerAbsence(int absId, boolean validee) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
-			
 			int effectuee = 0;
 			PreparedStatement ps = con.prepareStatement("UPDATE Lot2_Absence "
-					+ "SET abs_justificatif = ? "
+					+ "SET abs_valideeAdmin = ? "
 					+ "WHERE abs_id = ?");
 
-			ps.setString(1, justificatif);
-			ps.setInt(2, absenceId);
+			if(validee)
+				ps.setString(1, "Validee");
+			else
+				ps.setString(1, "Invalidee");
+			
+			ps.setInt(2, absId);
 			
 			effectuee = ps.executeUpdate();
 			
 			return effectuee;
+			}
 		}
-	}
-
 }

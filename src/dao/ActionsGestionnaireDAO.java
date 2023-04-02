@@ -71,7 +71,8 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 					+ "cours_NbHeuresAmphi, cours_NbHeuresTD, "
 					+ "cours_NbHeuresTP, cours_NbHeuresExamen "
 					+ "FROM Lot2_Cours "
-					+ "JOIN Lot2_Professeur ON cours_prof_id = prof_id");
+					+ "JOIN Lot2_Professeur ON cours_prof_id = prof_id "
+					+ "ORDER BY cours_id ASC");
 
 			ResultSet rs = ps.executeQuery();
 			
@@ -89,11 +90,12 @@ public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
 		
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			ArrayList<Groupe> listeGroupe = new ArrayList<>();
-			PreparedStatement ps = con.prepareStatement("SELECT grp_numero, grp_capaciteMax "
+			PreparedStatement ps = con.prepareStatement("SELECT DISTINCT grp_numero, grp_capaciteMax "
 					+ "FROM Lot2_Cours "
 					+ "JOIN Lot2_PlanningGroupe ON Lot2_PlanningGroupe.cours_id = Lot2_Cours.cours_id "
 					+ "JOIN Lot2_Groupe ON Lot2_PlanningGroupe.grp_id = Lot2_Groupe.grp_id "
-					+ "WHERE Lot2_Cours.cours_id = ?");
+					+ "WHERE Lot2_Cours.cours_id = ? "
+					+ "ORDER BY grp_numero ASC");
 			ps.setInt(1, coursId);
 
 			
@@ -291,6 +293,9 @@ public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
 				break;
 			case 3:
 				ps = con.prepareStatement("SELECT cours_id FROM Lot2_Cours");
+				break;
+			case 4:
+				ps = con.prepareStatement("SELECT abs_id FROM Lot2_Absence");
 				break;
 			}
 			

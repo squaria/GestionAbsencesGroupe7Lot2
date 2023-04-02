@@ -72,7 +72,7 @@ public class Etudiant extends Profil {
 	 * @param justificatif
 	 * @param valideeAdmin
 	 */
-	public void declarerUneAbsence(String date, double nbHeures, String nomCours, String type, String justificatif, String valideeAdmin) {
+	public void declarerUneAbsence(String date, Float nbHeures, String nomCours, String type, String justificatif, String valideeAdmin) {
 		Absence ab = new Absence(date, nbHeures, nomCours, type, justificatif, valideeAdmin);
 		abs.add(ab);
 	}

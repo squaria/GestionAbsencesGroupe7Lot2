@@ -27,6 +27,13 @@ public class Planning {
 		this.heureFin = heureFin;
 	}
 
+	public Planning(String coursNom, String date, float heureDebut, float heureFin) {
+		this.coursNom = coursNom;;
+		this.date = date;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
+	}
+
 	public int getGrpId() {
 		return grpId;
 	}

@@ -6,9 +6,12 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.EventQueue;
+
 import javax.swing.SwingConstants;
 
-public class CreerCoursIHM extends JFrame {
+public class CreerCoursIHM {
+	private JFrame frame;
 	private JTextField txtBmww;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -17,22 +20,37 @@ public class CreerCoursIHM extends JFrame {
 	private JTextField textField_5;
 	private JTextField textField;
 	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CreerCoursIHM window = new CreerCoursIHM();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	
 	public CreerCoursIHM() {
 		initialize();
 	}
 	
 	private void initialize() {
-		this.setTitle("CREATION");
-		this.setSize(730, 427);
-		this.setLocation(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setTitle("CREATION");
+		frame.setSize(730, 427);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		
 		JLabel ArrierePlan = new JLabel("");
 		ArrierePlan.setIcon(new ImageIcon("C:\\Users\\46426223\\Downloads\\profile-17.jpg"));
 		ArrierePlan.setBounds(0, 0, 704, 388);
-		getContentPane().add(ArrierePlan);
+		frame.getContentPane().add(ArrierePlan);
 		
 		JLabel lblNewLabel = new JLabel("Cr\u00E9ation d'dun nouveau cours");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -126,7 +144,5 @@ public class CreerCoursIHM extends JFrame {
 		textField.setBounds(234, 141, 214, 20);
 		ArrierePlan.add(textField);
 		textField.setColumns(10);
-		
-		this.setVisible(true);
 	}
 }

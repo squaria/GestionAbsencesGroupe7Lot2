@@ -152,10 +152,12 @@ public class ConnexionIHM extends JFrame {
 		case 1:
 			lblNewLabel_3.setText("Connecté en tant que professeur !");
 			frmConnexion.dispose();
-			new EnseignantIHM();
+			new EnseignantIHM(res[1]);
 			break;
 		case 2:
 			lblNewLabel_3.setText("Connecté en tant qu'administratif !");
+			frmConnexion.dispose();
+			new AdministratifIHM();
 			break;
 		case 3:
 			lblNewLabel_3.setText("Connecté en tant que gestionnaire !");

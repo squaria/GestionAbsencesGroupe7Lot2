@@ -14,12 +14,18 @@ public class Absence {
 	/**
 	 * 
 	 */
-	private double nbHeures;
+	private Float nbHeures;
 	
 	/**
 	 * 
 	 */
 	private String nomCours;
+	
+	private int coursId;
+	
+	private String nomEtu;
+	
+	private String prenomEtu;
 	
 	/**
 	 * 
@@ -41,10 +47,30 @@ public class Absence {
 	 * @param type
 	 * @param justificatif
 	 */
-	public Absence(String date, double nbHeures, String nomCours, String type, String justificatif, String valideeAdmin) {
+	public Absence(String date, Float nbHeures, String nomCours, String type, String justificatif, String valideeAdmin) {
 		this.date = date;
 		this.nbHeures = nbHeures;
 		this.nomCours = nomCours;
+		this.type = type;
+		this.justificatif = justificatif;
+		this.valideeAdmin = valideeAdmin;
+	}
+	
+	public Absence(String date, Float nbHeures, int coursId, String type, String justificatif, String valideeAdmin) {
+		this.date = date;
+		this.nbHeures = nbHeures;
+		this.coursId = coursId;
+		this.type = type;
+		this.justificatif = justificatif;
+		this.valideeAdmin = valideeAdmin;
+	}
+	
+	public Absence(String date, Float nbHeures, String nomCours, String nomEtu, String prenomEtu, String type, String justificatif, String valideeAdmin) {
+		this.date = date;
+		this.nbHeures = nbHeures;
+		this.nomCours = nomCours;
+		this.nomEtu = nomEtu;
+		this.prenomEtu = prenomEtu;
 		this.type = type;
 		this.justificatif = justificatif;
 		this.valideeAdmin = valideeAdmin;
@@ -67,14 +93,14 @@ public class Absence {
 	/**
 	 * @return
 	 */
-	public double getNbHeures() {
+	public Float getNbHeures() {
 		return nbHeures;
 	}
 
 	/**
 	 * @param nbHeures
 	 */
-	public void setNbHeures(double nbHeures) {
+	public void setNbHeures(Float nbHeures) {
 		this.nbHeures = nbHeures;
 	}
 
@@ -143,6 +169,30 @@ public class Absence {
 	 */
 	public void setNomCours(String nomCours) {
 		this.nomCours = nomCours;
+	}
+
+	public int getCoursId() {
+		return coursId;
+	}
+
+	public void setCoursId(int coursId) {
+		this.coursId = coursId;
+	}
+
+	public String getNomEtu() {
+		return nomEtu;
+	}
+
+	public void setNomEtu(String nomEtu) {
+		this.nomEtu = nomEtu;
+	}
+
+	public String getPrenomEtu() {
+		return prenomEtu;
+	}
+
+	public void setPrenomEtu(String prenomEtu) {
+		this.prenomEtu = prenomEtu;
 	}
 	
 	

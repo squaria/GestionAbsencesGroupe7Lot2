@@ -3,9 +3,8 @@ package model;
 
 public class PlanningEnseignant extends Planning {
 
-	public PlanningEnseignant(int grpId, int coursId, String date, float heureDebut, float heureFin) {
-		super(grpId, coursId, date, heureDebut, heureFin);
-		// TODO Auto-generated constructor stub
+	public PlanningEnseignant(int grpId, String coursNom, String date, int jour, float heureDebut, float heureFin) {
+		super(grpId, coursNom, date, jour, heureDebut, heureFin);
 	}
 /*
 	public PlanningEnseignant(ArrayList<Cours> listeCours) {

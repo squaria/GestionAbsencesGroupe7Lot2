@@ -22,7 +22,7 @@ public class PlanningGrpIHM {
 
 	private JFrame frame;
 	private JTable table;
-	private static int idEtu = 1;
+	private static int idEtu;
 	/**
 	 * Launch the application.
 	 */
@@ -44,6 +44,11 @@ public class PlanningGrpIHM {
 	 */
 	public PlanningGrpIHM(int idEtu) {
 		PlanningGrpIHM.idEtu = idEtu;
+		initialize();
+	}
+
+	public PlanningGrpIHM() {
+		idEtu = 0;
 		initialize();
 	}
 
@@ -121,7 +126,8 @@ public class PlanningGrpIHM {
 		PlanningDAO planDAO = new PlanningDAO();
 		ArrayList<PlanningGroupe> listeCours = null;
 		try {
-			listeCours = planDAO.listeCoursGroupe(planDAO.getGroupeEtudiant(idEtu));
+			if(idEtu != 0)
+				listeCours = planDAO.listeCoursGroupe(planDAO.getGroupeEtudiant(idEtu));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
