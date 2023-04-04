@@ -8,3 +8,4 @@ public class IdentificationBdd {
 	final static String LOGIN = "C##_G7_G4_APP";
 	final static String PWD = "APP_7_4";
 }
+//test tetetetetete
