@@ -17,6 +17,7 @@ public class AdministratifIHM {
 
 	private JFrame frame;
 //GHJK
+///dqzdzqdqzzqqzidzqidqzidqzdijqzdijzqidqzid
 	/**
 	 * Launch the application.
 	 */
