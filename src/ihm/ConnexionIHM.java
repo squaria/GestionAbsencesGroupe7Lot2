@@ -109,7 +109,6 @@ public class ConnexionIHM extends JFrame {
 		JButton btnProfil = new JButton("Connexion");
 		btnProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				if (textField.getText().length() > 0 && passwordField.getPassword().length > 0) {
 					connexion(textField.getText(), String.valueOf(passwordField.getPassword()));
 				} else {

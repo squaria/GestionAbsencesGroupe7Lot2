@@ -21,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.PlanningDAO;
 import model.PlanningEnseignant;
-import model.PlanningGroupe;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -29,11 +28,12 @@ public class PlanningEnseignantIHM {
 
 	private JFrame frmCoursNonTraites;
 	private JTable table;
-	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private ArrayList<PlanningEnseignant> planningProf;
 	private static int profId;
+	private float nbHeures;
+	private int groupe;
 
 	/**
 	 * Launch the application.
@@ -198,11 +198,15 @@ public class PlanningEnseignantIHM {
 				int ligneNum = -1;
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
-					if(CaseCochee)
+					if(CaseCochee) {
 						ligneNum = i;
+						nbHeures = Float.valueOf((String) table.getValueAt(i, 5))  - Float.valueOf((String) table.getValueAt(i, 4));
+						System.out.println(nbHeures);
+						groupe = Integer.valueOf((String) table.getValueAt(i, 2));
+					}
 				}
 				if(ligneNum != -1)
-					new DeclarerAbsenceIHM(ligneNum);
+					new DeclarerAbsenceIHM(ligneNum, nbHeures, groupe);
 				else {
 					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);

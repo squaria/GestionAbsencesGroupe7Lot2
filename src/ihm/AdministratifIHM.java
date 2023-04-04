@@ -16,8 +16,6 @@ import javax.swing.JPanel;
 public class AdministratifIHM {
 
 	private JFrame frame;
-//GHJK
-///dqzdzqdqzzqqzidzqidqzidqzdijqzdijzqidqzid
 	/**
 	 * Launch the application.
 	 */
