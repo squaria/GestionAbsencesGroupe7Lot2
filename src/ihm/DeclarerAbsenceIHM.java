@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,7 +18,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsProfesseurDAO;
 import model.Absence;
@@ -27,6 +33,7 @@ public class DeclarerAbsenceIHM {
 	private JTextField textField_1;
 	private static int coursId;
 	private ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -62,6 +69,15 @@ public class DeclarerAbsenceIHM {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setVisible(true);
+		/*
+		ArrayList<Absence> listeAbsences = null;
+		try {
+			listeAbsences = actionAdmin.listeAbsencesAdmin();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_4.getLayout();
 		flowLayout_2.setHgap(500);
@@ -77,7 +93,68 @@ public class DeclarerAbsenceIHM {
 		JPanel panel_5 = new JPanel();
 		frame.getContentPane().add(panel_5);
 		panel_5.setLayout(new FlowLayout(FlowLayout.LEADING, 60, 5));
+		/*
+		table = new JTable();
+		table.setCellSelectionEnabled(true);
+		table.setColumnSelectionAllowed(false);
+		table.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		table.setForeground(Color.DARK_GRAY);
+		table.setToolTipText("");
+		table.setDragEnabled(true);
 		
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{Boolean.FALSE, "DATE", "NBHEURES", "NOM ETUDIANT", "PRENOM ETUDIANT", "COURS", "TYPE", "JUSTIFICATIF", "VALIDEE ADMIN"},
+			},
+			new String[] {
+				"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
+			}
+			
+			
+		) {
+			private static final long serialVersionUID = 1L;
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			
+			boolean[] isCellEditable = new boolean[]{
+                true, false, false, false, false, false, false, true, false
+			};
+
+	        public boolean isCellEditable(int rowIndex, int columnIndex) {
+	            return isCellEditable[columnIndex];
+	        }
+        });
+		table.getColumnModel().getColumn(0).setPreferredWidth(40);
+		table.getColumnModel().getColumn(1).setPreferredWidth(60);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(50);
+		table.getColumnModel().getColumn(5).setPreferredWidth(40);
+		table.getColumnModel().getColumn(6).setPreferredWidth(200);
+		
+		for(int i = 0; i<listeEtudiant.size(); i++) {
+			((DefaultTableModel) table.getModel()).addRow(
+						new Object[]{Boolean.FALSE, listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),
+									listeAbsences.get(i).getNomEtu(), listeAbsences.get(i).getPrenomEtu(), 
+									listeAbsences.get(i).getNomCours(), listeAbsences.get(i).getType(),
+									listeAbsences.get(i).getJustificatif(), listeAbsences.get(i).getValideeAdmin()});
+		}
+		ListSelectionModel tableSelectionModel = table.getSelectionModel();
+		tableSelectionModel.setSelectionInterval(0, 0);
+		table.setSelectionModel(tableSelectionModel);
+		table.repaint();
+		GridBagConstraints gbc_table = new GridBagConstraints();
+		gbc_table.gridheight = 2;
+		gbc_table.gridwidth = 2;
+		gbc_table.insets = new Insets(0, 0, 0, 5);
+		gbc_table.fill = GridBagConstraints.BOTH;
+		gbc_table.gridx = 0;
+		gbc_table.gridy = 0;
+		panel.add(table, gbc_table);
+		*/
 		JPanel panel_13 = new JPanel();
 		panel_5.add(panel_13);
 		
