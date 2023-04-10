@@ -152,15 +152,14 @@ public class TraiterAbsencesIHM {
 				int ligneNum = -1;
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
-					if(CaseCochee)
-						ligneNum = i;
+					if(CaseCochee) {
+						validerAbsence(i, false);
+						ligneNum = 1;
+					}
 				}
-				if(ligneNum != -1)
-					validerAbsence(ligneNum, false);
-				else {
+				if(ligneNum == -1)
 					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
-				}
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -173,15 +172,14 @@ public class TraiterAbsencesIHM {
 				int ligneNum = -1;
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
-					if(CaseCochee)
-						ligneNum = i;
+					if(CaseCochee) {
+						validerAbsence(i, true);
+						ligneNum = 1;
+					}
 				}
-				if(ligneNum != -1)
-					validerAbsence(ligneNum, true);
-				else {
+				if(ligneNum == -1)
 					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
-				}
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -200,7 +198,7 @@ public class TraiterAbsencesIHM {
 			if (effectuee == 1)
 				lblNewLabel_3_2.setText("Absence validee ou non validee !");
 			else
-				lblNewLabel_3_2.setText("Erreur cette absence n'existe pas !");
+				lblNewLabel_3_2.setText("Erreur cette absence n'existe pas ou a deja ete traitee !");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

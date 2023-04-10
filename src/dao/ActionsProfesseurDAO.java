@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.Absence;
-import model.Cours;
 import model.Etudiant;
-import model.Profil;
 
 public class ActionsProfesseurDAO extends IdentificationBdd {
 	public ActionsProfesseurDAO() {
@@ -32,6 +30,24 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 			return coursNom;
 		}
 	}*/
+	public ArrayList<Absence> listeAbsencesProf() throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			ArrayList<Absence> listeAbsence = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT abs_date, abs_nbHeures, cours_nom, abs_type "
+					+ "FROM Lot2_Absence "
+					+ "JOIN Lot2_Cours ON Lot2_Absence.abs_cours_id = Lot2_Cours.cours_id "
+					+ "JOIN Lot2_AbsenceParEnseignant ON Lot2_Absence.abs_id = Lot2_AbsenceParEnseignant.abs_id ");
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getFloat("abs_nbHeures"), rs.getString("cours_nom"),
+				rs.getString("abs_type")));
+			}
+			
+			return listeAbsence;
+		}
+	}
 	
 	public int creerAbsence(Absence absence) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
@@ -74,6 +90,24 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 			}
 			
 			return listeEtudiant;
+		}
+	}
+	
+	public String getNbHeures(int coursId) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			PreparedStatement ps = null;
+			String coursNom = null;
+			ps = con.prepareStatement("SELECT cours_nom FROM Lot2_Cours "
+					+ "WHERE cours_id = ?");
+			ps.setInt(1, coursId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				coursNom = rs.getString("cours_nom");
+			}
+			
+			return coursNom;
 		}
 	}
 }

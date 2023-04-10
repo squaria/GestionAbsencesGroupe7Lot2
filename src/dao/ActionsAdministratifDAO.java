@@ -24,7 +24,8 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 					+ "JOIN Lot2_Cours ON Lot2_Absence.abs_cours_id = Lot2_Cours.cours_id "
 					+ "JOIN Lot2_AbsenceParEtudiant ON Lot2_Absence.abs_id = Lot2_AbsenceParEtudiant.abs_id "
 					+ "JOIN Lot2_Etudiant ON Lot2_AbsenceParEtudiant.etu_id = Lot2_Etudiant.etu_id "
-					+ "WHERE abs_valideeAdmin IS NULL");
+					+ "WHERE abs_valideeAdmin IS NULL "
+					+ "ORDER BY Lot2_Absence.abs_id ASC");
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -42,7 +43,7 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 			int effectuee = 0;
 			PreparedStatement ps = con.prepareStatement("UPDATE Lot2_Absence "
 					+ "SET abs_valideeAdmin = ? "
-					+ "WHERE abs_id = ?");
+					+ "WHERE abs_id = ? AND abs_valideeAdmin IS NULL");
 
 			if(validee)
 				ps.setString(1, "Validee");

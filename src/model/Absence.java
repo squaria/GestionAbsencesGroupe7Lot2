@@ -76,6 +76,13 @@ public class Absence {
 		this.valideeAdmin = valideeAdmin;
 	}
 
+	public Absence(String date, Float nbHeures, String nomCours, String type) {
+		this.date = date;
+		this.nbHeures = nbHeures;
+		this.nomCours = nomCours;
+		this.type = type;
+	}
+
 	/**
 	 * @return
 	 */

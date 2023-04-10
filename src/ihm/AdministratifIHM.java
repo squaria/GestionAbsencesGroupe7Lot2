@@ -83,6 +83,20 @@ public class AdministratifIHM {
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_2);
 		
+		JButton btnNewButton = new JButton("Afficher les absences des professeurs");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ListeAbsencesEnsIHM();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(btnNewButton);
+		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_3);
