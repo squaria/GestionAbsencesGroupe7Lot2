@@ -58,7 +58,7 @@ public class ListeAbsencesEnsIHM {
 	private void initialize() throws Exception {
 		frmAbsencesClassiquesEnseignant = new JFrame();
 		frmAbsencesClassiquesEnseignant.setVisible(true);
-		frmAbsencesClassiquesEnseignant.setTitle("Absences classiques et physiques");
+		frmAbsencesClassiquesEnseignant.setTitle("Absences classiques et physiques enseignant");
 		frmAbsencesClassiquesEnseignant.setBounds(100, 100, 1405, 899);
 		frmAbsencesClassiquesEnseignant.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAbsencesClassiquesEnseignant.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEnseignant.getContentPane(), BoxLayout.Y_AXIS));
@@ -98,7 +98,7 @@ public class ListeAbsencesEnsIHM {
 		
 		
 		for(int i = 0; i<listeAbsencesP.size(); i++) {
-			((DefaultTableModel) table.getModel()).addRow(new Object[]{Boolean.FALSE, listeAbsencesP.get(i).getDate(), listeAbsencesP.get(i).getNbHeures(),
+			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeAbsencesP.get(i).getDate(), listeAbsencesP.get(i).getNbHeures(),
 									listeAbsencesP.get(i).getNomCours(),listeAbsencesP.get(i).getType()});
 		}
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
