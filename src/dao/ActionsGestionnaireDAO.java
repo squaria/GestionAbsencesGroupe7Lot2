@@ -411,7 +411,7 @@ public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
 			
 			ps.setInt(1, planningGroupe.getCoursId());
 			ps.setInt(2, planningGroupe.getGrpId());
-			ps.setDate(3, java.sql.Date.valueOf(planningGroupe.getDate()));
+			ps.setString(3, planningGroupe.getDate());
 			ps.setFloat(4, planningGroupe.getHeureDebut());
 			ps.setFloat(5, planningGroupe.getHeureFin());
 			

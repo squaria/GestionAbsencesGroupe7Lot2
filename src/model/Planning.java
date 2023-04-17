@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class Planning {
 	
 	protected int grpId;
@@ -32,6 +35,9 @@ public class Planning {
 		this.date = date;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
+	}
+
+	public Planning() {
 	}
 
 	public int getGrpId() {
@@ -88,6 +94,54 @@ public class Planning {
 
 	public void setHeureFin(float heureFin) {
 		this.heureFin = heureFin;
+	}
+	
+	public boolean isIntGroupe(String groupe) {
+		boolean isInt = true;
+		try {
+			Integer.parseInt(groupe);
+		}
+		catch (NumberFormatException e) {
+			isInt = false;
+		}
+		return isInt;
+	}
+	
+	public boolean isIntDay(String day, String month, String year) {
+		boolean isInt = true;
+		Calendar monthStart = new GregorianCalendar(intYear(year), intMonth(month) - 1, 1);
+		try {
+			if(Integer.parseInt(day) < 1 || Integer.parseInt(day) > monthStart.getActualMaximum(Calendar.DAY_OF_MONTH))
+				isInt = false;
+		}
+		catch (NumberFormatException e) {
+			isInt = false;
+		}
+		return isInt;
+	}
+	
+	public int intMonth(String text) {
+		int month = 0;
+		try {
+			if(Integer.parseInt(text) > 1 && Integer.parseInt(text) < 12)
+				month = Integer.parseInt(text);
+		}
+		catch (NumberFormatException e) {
+			month = 0;
+		}
+		return month;
+	}
+	
+	public int intYear(String text) {
+		int year = 0;
+		try {
+			if(Integer.parseInt(text) > 1 && Integer.parseInt(text) < 9999)
+				year = Integer.parseInt(text);
+		}
+		catch (NumberFormatException e) {
+			year = 0;
+		}
+		return year;
 	}
 	
 	/*

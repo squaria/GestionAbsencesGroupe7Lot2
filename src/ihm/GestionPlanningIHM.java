@@ -9,7 +9,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,27 +19,26 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsGestionnaireDAO;
-import model.Administratif;
 import model.Cours;
 import model.Groupe;
+import model.Planning;
 import model.PlanningGroupe;
-import model.Profil;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import java.awt.Component;
-import java.awt.GridLayout;
 
 public class GestionPlanningIHM {
 
 	private JFrame frmCoursNonTraites;
 	private JTable table;
+	private Planning planning = new Planning();
+	private Cours cours = new Cours();
 	private JTextField textField;
-	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JLabel lblNewLabel_3_2;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -112,6 +110,7 @@ public class GestionPlanningIHM {
 				"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
 			}
 		) {
+			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
 			};
@@ -188,15 +187,35 @@ public class GestionPlanningIHM {
 		textField.setColumns(10);
 		panel_4.add(textField);
 		
-		JLabel lblNewLabel_1 = new JLabel("Date (YYYY-MM-DD) : ");
+		JLabel lblNewLabel_1 = new JLabel("Date (JJ/MM/AAAA) : ");
 		lblNewLabel_1.setForeground(Color.BLACK);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_4.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField_1.setColumns(10);
-		panel_4.add(textField_1);
+		textField_5 = new JTextField();
+		textField_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_5.setColumns(5);
+		panel_4.add(textField_5);
+		
+		JLabel lblNewLabel_5 = new JLabel("/");
+		lblNewLabel_5.setForeground(Color.BLACK);
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(lblNewLabel_5);
+		
+		textField_6 = new JTextField();
+		textField_6.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_6.setColumns(5);
+		panel_4.add(textField_6);
+		
+		JLabel lblNewLabel_6 = new JLabel("/");
+		lblNewLabel_6.setForeground(Color.BLACK);
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(lblNewLabel_6);
+		
+		textField_7 = new JTextField();
+		textField_7.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_7.setColumns(5);
+		panel_4.add(textField_7);
 		
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
@@ -233,10 +252,19 @@ public class GestionPlanningIHM {
 					if(CaseCochee)
 						ligneNum = i;
 				}
-				if(ligneNum != -1)
-					ajouterCoursPlanning(new PlanningGroupe(Integer.valueOf(textField.getText()),
-							ligneNum, textField_1.getText(), Float.valueOf(textField_2.getText()),
-							Float.valueOf(textField_3.getText())));
+				if(ligneNum != -1) {
+					if(textField_5.getText().length() > 0 && textField_2.getText().length() > 0 &&
+						textField_3.getText().length() > 0 && textField_6.getText().length() > 0 && 
+						textField_7.getText().length() > 0 && textField.getText().length() > 0 &&
+						cours.isFloatHeure(textField_2.getText()) && cours.isFloatHeure(textField_3.getText()) && 
+						planning.isIntDay(textField_5.getText(), textField_5.getText(), textField_6.getText()) &&
+						planning.intMonth(textField_6.getText()) != 0 && planning.intYear(textField_7.getText()) != 0) {
+							String date = textField_5.getText() + "/" + textField_6.getText() + "/" + textField_7.getText();
+							ajouterCoursPlanning(new PlanningGroupe(Integer.valueOf(textField.getText()),
+									ligneNum, date, Float.valueOf(textField_2.getText()),
+									Float.valueOf(textField_3.getText())));
+					}
+				}
 				else {
 					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
@@ -265,5 +293,4 @@ public class GestionPlanningIHM {
 			e.printStackTrace();
 		}
 	}
-
 }

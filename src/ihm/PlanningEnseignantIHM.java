@@ -9,6 +9,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,6 +23,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import dao.PlanningDAO;
+import model.Planning;
 import model.PlanningEnseignant;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -29,11 +33,16 @@ public class PlanningEnseignantIHM {
 	private JFrame frmCoursNonTraites;
 	private JTable table;
 	private JTextField textField_1;
-	private JTextField textField_2;
 	private ArrayList<PlanningEnseignant> planningProf;
-	private static int profId;
+	private Planning planning = new Planning();
+	private static int profId = 1;
 	private float nbHeures;
 	private int groupe;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -93,8 +102,28 @@ public class PlanningEnseignantIHM {
 		
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField_1.setColumns(10);
+		textField_1.setColumns(5);
 		panel_4.add(textField_1);
+		
+		JLabel lblNewLabel_3 = new JLabel("/");
+		lblNewLabel_3.setForeground(Color.BLACK);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(lblNewLabel_3);
+		
+		textField_3 = new JTextField();
+		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_3.setColumns(5);
+		panel_4.add(textField_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("/");
+		lblNewLabel_4.setForeground(Color.BLACK);
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(lblNewLabel_4);
+		
+		textField_4 = new JTextField();
+		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_4.setColumns(5);
+		panel_4.add(textField_4);
 		
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
@@ -104,18 +133,46 @@ public class PlanningEnseignantIHM {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_3.add(lblNewLabel_2);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField_2.setColumns(10);
-		panel_3.add(textField_2);
+		textField_5 = new JTextField();
+		textField_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_5.setColumns(5);
+		panel_3.add(textField_5);
+		
+		JLabel lblNewLabel_5 = new JLabel("/");
+		lblNewLabel_5.setForeground(Color.BLACK);
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_3.add(lblNewLabel_5);
+		
+		textField_6 = new JTextField();
+		textField_6.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_6.setColumns(5);
+		panel_3.add(textField_6);
+		
+		JLabel lblNewLabel_6 = new JLabel("/");
+		lblNewLabel_6.setForeground(Color.BLACK);
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_3.add(lblNewLabel_6);
+		
+		textField_7 = new JTextField();
+		textField_7.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField_7.setColumns(5);
+		panel_3.add(textField_7);
 		
 		JButton btnNewButton_1 = new JButton("Afficher planning");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (textField_1.getText().length() > 0 && textField_2.getText().length() > 0) {
-					afficherPlanning(textField_1.getText(), textField_2.getText());
+				if (textField_1.getText().length() > 0 && textField_3.getText().length() > 0 &&
+						textField_4.getText().length() > 0 && textField_5.getText().length() > 0 &&
+						textField_6.getText().length() > 0 && textField_7.getText().length() > 0 &&
+						planning.isIntDay(textField_1.getText(), textField_3.getText(), textField_4.getText()) && 
+						planning.intMonth(textField_3.getText()) != 0 && planning.intYear(textField_4.getText()) != 0 && 
+						planning.isIntDay(textField_5.getText(), textField_5.getText(), textField_6.getText()) &&
+						planning.intMonth(textField_6.getText()) != 0 && planning.intYear(textField_7.getText()) != 0 ) {
+					String dateDebut = textField_1.getText() + "/" + textField_3.getText() + "/" + textField_4.getText();
+					String dateFin = textField_5.getText() + "/" + textField_6.getText() + "/" + textField_7.getText();
+					afficherPlanning(dateDebut, dateFin);
 				} else {
-					JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes.", "Dialog",
+					JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes ou ne sont pas des entiers.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -200,9 +257,8 @@ public class PlanningEnseignantIHM {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
 						ligneNum = i;
-						nbHeures = Float.valueOf((String) table.getValueAt(i, 5))  - Float.valueOf((String) table.getValueAt(i, 4));
-						System.out.println(nbHeures);
-						groupe = Integer.valueOf((String) table.getValueAt(i, 2));
+						nbHeures = (float) table.getValueAt(i, 5) - (float) table.getValueAt(i, 4);
+						groupe =  (int) table.getValueAt(i, 2);
 					}
 				}
 				if(ligneNum != -1)
@@ -228,23 +284,13 @@ public class PlanningEnseignantIHM {
 			planningProf = planning.planningProf(profId, dateDebut, dateFin);
 			if(planningProf != null) {
 				for(int i = 0; i<planningProf.size(); i++) {
-					double heureDebutDecimal = planningProf.get(i).getHeureDebut();
-					double heureFinDecimal = planningProf.get(i).getHeureFin();
-					int heureDebutHeures = (int) heureDebutDecimal;
-					int heureDebutMinutes = (int) (heureDebutDecimal * 60) % 60;
-					String heureDebut = String.format("%sH%s", heureDebutHeures, heureDebutMinutes);
-					int heureFinHeures = (int) heureFinDecimal;
-					int heureFinMinutes = (int) (heureFinDecimal * 60) % 60;
-					String finDebut = String.format("%sH%s", heureFinHeures, heureFinMinutes);
-					
 					((DefaultTableModel) table.getModel()).addRow(
 							new Object[]{Boolean.FALSE, planningProf.get(i).getCoursNom(), planningProf.get(i).getGrpId(),
-									planningProf.get(i).getDate(), heureDebut, finDebut});
+									planningProf.get(i).getDate(), planningProf.get(i).getHeureDebut(), planningProf.get(i).getHeureFin()});
 				}
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
-
 }

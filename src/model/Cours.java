@@ -73,6 +73,10 @@ public class Cours {
 		this.nbHeuresExamen = nbHeuresExamen;
 	}
 
+	public Cours() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * @return
 	 */
@@ -169,6 +173,17 @@ public class Cours {
 	 */
 	public void setEnseignantNom(String enseignantNom) {
 		this.enseignantNom = enseignantNom;
+	}
+	
+	public boolean isFloatHeure(String heure) {
+		boolean isFloat = true;
+		try {
+			Float.parseFloat(heure);
+		}
+		catch (NumberFormatException e) {
+			isFloat = false;
+		}
+		return isFloat;
 	}
 	
 	/*

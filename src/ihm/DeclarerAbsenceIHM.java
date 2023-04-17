@@ -20,21 +20,22 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsProfesseurDAO;
 import model.Absence;
 import model.Etudiant;
+import model.Note;
 
 public class DeclarerAbsenceIHM {
 
 	private JFrame frame;
-	private JTextField textField_1;
 	private static int coursId;
 	private ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
 	private JTable table;
+	private JLabel lblNewLabel_3_2;
+	private JLabel lblNewLabel_3_3;
 	private static float nbHeures;
 	private static int groupe;
 
@@ -70,7 +71,7 @@ public class DeclarerAbsenceIHM {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Gestion des Cours");
-		frame.setBounds(100, 100, 1127, 731);
+		frame.setBounds(100, 100, 1427, 731);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setVisible(true);
@@ -79,7 +80,6 @@ public class DeclarerAbsenceIHM {
 		try {
 			listeEtudiant = actionProf.listeEtudiant(groupe);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -146,7 +146,9 @@ public class DeclarerAbsenceIHM {
 		
 		for(int i = 0; i<listeEtudiant.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(
-						new Object[]{Boolean.FALSE, listeEtudiant.get(i).getNom()});
+						new Object[]{Boolean.FALSE, listeEtudiant.get(i).getNom(), 
+								listeEtudiant.get(i).getPrenom(), listeEtudiant.get(i).getEmail(),
+								listeEtudiant.get(i).getFiliere(), listeEtudiant.get(i).getGroupe()});
 		}
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
@@ -172,47 +174,79 @@ public class DeclarerAbsenceIHM {
 		JPanel panel_15 = new JPanel();
 		panel_5.add(panel_15);
 		
-		JLabel lblNewLabel_2_1_1 = new JLabel("Type d'absence (Classique/Physique) :");
-		lblNewLabel_2_1_1.setForeground(new Color(255, 128, 0));
-		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		panel_15.add(lblNewLabel_2_1_1);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField_1.setColumns(10);
-		panel_15.add(textField_1);
+		JButton btnDeclarer = new JButton("Declarer Absence Classique");
+		btnDeclarer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				declarer("Classique");
+			}
+		});
+		btnDeclarer.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_5.add(btnDeclarer);
 		
 		JPanel panel_1 = new JPanel();
 		panel_5.add(panel_1);
 		
-		JButton btnSupprimer = new JButton("Declarer");
+		JButton btnSupprimer = new JButton("Declarer Absence Physique");
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (textField_1.getText().length() > 0) {
-					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-					LocalDate localDate = LocalDate.now();
-					System.out.println(dtf.format(localDate));
-					creerAbsence(new Absence(dtf.format(localDate), 
-							nbHeures, coursId, textField_1.getText(), null, null));
-				} else {
-					JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes.", "Dialog",
-							JOptionPane.ERROR_MESSAGE);
-				}
+				declarer("Physique");
 			}
 		});
 		btnSupprimer.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnSupprimer);
 		
-		JLabel lblNewLabel_3_2 = new JLabel("");
+		lblNewLabel_3_2 = new JLabel("");
 		lblNewLabel_3_2.setForeground(Color.RED);
 		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel_1.add(lblNewLabel_3_2);
+		
+		lblNewLabel_3_3 = new JLabel("");
+		lblNewLabel_3_3.setForeground(Color.RED);
+		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_1.add(lblNewLabel_3_3);
 		
 	}
 
 	public void creerAbsence(Absence absence) {
 		
-		
+		try {
+			int effectuee = actionProf.creerAbsence(absence);
+			if (effectuee == 1)
+				lblNewLabel_3_2.setText("Absence cree !");
+			else
+				lblNewLabel_3_2.setText("Erreur cet etudiant n'existe pas !");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public void noteZero(Note note) {
+			try {
+				int effectuee = actionProf.noteZero(note);
+				if (effectuee == 1)
+					lblNewLabel_3_3.setText("Note mise a zero !");
+				else
+					lblNewLabel_3_3.setText("Erreur !");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 	}
 
+	public void declarer(String type) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate localDate = LocalDate.now();
+		int ligneNum = -1;
+		for(int i = 0; i < table.getRowCount(); i++) {
+			Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
+			if(CaseCochee) {
+				ligneNum = i;
+				creerAbsence(new Absence(dtf.format(localDate), 
+						nbHeures, coursId, type, null, null));
+				noteZero(new Note(ligneNum, coursId, 0, dtf.format(localDate)));
+			}
+		}
+		if(ligneNum == -1)
+			JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'etudiant.", "Dialog",
+					JOptionPane.ERROR_MESSAGE);
+	}
 }

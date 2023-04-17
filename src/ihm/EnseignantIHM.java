@@ -70,7 +70,7 @@ public class EnseignantIHM {
 		panel_1.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_1);
 		
-		JButton btnNewButton_2 = new JButton("Planning");
+		JButton btnNewButton_2 = new JButton("Planning et declarer absence etudiant");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new PlanningEnseignantIHM(profId);
