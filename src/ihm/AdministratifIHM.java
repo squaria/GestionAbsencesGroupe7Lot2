@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 public class AdministratifIHM {
 
 	private JFrame frame;
+	private static int id;
 	/**
 	 * Launch the application.
 	 */
@@ -23,7 +24,7 @@ public class AdministratifIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdministratifIHM window = new AdministratifIHM();
+					AdministratifIHM window = new AdministratifIHM(id);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +36,8 @@ public class AdministratifIHM {
 	/**
 	 * Create the application.
 	 */
-	public AdministratifIHM() {
+	public AdministratifIHM(int id) {
+		AdministratifIHM.id = id;
 		initialize();
 	}
 
@@ -73,7 +75,7 @@ public class AdministratifIHM {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new TraiterAbsencesIHM();
+					new TraiterAbsencesIHM(id);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -118,7 +120,7 @@ public class AdministratifIHM {
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new PlanningGroupeIHM();
+					new PlanningGroupeIHM(id, 2);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

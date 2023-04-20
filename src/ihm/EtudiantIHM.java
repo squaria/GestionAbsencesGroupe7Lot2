@@ -79,7 +79,7 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new PlanningGroupeIHM();
+					new PlanningGroupeIHM(id, 0);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

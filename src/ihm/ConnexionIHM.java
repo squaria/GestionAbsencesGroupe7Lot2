@@ -156,7 +156,7 @@ public class ConnexionIHM extends JFrame {
 		case 2:
 			lblNewLabel_3.setText("Connecté en tant qu'administratif !");
 			frmConnexion.dispose();
-			new AdministratifIHM();
+			new AdministratifIHM(res[1]);
 			break;
 		case 3:
 			lblNewLabel_3.setText("Connecté en tant que gestionnaire !");

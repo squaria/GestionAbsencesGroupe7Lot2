@@ -2,6 +2,7 @@ package ihm;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,6 +29,7 @@ public class TraiterAbsencesIHM {
 	private JFrame frame;
 	private JTable table;
 	private JLabel lblNewLabel_3_2;
+	private static int adminId;
 
 	/**
 	 * Launch the application.
@@ -36,7 +38,7 @@ public class TraiterAbsencesIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TraiterAbsencesIHM window = new TraiterAbsencesIHM();
+					TraiterAbsencesIHM window = new TraiterAbsencesIHM(adminId);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +50,8 @@ public class TraiterAbsencesIHM {
 	/**
 	 * Create the application.
 	 */
-	public TraiterAbsencesIHM() {
+	public TraiterAbsencesIHM(int adminId) {
+		TraiterAbsencesIHM.adminId = adminId;
 		initialize();
 	}
 
@@ -71,6 +74,21 @@ public class TraiterAbsencesIHM {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		JPanel panel_7 = new JPanel();
+		frame.getContentPane().add(panel_7);
+		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new AdministratifIHM(adminId);
+				frame.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_7.add(btnNewButtonRetour);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);

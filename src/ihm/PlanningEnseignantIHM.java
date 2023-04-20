@@ -2,7 +2,9 @@ package ihm;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -85,6 +87,21 @@ public class PlanningEnseignantIHM {
 		JPanel panel_2 = new JPanel();
 		frmCoursNonTraites.getContentPane().add(panel_2);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+		
+		JPanel panel_7 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panel_2.add(panel_7);
+		
+		JButton btnNewButton = new JButton("Retour");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new EnseignantIHM(profId);
+				frmCoursNonTraites.dispose();
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_7.add(btnNewButton);
 		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);

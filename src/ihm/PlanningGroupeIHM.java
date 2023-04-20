@@ -23,6 +23,8 @@ import model.Planning;
 import model.PlanningGroupe;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
 
 public class PlanningGroupeIHM {
 
@@ -32,6 +34,8 @@ public class PlanningGroupeIHM {
 	private JTextField textField_1;
 	private ArrayList<PlanningGroupe> planningGroupe;
 	private Planning planning = new Planning();
+	private static int id;
+	private static int typeCompte;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
@@ -45,7 +49,7 @@ public class PlanningGroupeIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PlanningGroupeIHM window = new PlanningGroupeIHM();
+					PlanningGroupeIHM window = new PlanningGroupeIHM(id, typeCompte);
 					window.frmCoursNonTraites.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,8 +63,11 @@ public class PlanningGroupeIHM {
 	 * @param id 
 	 * @throws Exception 
 	 */
-	public PlanningGroupeIHM() {
+	public PlanningGroupeIHM(int id, int typeCompte) {
+		PlanningGroupeIHM.id = id;
+		PlanningGroupeIHM.typeCompte = typeCompte;
 		initialize();
+		
 	}
 
 	/**
@@ -78,9 +85,28 @@ public class PlanningGroupeIHM {
 		JPanel panel_2 = new JPanel();
 		frmCoursNonTraites.getContentPane().add(panel_2);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panel_2.add(panel_1);
+		
+		JButton btnNewButton = new JButton("Retour");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(typeCompte == 0)
+					new EtudiantIHM(id);
+				else if(typeCompte == 2)
+					new AdministratifIHM(id);
+				frmCoursNonTraites.dispose();
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_1.add(btnNewButton);
 		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
+		
 		
 		JLabel lblEntrezLeGroupe = new JLabel("Selection du planning :  ");
 		lblEntrezLeGroupe.setForeground(Color.BLUE);
@@ -189,6 +215,7 @@ public class PlanningGroupeIHM {
 		lblNewLabel_3_2.setForeground(Color.RED);
 		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel_3.add(lblNewLabel_3_2);
+		
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);

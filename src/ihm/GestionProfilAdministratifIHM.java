@@ -92,6 +92,22 @@ public class GestionProfilAdministratifIHM {
 		panel_6.setBackground(new Color(0, 128, 255));
 		panel.add(panel_6);
 		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBackground(new Color(0, 128, 255));
+		panel_6.add(panel_10);
+		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GestionnaireIHM();
+				frmMenuPrincipalAdmin.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_10.add(btnNewButtonRetour);
+		
 		JLabel lblNewLabel = new JLabel("Gestion Profil Administratif");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
