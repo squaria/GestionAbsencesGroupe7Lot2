@@ -19,14 +19,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsProfesseurDAO;
-import model.Absence;
+import model.Cours;
 
 import java.awt.Color;
 
-public class ListeAbsencesEnsIHM {
+public class ListeCoursEnsIHM {
 	private JFrame frmAbsencesClassiquesEnseignant;
 	private JTable table;
-	private static int id;
+	private static int id = 1;
 
 	/**
 	 * Launch the application.
@@ -35,7 +35,7 @@ public class ListeAbsencesEnsIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListeAbsencesEnsIHM window = new ListeAbsencesEnsIHM(id);
+					ListeCoursEnsIHM window = new ListeCoursEnsIHM(id);
 					window.frmAbsencesClassiquesEnseignant.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,8 +48,8 @@ public class ListeAbsencesEnsIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public ListeAbsencesEnsIHM(int id) throws Exception {
-		ListeAbsencesEnsIHM.id = id;
+	public ListeCoursEnsIHM(int id) throws Exception {
+		ListeCoursEnsIHM.id = id;
 		initialize();
 	}
 
@@ -60,13 +60,13 @@ public class ListeAbsencesEnsIHM {
 	private void initialize() throws Exception {
 		frmAbsencesClassiquesEnseignant = new JFrame();
 		frmAbsencesClassiquesEnseignant.setVisible(true);
-		frmAbsencesClassiquesEnseignant.setTitle("Absences classiques et physiques enseignant");
+		frmAbsencesClassiquesEnseignant.setTitle("Liste cours professeur");
 		frmAbsencesClassiquesEnseignant.setBounds(100, 100, 1405, 700);
 		frmAbsencesClassiquesEnseignant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAbsencesClassiquesEnseignant.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEnseignant.getContentPane(), BoxLayout.Y_AXIS));
 		
 		ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
-		ArrayList<Absence> listeAbsencesP = actionProf.listeAbsencesProf();
+		ArrayList<Cours> listeCours = actionProf.listeCoursProf(id);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -84,7 +84,7 @@ public class ListeAbsencesEnsIHM {
 		panel_3.add(btnNewButtonRetour);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.BLUE);
+		panel.setBackground(new Color(255, 255, 255));
 		frmAbsencesClassiquesEnseignant.getContentPane().add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{182, 10, 0};
@@ -103,20 +103,29 @@ public class ListeAbsencesEnsIHM {
 		
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"DATE", "NBHEURES", "NOM COURS", "TYPE"},
+				{"NOM COURS", "NBHEURES AMPHI", "NBHEURES TD", "NBHEURES TP", "NBHEURES EXAMEN"},
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column"
+				"New column", "New column", "New column", "New column", "New column"
 			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(40);
-		table.getColumnModel().getColumn(1).setPreferredWidth(60);
-		table.getColumnModel().getColumn(2).setPreferredWidth(50);
+			) {
+			
+				private static final long serialVersionUID = 1L;
+				
+				boolean[] isCellEditable = new boolean[]{
+	                    false, false, false, false, false
+	            };
+	
+	            public boolean isCellEditable(int rowIndex, int columnIndex) {
+	                return isCellEditable[columnIndex];
+	            }
+		});
 		
 		
-		for(int i = 0; i<listeAbsencesP.size(); i++) {
-			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeAbsencesP.get(i).getDate(), listeAbsencesP.get(i).getNbHeures(),
-									listeAbsencesP.get(i).getNomCours(),listeAbsencesP.get(i).getType()});
+		for(int i = 0; i<listeCours.size(); i++) {
+			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeCours.get(i).getNom(),
+					listeCours.get(i).getNbHeuresAmphi(), listeCours.get(i).getNbHeuresTD(),
+					listeCours.get(i).getNbHeuresTP(), listeCours.get(i).getNbHeuresExamen()});
 		}
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
@@ -130,9 +139,6 @@ public class ListeAbsencesEnsIHM {
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 0;
 		panel.add(table, gbc_table);
-		
-		JPanel panel_1 = new JPanel();
-		frmAbsencesClassiquesEnseignant.getContentPane().add(panel_1);
 		
 		
 		

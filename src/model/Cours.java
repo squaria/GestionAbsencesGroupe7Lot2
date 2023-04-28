@@ -66,7 +66,7 @@ public class Cours {
 	public Cours(String nom, String enseignantNom,
 			float nbHeuresAmphi, float nbHeuresTD, float nbHeuresTP, float nbHeuresExamen) {
 		this.nom = nom;
-		this.setEnseignantNom(enseignantNom);
+		this.enseignantNom = enseignantNom;
 		this.nbHeuresAmphi = nbHeuresAmphi;
 		this.nbHeuresTD = nbHeuresTD;
 		this.nbHeuresTP = nbHeuresTP;

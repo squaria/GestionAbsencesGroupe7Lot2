@@ -62,7 +62,7 @@ public class DeposerJustificatifIHM {
 		frame.setVisible(true);
 		frame.setTitle("JUSTIFICATION");
 		frame.setBounds(100, 100, 1156, 656);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel = new JPanel();

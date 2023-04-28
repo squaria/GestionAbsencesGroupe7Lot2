@@ -2,6 +2,7 @@ package ihm;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -39,6 +40,8 @@ public class GestionPlanningIHM {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
+	private static int id;
+	private static int typeCompte;
 
 	/**
 	 * Launch the application.
@@ -47,7 +50,7 @@ public class GestionPlanningIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestionPlanningIHM window = new GestionPlanningIHM();
+					GestionPlanningIHM window = new GestionPlanningIHM(id, typeCompte);
 					window.frmCoursNonTraites.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +63,9 @@ public class GestionPlanningIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public GestionPlanningIHM() {
+	public GestionPlanningIHM(int id, int typeCompte) {
+		GestionPlanningIHM.id = id;
+		GestionPlanningIHM.typeCompte = typeCompte;
 		initialize();
 	}
 
@@ -73,7 +78,7 @@ public class GestionPlanningIHM {
 		frmCoursNonTraites.setVisible(true);
 		frmCoursNonTraites.setTitle("Cours non traites");
 		frmCoursNonTraites.setBounds(100, 100, 1409, 751);
-		frmCoursNonTraites.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmCoursNonTraites.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
 		
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
@@ -83,6 +88,24 @@ public class GestionPlanningIHM {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		frmCoursNonTraites.getContentPane().add(panel_3);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(typeCompte == 1)
+					new GestionnaireIHM(id);
+				else if(typeCompte == 2)
+					new AdministratifIHM(id);
+				frmCoursNonTraites.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_3.add(btnNewButtonRetour);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -217,28 +240,28 @@ public class GestionPlanningIHM {
 		textField_7.setColumns(5);
 		panel_4.add(textField_7);
 		
-		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3);
+		JPanel panel_31 = new JPanel();
+		panel_2.add(panel_31);
 		
 		JLabel lblNewLabel_2 = new JLabel("Heure debut du cours : ");
 		lblNewLabel_2.setForeground(Color.BLACK);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_3.add(lblNewLabel_2);
+		panel_31.add(lblNewLabel_2);
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textField_2.setColumns(10);
-		panel_3.add(textField_2);
+		panel_31.add(textField_2);
 		
 		JLabel lblNewLabel__3 = new JLabel("Heure fin du cours : ");
 		lblNewLabel__3.setForeground(Color.BLACK);
 		lblNewLabel__3.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_3.add(lblNewLabel__3);
+		panel_31.add(lblNewLabel__3);
 		
 		textField_3 = new JTextField();
 		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textField_3.setColumns(10);
-		panel_3.add(textField_3);
+		panel_31.add(textField_3);
 		
 		JPanel panel_1 = new JPanel();
 		frmCoursNonTraites.getContentPane().add(panel_1);

@@ -79,7 +79,7 @@ public class PlanningGroupeIHM {
 		frmCoursNonTraites.setVisible(true);
 		frmCoursNonTraites.setTitle("Planning de groupe");
 		frmCoursNonTraites.setBounds(100, 100, 1409, 751);
-		frmCoursNonTraites.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmCoursNonTraites.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
 		
 		JPanel panel_2 = new JPanel();

@@ -21,6 +21,7 @@ public class EtudiantIHM extends JFrame {
 	private JFrame frmMenuPrincipalEtu;
 	private static int id;
 	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +54,7 @@ public class EtudiantIHM extends JFrame {
 		frmMenuPrincipalEtu.setVisible(true);
 		frmMenuPrincipalEtu.setTitle("Menu Principal - Etudiant");
 		frmMenuPrincipalEtu.setBounds(100, 100, 1045, 741);
-		frmMenuPrincipalEtu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmMenuPrincipalEtu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuPrincipalEtu.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel = new JPanel();
@@ -80,6 +81,7 @@ public class EtudiantIHM extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new PlanningGroupeIHM(id, 0);
+					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -98,6 +100,7 @@ public class EtudiantIHM extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new ListeAbsencesEtuIHM(id);
+					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -110,7 +113,17 @@ public class EtudiantIHM extends JFrame {
 		panel_4.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_4);
 		
-		JButton btnGroupe = new JButton("Groupe");
+		JButton btnGroupe = new JButton("Notes et notifications de rattrapage");
+		btnGroupe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new NotesEtRatrapagesEtuIHM(id);
+					frmMenuPrincipalEtu.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnGroupe.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_4.add(btnGroupe);
 	}

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.Absence;
+import model.Cours;
 import model.Etudiant;
 import model.Note;
 import model.Profil;
@@ -51,6 +52,28 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 			}
 			
 			return listeAbsence;
+		}
+	}
+	
+	public ArrayList<Cours> listeCoursProf(int profId) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			ArrayList<Cours> listeCours = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT cours_nom, cours_NbHeuresAmphi, "
+					+ "cours_NbHeuresTD, cours_NbHeuresTP, cours_NbHeuresExamen "
+					+ "FROM Lot2_Cours "
+					+ "WHERE cours_prof_id = ?");
+			ps.setInt(1, profId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				listeCours.add(new Cours(rs.getString("cours_nom"), profId, rs.getFloat("cours_NbHeuresAmphi"),
+						rs.getFloat("cours_NbHeuresTD"), rs.getFloat("cours_NbHeuresTP"),
+						rs.getFloat("cours_NbHeuresExamen")));
+			}
+			
+			return listeCours;
 		}
 	}
 	

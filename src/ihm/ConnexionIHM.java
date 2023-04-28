@@ -58,7 +58,7 @@ public class ConnexionIHM extends JFrame {
 		frmConnexion = new JFrame();
 		frmConnexion.setTitle("Connexion");
 		frmConnexion.setBounds(100, 100, 1045, 741);
-		frmConnexion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmConnexion.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel = new JPanel();
@@ -161,7 +161,7 @@ public class ConnexionIHM extends JFrame {
 		case 3:
 			lblNewLabel_3.setText("Connecté en tant que gestionnaire !");
 			frmConnexion.dispose();
-			new GestionnaireIHM();
+			new GestionnaireIHM(res[1]);
 			break;
 		}
 	}

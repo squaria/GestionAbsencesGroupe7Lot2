@@ -107,6 +107,26 @@ public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
 		return listeGroupe;
 		}
 	}
+
+public ArrayList<Professeur> getListeProfesseur() throws Exception {
+	
+	try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+		ArrayList<Professeur> listeProf = new ArrayList<>();
+		PreparedStatement ps = con.prepareStatement("SELECT prof_id, prof_nom, prof_prenom, prof_email, prof_numTelephone "
+				+ "FROM Lot2_Professeur "
+				+ "ORDER BY prof_id ASC");
+
+		
+		ResultSet rs = ps.executeQuery();
+
+		while(rs.next()) {
+			listeProf.add(new Professeur(rs.getString("prof_nom"), rs.getString("prof_prenom"), 
+					rs.getString("prof_email"), rs.getString("prof_numTelephone")));
+		}
+	return listeProf;
+	}
+}
+
 	
 	public Etudiant getEtudiant(Profil profil) throws Exception {
 		
@@ -297,6 +317,8 @@ public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
 			case 4:
 				ps = con.prepareStatement("SELECT abs_id FROM Lot2_Absence");
 				break;
+			case 5:
+				ps = con.prepareStatement("SELECT grp_id FROM Lot2_Groupe");
 			}
 			
 			ResultSet rs = ps.executeQuery();
@@ -402,6 +424,43 @@ public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
 			return effectuee;
 			}
 		}
+	
+	public int creerGroupe(Groupe groupe) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			PreparedStatement ps = null;
+
+			int effectuee = 0;
+			
+			ps = con.prepareStatement("INSERT INTO Lot2_Groupe "
+					+ "VALUES (?,?,?)");
+			
+			ps.setInt(1, groupe.getGrpNum());
+			ps.setInt(2, groupe.getGrpNum());
+			ps.setInt(3, groupe.getCapaciteMax());
+			
+			effectuee = ps.executeUpdate();
+			
+			return effectuee;
+			}
+		}
+	
+	public boolean isGrpDejaCree(int grp) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			boolean grpExiste = false;
+			
+			PreparedStatement ps = con.prepareStatement("SELECT grp_numero FROM Lot2_Groupe");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				if(grp == rs.getInt("grp_numero"))
+					grpExiste = true;
+			}
+			
+			return grpExiste;
+		}
+		
+	} 
 	
 	public int ajouterCoursPlanning(PlanningGroupe planningGroupe) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {

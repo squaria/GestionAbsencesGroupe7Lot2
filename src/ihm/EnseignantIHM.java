@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 public class EnseignantIHM {
 
 	private JFrame frmMenuPrincipal;
-	private static int profId;
+	private static int profId = 1;
 	
 	/**
 	 * Launch the application.
@@ -59,6 +59,7 @@ public class EnseignantIHM {
 		panel.setLayout(fl_panel);
 		
 		JLabel lblNewLabel = new JLabel("Enseignant");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		panel.add(lblNewLabel);
 		
@@ -74,6 +75,7 @@ public class EnseignantIHM {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new PlanningEnseignantIHM(profId);
+				frmMenuPrincipal.dispose();
 			}
 		});
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
@@ -85,6 +87,16 @@ public class EnseignantIHM {
 		panel_2.add(panel_3);
 		
 		JButton btnNewButton_1 = new JButton("Absences");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ListeAbsencesEnsIHM(profId);
+					frmMenuPrincipal.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_3.add(btnNewButton_1);
 		
@@ -92,9 +104,19 @@ public class EnseignantIHM {
 		panel_4.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_4);
 		
-		JButton btnProfil = new JButton("Profil");
-		btnProfil.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_4.add(btnProfil);
+		JButton btnNewButton_3 = new JButton("Liste de mes cours");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ListeCoursEnsIHM(profId);
+					frmMenuPrincipal.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(btnNewButton_3);
 	}
 
 }

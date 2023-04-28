@@ -49,7 +49,7 @@ public class AdministratifIHM {
 		frame.setVisible(true);
 		frame.setTitle("Menu Principal - Administratif");
 		frame.setBounds(100, 100, 1045, 741);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel = new JPanel();
@@ -76,6 +76,7 @@ public class AdministratifIHM {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new TraiterAbsencesIHM(id);
+					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -89,7 +90,8 @@ public class AdministratifIHM {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeAbsencesEnsIHM();
+					new ListeAbsencesEnsIHM(id);
+					frame.dispose();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -107,7 +109,8 @@ public class AdministratifIHM {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new GestionCoursIHM();
+					new GestionCoursIHM(id, 2);
+					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -121,6 +124,7 @@ public class AdministratifIHM {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new PlanningGroupeIHM(id, 2);
+					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -137,7 +141,8 @@ public class AdministratifIHM {
 		btnGroupe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new GestionPlanningIHM();
+					new GestionPlanningIHM(id, 2);
+					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

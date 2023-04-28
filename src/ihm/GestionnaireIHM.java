@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 public class GestionnaireIHM {
 
 	private JFrame frame;
+	private static int id;
 
 	/**
 	 * Launch the application.
@@ -24,7 +25,7 @@ public class GestionnaireIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestionnaireIHM window = new GestionnaireIHM();
+					GestionnaireIHM window = new GestionnaireIHM(id);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +37,8 @@ public class GestionnaireIHM {
 	/**
 	 * Create the application.
 	 */
-	public GestionnaireIHM() {
+	public GestionnaireIHM(int id) {
+		GestionnaireIHM.id = id;
 		initialize();
 	}
 
@@ -48,7 +50,7 @@ public class GestionnaireIHM {
 		frame.setVisible(true);
 		frame.setTitle("Menu Principal - Etudiant");
 		frame.setBounds(100, 100, 1045, 741);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel = new JPanel();
@@ -73,7 +75,8 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2 = new JButton("Gestion profil etudiant");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionProfilEtudiantIHM();
+				new GestionProfilEtudiantIHM(id);
+				frame.dispose();
 			}
 		});
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
@@ -83,7 +86,8 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2_1 = new JButton("Gestion profil professeur");
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionProfilProfesseurIHM();
+				new GestionProfilProfesseurIHM(id);
+				frame.dispose();
 			}
 		});
 		btnNewButton_2_1.setForeground(Color.BLACK);
@@ -93,7 +97,8 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2_2 = new JButton("Gestion profil administratif");
 		btnNewButton_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionProfilAdministratifIHM();
+				new GestionProfilAdministratifIHM(id);
+				frame.dispose();
 			}
 		});
 		
@@ -108,7 +113,8 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2_2_1 = new JButton("Gestion cours");
 		btnNewButton_2_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionCoursIHM();
+				new GestionCoursIHM(id, 1);
+				frame.dispose();
 			}
 		});
 		btnNewButton_2_2_1.setForeground(Color.BLACK);
@@ -122,7 +128,8 @@ public class GestionnaireIHM {
 		JButton btnGroupe = new JButton("Gestion planning de Groupe");
 		btnGroupe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionPlanningIHM();
+				new GestionPlanningIHM(id, 1);
+				frame.dispose();
 			}
 		});
 		btnGroupe.setFont(new Font("Tahoma", Font.PLAIN, 24));

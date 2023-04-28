@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.Absence;
+import model.Note;
 
 public class ActionsEtudiantDAO extends IdentificationBdd {
 
@@ -35,6 +36,27 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 		}
 	}
 	
+	public ArrayList<Note> listeNotes(int etuId) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			ArrayList<Note> listeNotes = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT cours_nom, note_valeur, note_date, note_rattrapage "
+					+ "FROM Lot2_Note "
+					+ "JOIN Lot2_Cours ON Lot2_Note.cours_id = Lot2_Cours.cours_id "
+					+ "WHERE Lot2_Note.etu_id = ?");
+			ps.setInt(1, etuId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				listeNotes.add(new Note(rs.getString("cours_nom"), rs.getFloat("note_valeur"), 
+						rs.getString("note_date"), rs.getString("note_rattrapage")));
+			}
+			
+			return listeNotes;
+		}
+	}
+	
 	public int deposerJustificatif(int absenceId, String justificatif) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -49,6 +71,29 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 			effectuee = ps.executeUpdate();
 			
 			return effectuee;
+		}
+	}
+	
+	public float quotaNonRespecte(int etuId) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			float calcul = 0;
+			PreparedStatement ps = con.prepareStatement("SELECT abs_nbHeures, abs_valideeAdmin "
+					+ "FROM Lot2_Absence "
+					+ "JOIN Lot2_AbsenceParEtudiant ON Lot2_Absence.abs_id = Lot2_AbsenceParEtudiant.abs_id "
+					+ "WHERE Lot2_AbsenceParEtudiant.etu_id = ?");
+			ps.setInt(1, etuId);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				if(rs.getString("abs_valideeAdmin") == null)
+					calcul += rs.getFloat("abs_nbHeures");
+				else
+					if(rs.getString("abs_valideeAdmin").equals("Invalidee"))
+						calcul += rs.getFloat("abs_nbHeures");
+			}
+			
+			return calcul;
 		}
 	}
 

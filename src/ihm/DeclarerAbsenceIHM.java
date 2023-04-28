@@ -27,6 +27,9 @@ import dao.ActionsProfesseurDAO;
 import model.Absence;
 import model.Etudiant;
 import model.Note;
+import net.miginfocom.swing.MigLayout;
+import java.awt.Component;
+import java.awt.GridLayout;
 
 public class DeclarerAbsenceIHM {
 
@@ -72,8 +75,7 @@ public class DeclarerAbsenceIHM {
 		frame = new JFrame();
 		frame.setTitle("Gestion des Cours");
 		frame.setBounds(100, 100, 1427, 731);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
 		ArrayList<Etudiant> listeEtudiant = null;
@@ -82,6 +84,7 @@ public class DeclarerAbsenceIHM {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_4.getLayout();
@@ -95,9 +98,55 @@ public class DeclarerAbsenceIHM {
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		panel_2.add(lblNewLabel_1_1_1);
 		
+
+		JPanel panel_1 = new JPanel();
+		frame.getContentPane().add(panel_1);
+		
 		JPanel panel_5 = new JPanel();
-		frame.getContentPane().add(panel_5);
-		panel_5.setLayout(new FlowLayout(FlowLayout.LEADING, 60, 5));
+		panel_1.add(panel_5);
+		panel_5.setLayout(new MigLayout("", "[229px][323px][1px][1px][317px]", "[29px][37px][37px]"));
+		
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Declarer une absence");
+		panel_5.add(lblNewLabel_1_1, "cell 0 0,alignx left,aligny top");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		JButton btnDeclarer = new JButton("Declarer Absence Classique");
+		btnDeclarer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				declarer("Classique");
+			}
+		});
+		
+		JButton btnDeclarer2 = new JButton("Declarer Absence Examen");
+		btnDeclarer2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				declarer("Examen");
+			}
+		});
+		btnDeclarer2.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_5.add(btnDeclarer2, "cell 0 1,alignx left,aligny top");
+		btnDeclarer.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_5.add(btnDeclarer, "cell 1 1,alignx left,aligny top");
+		
+		JButton btnSupprimer = new JButton("Declarer Absence Physique");
+		btnSupprimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				declarer("Physique");
+			}
+		});
+		btnSupprimer.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_5.add(btnSupprimer, "cell 4 1,alignx left,aligny top");
+		
+		lblNewLabel_3_3 = new JLabel("");
+		lblNewLabel_3_3.setForeground(Color.RED);
+		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_5.add(lblNewLabel_3_3, "cell 0 2,alignx left,aligny center");
+		
+		lblNewLabel_3_2 = new JLabel("");
+		lblNewLabel_3_2.setForeground(Color.RED);
+		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_5.add(lblNewLabel_3_2, "cell 4 2,alignx left,aligny center");
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -164,46 +213,6 @@ public class DeclarerAbsenceIHM {
 		panel.add(table, gbc_table);
 		
 		
-		JPanel panel_13 = new JPanel();
-		panel_5.add(panel_13);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Declarer une absence");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_13.add(lblNewLabel_1_1);
-		
-		JPanel panel_15 = new JPanel();
-		panel_5.add(panel_15);
-		
-		JButton btnDeclarer = new JButton("Declarer Absence Classique");
-		btnDeclarer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				declarer("Classique");
-			}
-		});
-		btnDeclarer.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_5.add(btnDeclarer);
-		
-		JPanel panel_1 = new JPanel();
-		panel_5.add(panel_1);
-		
-		JButton btnSupprimer = new JButton("Declarer Absence Physique");
-		btnSupprimer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				declarer("Physique");
-			}
-		});
-		btnSupprimer.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_1.add(btnSupprimer);
-		
-		lblNewLabel_3_2 = new JLabel("");
-		lblNewLabel_3_2.setForeground(Color.RED);
-		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		panel_1.add(lblNewLabel_3_2);
-		
-		lblNewLabel_3_3 = new JLabel("");
-		lblNewLabel_3_3.setForeground(Color.RED);
-		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		panel_1.add(lblNewLabel_3_3);
 		
 	}
 
@@ -242,7 +251,8 @@ public class DeclarerAbsenceIHM {
 				ligneNum = i;
 				creerAbsence(new Absence(dtf.format(localDate), 
 						nbHeures, coursId, type, null, null));
-				noteZero(new Note(ligneNum, coursId, 0, dtf.format(localDate)));
+				if(type.equals("Examen"))
+					noteZero(new Note(ligneNum, coursId, 0, dtf.format(localDate), null));
 			}
 		}
 		if(ligneNum == -1)

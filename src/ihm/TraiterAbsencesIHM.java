@@ -29,6 +29,7 @@ public class TraiterAbsencesIHM {
 	private JFrame frame;
 	private JTable table;
 	private JLabel lblNewLabel_3_2;
+	private JLabel lblNewLabel_3_3;
 	private static int adminId;
 
 	/**
@@ -63,7 +64,7 @@ public class TraiterAbsencesIHM {
 		frame.setVisible(true);
 		frame.setTitle("Absences classiques et physiques");
 		frame.setBounds(100, 100, 1405, 765);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
 		ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
@@ -207,6 +208,11 @@ public class TraiterAbsencesIHM {
 		lblNewLabel_3_2.setForeground(Color.RED);
 		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel_1.add(lblNewLabel_3_2);
+		
+		lblNewLabel_3_3 = new JLabel("");
+		lblNewLabel_3_3.setForeground(Color.RED);
+		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_1.add(lblNewLabel_3_3);
 	}
 
 	public void validerAbsence(int ligneNum, boolean isValidee) {
@@ -217,6 +223,14 @@ public class TraiterAbsencesIHM {
 				lblNewLabel_3_2.setText("Absence validee ou non validee !");
 			else
 				lblNewLabel_3_2.setText("Erreur cette absence n'existe pas ou a deja ete traitee !");
+			if(actionAdmin.absenceExamenValidee(ligneNum)) {
+				int effectuee2 = actionAdmin.declancherRatrapages(ligneNum);
+				if(effectuee2 == 1)
+					lblNewLabel_3_3.setText("Note zero supprimee et rattrapage declanche !");
+				else
+					lblNewLabel_3_2.setText("Erreur !");
+				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

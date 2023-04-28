@@ -19,15 +19,17 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsEtudiantDAO;
 import model.Absence;
+import model.Note;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 
-public class ListeAbsencesEtuIHM {
+public class NotesEtRatrapagesEtuIHM {
 
 	private JFrame frmAbsencesClassiquesEt;
 	private JTable table;
@@ -42,7 +44,7 @@ public class ListeAbsencesEtuIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListeAbsencesEtuIHM window = new ListeAbsencesEtuIHM(id);
+					NotesEtRatrapagesEtuIHM window = new NotesEtRatrapagesEtuIHM(id);
 					window.frmAbsencesClassiquesEt.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,8 +57,8 @@ public class ListeAbsencesEtuIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public ListeAbsencesEtuIHM(int id) throws Exception {
-		ListeAbsencesEtuIHM.id = id;
+	public NotesEtRatrapagesEtuIHM(int id) throws Exception {
+		NotesEtRatrapagesEtuIHM.id = id;
 		initialize();
 	}
 
@@ -67,14 +69,15 @@ public class ListeAbsencesEtuIHM {
 	private void initialize() throws Exception {
 		frmAbsencesClassiquesEt = new JFrame();
 		frmAbsencesClassiquesEt.setVisible(true);
-		frmAbsencesClassiquesEt.setTitle("Absences classiques et physiques");
+		frmAbsencesClassiquesEt.setTitle("Notes et rattrapages");
 		frmAbsencesClassiquesEt.setBounds(100, 100, 1400, 700);
 		frmAbsencesClassiquesEt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAbsencesClassiquesEt.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEt.getContentPane(), BoxLayout.Y_AXIS));
 		
 		
-		ArrayList<Absence> listeAbsences = actionEtu.listeAbsences(id);
+		ArrayList<Note> listeNotes = actionEtu.listeNotes(id);
 		
+
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
@@ -110,40 +113,32 @@ public class ListeAbsencesEtuIHM {
 		
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{Boolean.FALSE, "DATE", "NBHEURES", "COURS", "TYPE", "JUSTIFICATIF", "VALIDEE ADMIN"}
+				{"DATE", "COURS", "VALEUR", "RATTRAPAGE DECLANCHE"}
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column", "New column"
+				"New column", "New column", "New column", "New column"
 			}
 		) {
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
-				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
+				Object.class, Object.class, Object.class, Object.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 			
 			boolean[] isCellEditable = new boolean[]{
-                    true, false, false, false, false, false, false
+                    false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return isCellEditable[columnIndex];
             }
 		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(15);
-		table.getColumnModel().getColumn(0).setMinWidth(5);
-		table.getColumnModel().getColumn(1).setPreferredWidth(40);
-		table.getColumnModel().getColumn(2).setPreferredWidth(60);
-		table.getColumnModel().getColumn(3).setPreferredWidth(50);
-		table.getColumnModel().getColumn(4).setPreferredWidth(40);
-		table.getColumnModel().getColumn(5).setPreferredWidth(220);
 		
-		for(int i = 0; i<listeAbsences.size(); i++) {
-			((DefaultTableModel) table.getModel()).addRow(new Object[]{Boolean.FALSE, listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),
-									listeAbsences.get(i).getNomCours(),listeAbsences.get(i).getType(),
-									listeAbsences.get(i).getJustificatif(), listeAbsences.get(i).getValideeAdmin()});
+		for(int i = 0; i<listeNotes.size(); i++) {
+			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeNotes.get(i).getDate(),
+					listeNotes.get(i).getCoursNom(), listeNotes.get(i).getValeur(), listeNotes.get(i).getRattrapage()});
 		}
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
@@ -163,31 +158,6 @@ public class ListeAbsencesEtuIHM {
 		JPanel panel_1 = new JPanel();
 		frmAbsencesClassiquesEt.getContentPane().add(panel_1);
 		
-		JButton btnNewButton = new JButton("Declarer une absence physique");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		btnNewButton.setForeground(Color.BLACK);
-		panel_1.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Deposer un justificatif");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int ligneNum = -1;
-				for(int i = 0; i < table.getRowCount(); i++) {
-					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
-					if(CaseCochee)
-						ligneNum = i;
-				}
-				if(ligneNum != -1)
-					new DeposerJustificatifIHM(ligneNum);
-				else {
-					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_1.add(btnNewButton_1);
-		
 		JPanel panel_2 = new JPanel();
 		frmAbsencesClassiquesEt.getContentPane().add(panel_2);
 		
@@ -196,22 +166,6 @@ public class ListeAbsencesEtuIHM {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel_2.add(lblNewLabel);
 		
-		quotaNonRespecte();
-	}
-	
-	public void quotaNonRespecte() {
-		try {
-			float calcul = actionEtu.quotaNonRespecte(id);
-			if(calcul < 20)
-				lblNewLabel.setText("Vous avez " + calcul + " heures d'absence, le quota est respecte.");
-			else if(calcul >= 20 && calcul < 40)
-				lblNewLabel.setText("Vous avez " + calcul + " heures d'absence, le quota n'est pas respecte ! Moyenne generale - 0.1 point.");
-			if(calcul >= 40 && calcul < 60)
-				lblNewLabel.setText("Vous avez " + calcul + " heures d'absence, le quota n'est pas respecte ! Moyenne generale - 0.2 point.");
-			if(calcul > 60)
-				lblNewLabel.setText("Vous avez " + calcul + " heures d'absence, le quota n'est pas respecte ! Redoublement ou exclusion possible.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 }

@@ -57,4 +57,58 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 			return effectuee;
 			}
 		}
+	
+	public boolean absenceExamenValidee(int absId) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			boolean absenceExamen = false;
+			PreparedStatement ps = con.prepareStatement("SELECT abs_type"
+					+ "FROM Lot2_Absence "
+					+ "WHERE abs_id = ?");
+			ps.setInt(1, absId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next() && rs.getString("abs_type") != null) {
+				if(rs.getString("abs_type").equals("Examen"))
+					absenceExamen = true;
+			}
+			
+			return absenceExamen;
+		}
+	}
+	
+	public int declancherRatrapages(int absId) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			int effectuee = 0;
+			int etuId = 0;
+			int coursId = 0;
+			
+			PreparedStatement ps = con.prepareStatement("SELECT Lot2_AbsenceParEtudiant.etu_id, abs_cours_id "
+					+ "FROM Lot2_Absence "
+					+ "JOIN Lot2_AbsenceParEtudiant ON Lot2_Absence.abs_id = Lot2_AbsenceParEtudiant.abs_id "
+					+ "WHERE abs_id = ? "
+					+ "ORDER BY Lot2_Absence.abs_id ASC");
+			ps.setInt(1, absId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				etuId = rs.getInt("Lot2_AbsenceParEtudiant.etu_id");
+				coursId = rs.getInt("abs_cours_id");
+			}
+			
+			ps = con.prepareStatement("UPDATE Lot2_Note "
+					+ "SET note_valeur = NULL, note_rattrapage = ? "
+					+ "WHERE etu_id = ? AND cours_id = ?");
+			ps.setString(1, "Convoquee");
+			ps.setInt(2, etuId);
+			ps.setInt(3, coursId);
+			
+			effectuee = ps.executeUpdate();
+			
+			return effectuee;
+		}
+	}
 }
