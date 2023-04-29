@@ -57,6 +57,7 @@ public class ConnexionIHM extends JFrame {
 	private void initialize() {
 		frmConnexion = new JFrame();
 		frmConnexion.setTitle("Connexion");
+		frmConnexion.setVisible(true);
 		frmConnexion.setBounds(100, 100, 1045, 741);
 		frmConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmConnexion.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));

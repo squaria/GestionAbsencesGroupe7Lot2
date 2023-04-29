@@ -41,6 +41,7 @@ public class DeclarerAbsenceIHM {
 	private JLabel lblNewLabel_3_3;
 	private static float nbHeures;
 	private static int groupe;
+	private static int profId;
 
 	/**
 	 * Launch the application.
@@ -49,7 +50,7 @@ public class DeclarerAbsenceIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DeclarerAbsenceIHM window = new DeclarerAbsenceIHM(coursId, nbHeures, groupe);
+					DeclarerAbsenceIHM window = new DeclarerAbsenceIHM(profId, coursId, nbHeures, groupe);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +62,8 @@ public class DeclarerAbsenceIHM {
 	/**
 	 * Create the application.
 	 */
-	public DeclarerAbsenceIHM(int coursId, float nbHeures, int groupe) {
+	public DeclarerAbsenceIHM(int profId, int coursId, float nbHeures, int groupe) {
+		DeclarerAbsenceIHM.profId = profId;
 		DeclarerAbsenceIHM.coursId = coursId;
 		DeclarerAbsenceIHM.nbHeures = nbHeures;
 		DeclarerAbsenceIHM.groupe = groupe;
@@ -77,6 +79,21 @@ public class DeclarerAbsenceIHM {
 		frame.setBounds(100, 100, 1427, 731);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		frame.getContentPane().add(panel_3);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PlanningEnseignantIHM(profId);
+				frame.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_3.add(btnNewButtonRetour);
 		
 		ArrayList<Etudiant> listeEtudiant = null;
 		try {
@@ -216,10 +233,10 @@ public class DeclarerAbsenceIHM {
 		
 	}
 
-	public void creerAbsence(Absence absence) {
+	public void creerAbsence(Absence absence, int etuIdGrp) {
 		
 		try {
-			int effectuee = actionProf.creerAbsence(absence);
+			int effectuee = actionProf.creerAbsence(absence, etuIdGrp, groupe);
 			if (effectuee == 1)
 				lblNewLabel_3_2.setText("Absence cree !");
 			else
@@ -250,7 +267,7 @@ public class DeclarerAbsenceIHM {
 			if(CaseCochee) {
 				ligneNum = i;
 				creerAbsence(new Absence(dtf.format(localDate), 
-						nbHeures, coursId, type, null, null));
+						nbHeures, coursId, type, null, null), ligneNum);
 				if(type.equals("Examen"))
 					noteZero(new Note(ligneNum, coursId, 0, dtf.format(localDate), null));
 			}

@@ -59,6 +59,22 @@ public class GestionnaireIHM {
 		FlowLayout fl_panel = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panel.setLayout(fl_panel);
 		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBackground(new Color(0, 128, 255));
+		panel.add(panel_10);
+		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ConnexionIHM();
+				frame.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_10.add(btnNewButtonRetour);
+		
 		JLabel lblNewLabel = new JLabel("Menu - Gestionnaire");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));

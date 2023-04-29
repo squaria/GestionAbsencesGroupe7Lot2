@@ -29,6 +29,7 @@ public class DeposerJustificatifIHM {
 	private JTextField textField;
 
 	private JLabel lblNewLabel_3_4;
+	private static int id;
 
 	/**
 	 * Launch the application.
@@ -37,7 +38,7 @@ public class DeposerJustificatifIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DeposerJustificatifIHM window = new DeposerJustificatifIHM(ligneNum);
+					DeposerJustificatifIHM window = new DeposerJustificatifIHM(id, ligneNum);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +50,8 @@ public class DeposerJustificatifIHM {
 	/**
 	 * Create the application.
 	 */
-	public DeposerJustificatifIHM(int ligneNum) {
+	public DeposerJustificatifIHM(int id, int ligneNum) {
+		DeposerJustificatifIHM.id = id;
 		DeposerJustificatifIHM.ligneNum = ligneNum;
 		initialize();
 	}
@@ -61,19 +63,33 @@ public class DeposerJustificatifIHM {
 		frame = new JFrame();
 		frame.setVisible(true);
 		frame.setTitle("JUSTIFICATION");
-		frame.setBounds(100, 100, 1156, 656);
+		frame.setBounds(100, 100, 1156, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		frame.getContentPane().add(panel_3);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ListeAbsencesEtuIHM(id, 1);
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_3.add(btnNewButtonRetour);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
 		frame.getContentPane().add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		
-		JLabel Arriere = new JLabel("");
-		Arriere.setIcon(new ImageIcon("/img/OIP.jfif"));
-		Arriere.setBounds(0, 0, 434, 261);
-		panel.add(Arriere);
 		
 		JLabel lblNewLabel = new JLabel("Entrez l'url de telechargement de votre justificatif : ");
 		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -83,7 +99,6 @@ public class DeposerJustificatifIHM {
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Depot de justificatif");
-		Arriere.add(lblNewLabel_1);
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(160, 27, 117, 14);
 		
@@ -94,8 +109,8 @@ public class DeposerJustificatifIHM {
 		textField.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
-		flowLayout.setVgap(20);
+		FlowLayout flowLayout1 = (FlowLayout) panel_1.getLayout();
+		flowLayout1.setVgap(20);
 		panel.add(panel_1);
 		
 		JButton btnDeposer = new JButton("Deposer");

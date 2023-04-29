@@ -19,7 +19,7 @@ public class EtudiantIHM extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frmMenuPrincipalEtu;
-	private static int id;
+	private static int id = 2;
 	
 	
 	/**
@@ -57,11 +57,29 @@ public class EtudiantIHM extends JFrame {
 		frmMenuPrincipalEtu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuPrincipalEtu.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
 		frmMenuPrincipalEtu.getContentPane().add(panel);
 		FlowLayout fl_panel = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panel.setLayout(fl_panel);
+		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBackground(new Color(0, 128, 255));
+		panel.add(panel_10);
+		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ConnexionIHM();
+				frmMenuPrincipalEtu.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_10.add(btnNewButtonRetour);
 		
 		JLabel lblNewLabel = new JLabel("Menu - Etudiant");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
@@ -99,7 +117,7 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeAbsencesEtuIHM(id);
+					new ListeAbsencesEtuIHM(id, 1);
 					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();

@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,6 +33,7 @@ public class CreerGroupeEtuIHM {
 	private JTextField textField;
 
 	private JTextField textField_1;
+	private static int id;
 
 	/**
 	 * Launch the application.
@@ -40,7 +42,7 @@ public class CreerGroupeEtuIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreerGroupeEtuIHM window = new CreerGroupeEtuIHM();
+					CreerGroupeEtuIHM window = new CreerGroupeEtuIHM(id);
 					window.frmModificationDunCours.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +54,8 @@ public class CreerGroupeEtuIHM {
 	/**
 	 * Create the application.
 	 */
-	public CreerGroupeEtuIHM() {
+	public CreerGroupeEtuIHM(int id) {
+		CreerGroupeEtuIHM.id = id;
 		initialize();
 	}
 
@@ -66,6 +69,21 @@ public class CreerGroupeEtuIHM {
 		frmModificationDunCours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmModificationDunCours.getContentPane().setLayout(new BoxLayout(frmModificationDunCours.getContentPane(), BoxLayout.Y_AXIS));
 		frmModificationDunCours.setVisible(true);
+		
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		frmModificationDunCours.getContentPane().add(panel_3);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GestionnaireIHM(id);
+				frmModificationDunCours.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_3.add(btnNewButtonRetour);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);

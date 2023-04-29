@@ -278,8 +278,10 @@ public class PlanningEnseignantIHM {
 						groupe =  (int) table.getValueAt(i, 2);
 					}
 				}
-				if(ligneNum != -1)
-					new DeclarerAbsenceIHM(ligneNum, nbHeures, groupe);
+				if(ligneNum != -1) {
+					new DeclarerAbsenceIHM(profId, ligneNum, nbHeures, groupe);
+					frmCoursNonTraites.dispose();
+				}
 				else {
 					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);

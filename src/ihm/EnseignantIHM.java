@@ -58,6 +58,22 @@ public class EnseignantIHM {
 		FlowLayout fl_panel = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panel.setLayout(fl_panel);
 		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBackground(new Color(0, 128, 255));
+		panel.add(panel_10);
+		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		
+		JButton btnNewButtonRetour = new JButton("Retour");
+		btnNewButtonRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ConnexionIHM();
+				frmMenuPrincipal.dispose();
+			}
+		});
+		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_10.add(btnNewButtonRetour);
+		
 		JLabel lblNewLabel = new JLabel("Enseignant");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
@@ -117,6 +133,20 @@ public class EnseignantIHM {
 		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_4.add(btnNewButton_3);
+		
+		JButton btnNewButton_31 = new JButton("Synthese absence d'un etudiant");
+		btnNewButton_31.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ListeAbsencesEtuIHM(profId, 2);
+					frmMenuPrincipal.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_31.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(btnNewButton_31);
 	}
 
 }
