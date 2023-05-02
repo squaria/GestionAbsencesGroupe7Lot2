@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.Absence;
-import model.Cours;
+import model.Profil;
 
 public class ActionsAdministratifDAO extends IdentificationBdd {
 	
@@ -17,7 +17,6 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 	
 	public ArrayList<Absence> listeAbsencesAdmin() throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
-			
 			ArrayList<Absence> listeAbsence = new ArrayList<>();
 			PreparedStatement ps = con.prepareStatement("SELECT abs_date, abs_nbHeures, etu_nom, etu_prenom, cours_nom, abs_type, abs_justificatif, abs_valideeAdmin "
 					+ "FROM Lot2_Absence "
@@ -32,6 +31,31 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 				listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getFloat("abs_nbHeures"), 
 				rs.getString("cours_nom"), rs.getString("etu_nom"), rs.getString("etu_prenom"),
 				rs.getString("abs_type"), rs.getString("abs_justificatif"), rs.getString("abs_valideeAdmin")));
+			}
+			
+			return listeAbsence;
+		}
+	}
+	
+	public ArrayList<Absence> listeAbsencesProf(Profil profil) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			ArrayList<Absence> listeAbsence = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT abs_date, abs_nbHeures, cours_nom, abs_type "
+					+ "FROM Lot2_Absence "
+					+ "JOIN Lot2_Cours ON Lot2_Absence.abs_cours_id = Lot2_Cours.cours_id "
+					+ "JOIN Lot2_AbsenceParEnseignant ON Lot2_Absence.abs_id = Lot2_AbsenceParEnseignant.abs_id "
+					+ "JOIN Lot2_Professeur ON Lot2_AbsenceParEnseignant.prof_id = Lot2_Professeur.prof_id "
+					+ "WHERE prof_nom = ? AND prof_prenom = ? AND prof_email = ?");
+			ps.setString(1, profil.getNom());
+			ps.setString(2, profil.getPrenom());
+			ps.setString(3, profil.getEmail());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getFloat("abs_nbHeures"), rs.getString("cours_nom"),
+				rs.getString("abs_type")));
 			}
 			
 			return listeAbsence;
@@ -62,7 +86,7 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
 			boolean absenceExamen = false;
-			PreparedStatement ps = con.prepareStatement("SELECT abs_type"
+			PreparedStatement ps = con.prepareStatement("SELECT abs_type "
 					+ "FROM Lot2_Absence "
 					+ "WHERE abs_id = ?");
 			ps.setInt(1, absId);

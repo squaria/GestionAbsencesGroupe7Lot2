@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 public class EnseignantIHM {
 
 	private JFrame frmMenuPrincipal;
-	private static int profId = 1;
 	
 	/**
 	 * Launch the application.
@@ -25,7 +24,7 @@ public class EnseignantIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EnseignantIHM window = new EnseignantIHM(profId);
+					EnseignantIHM window = new EnseignantIHM();
 					window.frmMenuPrincipal.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,8 +35,7 @@ public class EnseignantIHM {
 	/**
 	 * Create the application.
 	 */
-	public EnseignantIHM(int profId) {
-		EnseignantIHM.profId = profId;
+	public EnseignantIHM() {
 		initialize();
 	}
 
@@ -51,6 +49,7 @@ public class EnseignantIHM {
 		frmMenuPrincipal.setBounds(100, 100, 1045, 741);
 		frmMenuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuPrincipal.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frmMenuPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
@@ -90,7 +89,7 @@ public class EnseignantIHM {
 		JButton btnNewButton_2 = new JButton("Planning et declarer absence etudiant");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new PlanningEnseignantIHM(profId);
+				new PlanningEnseignantIHM();
 				frmMenuPrincipal.dispose();
 			}
 		});
@@ -106,7 +105,7 @@ public class EnseignantIHM {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeAbsencesEnsIHM(profId);
+					new ListeAbsencesEnsIHM();
 					frmMenuPrincipal.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -124,7 +123,7 @@ public class EnseignantIHM {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeCoursEnsIHM(profId);
+					new ListeCoursEnsIHM();
 					frmMenuPrincipal.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -138,7 +137,7 @@ public class EnseignantIHM {
 		btnNewButton_31.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeAbsencesEtuIHM(profId, 2);
+					new ListeAbsencesEtuIHM();
 					frmMenuPrincipal.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();

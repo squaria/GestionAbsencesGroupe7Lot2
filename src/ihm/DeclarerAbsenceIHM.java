@@ -28,8 +28,6 @@ import model.Absence;
 import model.Etudiant;
 import model.Note;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Component;
-import java.awt.GridLayout;
 
 public class DeclarerAbsenceIHM {
 
@@ -41,7 +39,6 @@ public class DeclarerAbsenceIHM {
 	private JLabel lblNewLabel_3_3;
 	private static float nbHeures;
 	private static int groupe;
-	private static int profId;
 
 	/**
 	 * Launch the application.
@@ -50,7 +47,7 @@ public class DeclarerAbsenceIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DeclarerAbsenceIHM window = new DeclarerAbsenceIHM(profId, coursId, nbHeures, groupe);
+					DeclarerAbsenceIHM window = new DeclarerAbsenceIHM(coursId, nbHeures, groupe);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,8 +59,7 @@ public class DeclarerAbsenceIHM {
 	/**
 	 * Create the application.
 	 */
-	public DeclarerAbsenceIHM(int profId, int coursId, float nbHeures, int groupe) {
-		DeclarerAbsenceIHM.profId = profId;
+	public DeclarerAbsenceIHM(int coursId, float nbHeures, int groupe) {
 		DeclarerAbsenceIHM.coursId = coursId;
 		DeclarerAbsenceIHM.nbHeures = nbHeures;
 		DeclarerAbsenceIHM.groupe = groupe;
@@ -79,6 +75,7 @@ public class DeclarerAbsenceIHM {
 		frame.setBounds(100, 100, 1427, 731);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -88,7 +85,7 @@ public class DeclarerAbsenceIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new PlanningEnseignantIHM(profId);
+				new PlanningEnseignantIHM();
 				frame.dispose();
 			}
 		});

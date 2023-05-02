@@ -30,7 +30,6 @@ public class TraiterAbsencesIHM {
 	private JTable table;
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_3;
-	private static int adminId;
 
 	/**
 	 * Launch the application.
@@ -39,7 +38,7 @@ public class TraiterAbsencesIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TraiterAbsencesIHM window = new TraiterAbsencesIHM(adminId);
+					TraiterAbsencesIHM window = new TraiterAbsencesIHM();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,8 +50,7 @@ public class TraiterAbsencesIHM {
 	/**
 	 * Create the application.
 	 */
-	public TraiterAbsencesIHM(int adminId) {
-		TraiterAbsencesIHM.adminId = adminId;
+	public TraiterAbsencesIHM() {
 		initialize();
 	}
 
@@ -66,6 +64,7 @@ public class TraiterAbsencesIHM {
 		frame.setBounds(100, 100, 1405, 765);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
 		ArrayList<Absence> listeAbsences = null;
@@ -84,7 +83,7 @@ public class TraiterAbsencesIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AdministratifIHM(adminId);
+				new AdministratifIHM();
 				frame.dispose();
 			}
 		});

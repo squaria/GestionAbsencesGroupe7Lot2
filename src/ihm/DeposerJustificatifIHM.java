@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +28,6 @@ public class DeposerJustificatifIHM {
 	private JTextField textField;
 
 	private JLabel lblNewLabel_3_4;
-	private static int id;
 
 	/**
 	 * Launch the application.
@@ -38,7 +36,7 @@ public class DeposerJustificatifIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DeposerJustificatifIHM window = new DeposerJustificatifIHM(id, ligneNum);
+					DeposerJustificatifIHM window = new DeposerJustificatifIHM(ligneNum);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,8 +48,7 @@ public class DeposerJustificatifIHM {
 	/**
 	 * Create the application.
 	 */
-	public DeposerJustificatifIHM(int id, int ligneNum) {
-		DeposerJustificatifIHM.id = id;
+	public DeposerJustificatifIHM(int ligneNum) {
 		DeposerJustificatifIHM.ligneNum = ligneNum;
 		initialize();
 	}
@@ -66,6 +63,7 @@ public class DeposerJustificatifIHM {
 		frame.setBounds(100, 100, 1156, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -76,7 +74,7 @@ public class DeposerJustificatifIHM {
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeAbsencesEtuIHM(id, 1);
+					new ListeAbsencesEtuIHM();
 					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();

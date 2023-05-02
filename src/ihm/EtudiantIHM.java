@@ -19,7 +19,6 @@ public class EtudiantIHM extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frmMenuPrincipalEtu;
-	private static int id = 2;
 	
 	
 	/**
@@ -29,7 +28,7 @@ public class EtudiantIHM extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EtudiantIHM window = new EtudiantIHM(id);
+					EtudiantIHM window = new EtudiantIHM();
 					window.frmMenuPrincipalEtu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,8 +40,7 @@ public class EtudiantIHM extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public EtudiantIHM(int id) {
-		EtudiantIHM.id = id;
+	public EtudiantIHM() {
 		initialize();
 	}
 
@@ -56,6 +54,7 @@ public class EtudiantIHM extends JFrame {
 		frmMenuPrincipalEtu.setBounds(100, 100, 1045, 741);
 		frmMenuPrincipalEtu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuPrincipalEtu.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frmMenuPrincipalEtu.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		
 		
@@ -98,7 +97,7 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new PlanningGroupeIHM(id, 0);
+					new PlanningGroupeIHM();
 					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -117,7 +116,7 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeAbsencesEtuIHM(id, 1);
+					new ListeAbsencesEtuIHM();
 					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -135,7 +134,7 @@ public class EtudiantIHM extends JFrame {
 		btnGroupe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new NotesEtRatrapagesEtuIHM(id);
+					new NotesEtRatrapagesEtuIHM();
 					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();

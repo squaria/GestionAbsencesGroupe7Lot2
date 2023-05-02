@@ -18,7 +18,6 @@ import javax.swing.JButton;
 
 import java.awt.Color;
 import dao.ActionsGestionnaireDAO;
-import model.Cours;
 import model.Groupe;
 import net.miginfocom.swing.MigLayout;
 
@@ -33,7 +32,6 @@ public class CreerGroupeEtuIHM {
 	private JTextField textField;
 
 	private JTextField textField_1;
-	private static int id;
 
 	/**
 	 * Launch the application.
@@ -42,7 +40,7 @@ public class CreerGroupeEtuIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreerGroupeEtuIHM window = new CreerGroupeEtuIHM(id);
+					CreerGroupeEtuIHM window = new CreerGroupeEtuIHM();
 					window.frmModificationDunCours.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,8 +52,7 @@ public class CreerGroupeEtuIHM {
 	/**
 	 * Create the application.
 	 */
-	public CreerGroupeEtuIHM(int id) {
-		CreerGroupeEtuIHM.id = id;
+	public CreerGroupeEtuIHM() {
 		initialize();
 	}
 
@@ -69,6 +66,8 @@ public class CreerGroupeEtuIHM {
 		frmModificationDunCours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmModificationDunCours.getContentPane().setLayout(new BoxLayout(frmModificationDunCours.getContentPane(), BoxLayout.Y_AXIS));
 		frmModificationDunCours.setVisible(true);
+		frmModificationDunCours.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -78,7 +77,7 @@ public class CreerGroupeEtuIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionnaireIHM(id);
+				new GestionnaireIHM();
 				frmModificationDunCours.dispose();
 			}
 		});

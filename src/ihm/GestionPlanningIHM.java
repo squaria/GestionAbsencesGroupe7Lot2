@@ -40,8 +40,6 @@ public class GestionPlanningIHM {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
-	private static int id;
-	private static int typeCompte;
 
 	/**
 	 * Launch the application.
@@ -50,7 +48,7 @@ public class GestionPlanningIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestionPlanningIHM window = new GestionPlanningIHM(id, typeCompte);
+					GestionPlanningIHM window = new GestionPlanningIHM();
 					window.frmCoursNonTraites.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,9 +61,7 @@ public class GestionPlanningIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public GestionPlanningIHM(int id, int typeCompte) {
-		GestionPlanningIHM.id = id;
-		GestionPlanningIHM.typeCompte = typeCompte;
+	public GestionPlanningIHM() {
 		initialize();
 	}
 
@@ -80,6 +76,7 @@ public class GestionPlanningIHM {
 		frmCoursNonTraites.setBounds(100, 100, 1409, 751);
 		frmCoursNonTraites.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
+		frmCoursNonTraites.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 		ArrayList<Cours> listeCours = null;
@@ -97,10 +94,10 @@ public class GestionPlanningIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(typeCompte == 1)
-					new GestionnaireIHM(id);
-				else if(typeCompte == 2)
-					new AdministratifIHM(id);
+				if(IdEtTypeCompte.typeCompte == 3)
+					new GestionnaireIHM();
+				else if(IdEtTypeCompte.typeCompte == 2)
+					new AdministratifIHM();
 				frmCoursNonTraites.dispose();
 			}
 		});

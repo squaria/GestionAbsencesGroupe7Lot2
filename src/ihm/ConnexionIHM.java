@@ -61,6 +61,8 @@ public class ConnexionIHM extends JFrame {
 		frmConnexion.setBounds(100, 100, 1045, 741);
 		frmConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmConnexion.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frmConnexion.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
@@ -137,32 +139,35 @@ public class ConnexionIHM extends JFrame {
 		int[] res = {-1,-1};
 		try {
 			res = connDAO.checkConnexion(email, pwd);
+			IdEtTypeCompte.id = res[1];
+			IdEtTypeCompte.typeCompte = res[0];
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		switch(res[0]) {
+		switch(IdEtTypeCompte.typeCompte) {
 		case -1:
 			lblNewLabel_3.setText("Mauvais mot de passe ou email !");
 			break;
 		case 0:
-			lblNewLabel_3.setText("Connecté en tant qu'etudiant !");
+			lblNewLabel_3.setText("Connecte en tant qu'etudiant !");
 			frmConnexion.dispose();
-			new EtudiantIHM(res[1]);
+			new EtudiantIHM();
 			break;
 		case 1:
-			lblNewLabel_3.setText("Connecté en tant que professeur !");
+			lblNewLabel_3.setText("Connecte en tant que professeur !");
 			frmConnexion.dispose();
-			new EnseignantIHM(res[1]);
+			new EnseignantIHM();
 			break;
 		case 2:
-			lblNewLabel_3.setText("Connecté en tant qu'administratif !");
+			lblNewLabel_3.setText("Connecte en tant qu'administratif !");
 			frmConnexion.dispose();
-			new AdministratifIHM(res[1]);
+			new AdministratifIHM();
 			break;
 		case 3:
-			lblNewLabel_3.setText("Connecté en tant que gestionnaire !");
+			lblNewLabel_3.setText("Connecte en tant que gestionnaire !");
 			frmConnexion.dispose();
-			new GestionnaireIHM(res[1]);
+			new GestionnaireIHM();
 			break;
 		}
 	}

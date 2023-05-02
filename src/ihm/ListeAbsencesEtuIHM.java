@@ -20,10 +20,8 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsEtudiantDAO;
-import dao.ActionsGestionnaireDAO;
 import dao.ActionsProfesseurDAO;
 import model.Absence;
-import model.Administratif;
 import model.Profil;
 
 import javax.swing.ListSelectionModel;
@@ -38,8 +36,6 @@ public class ListeAbsencesEtuIHM {
 	private JFrame frmAbsencesClassiquesEt;
 	private JTable table;
 	private JLabel lblNewLabel;
-	private static int id = 1;
-	private static int typeCompte = 1;
 	private ActionsEtudiantDAO actionEtu = new ActionsEtudiantDAO();
 	private ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
 	private ArrayList<Absence> listeAbsences = null;
@@ -51,7 +47,7 @@ public class ListeAbsencesEtuIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListeAbsencesEtuIHM window = new ListeAbsencesEtuIHM(id, typeCompte);
+					ListeAbsencesEtuIHM window = new ListeAbsencesEtuIHM();
 					window.frmAbsencesClassiquesEt.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,9 +60,7 @@ public class ListeAbsencesEtuIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public ListeAbsencesEtuIHM(int id, int typeCompte) throws Exception {
-		ListeAbsencesEtuIHM.id = id;
-		ListeAbsencesEtuIHM.typeCompte = typeCompte;
+	public ListeAbsencesEtuIHM() {
 		initialize();
 	}
 
@@ -74,13 +68,14 @@ public class ListeAbsencesEtuIHM {
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
 	 */
-	private void initialize() throws Exception {
+	private void initialize() {
 		frmAbsencesClassiquesEt = new JFrame();
 		frmAbsencesClassiquesEt.setVisible(true);
 		frmAbsencesClassiquesEt.setTitle("Absences classiques et physiques");
 		frmAbsencesClassiquesEt.setBounds(100, 100, 1400, 700);
 		frmAbsencesClassiquesEt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAbsencesClassiquesEt.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEt.getContentPane(), BoxLayout.Y_AXIS));
+		frmAbsencesClassiquesEt.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -90,10 +85,10 @@ public class ListeAbsencesEtuIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(typeCompte == 1)
-					new EtudiantIHM(id);
-				else if(typeCompte == 2)
-					new EnseignantIHM(id);
+				if(IdEtTypeCompte.typeCompte == 0)
+					new EtudiantIHM();
+				else if(IdEtTypeCompte.typeCompte == 1)
+					new EnseignantIHM();
 				frmAbsencesClassiquesEt.dispose();
 			}
 		});
@@ -153,8 +148,12 @@ public class ListeAbsencesEtuIHM {
 		JPanel panel_1 = new JPanel();
 		frmAbsencesClassiquesEt.getContentPane().add(panel_1);
 
-		if(typeCompte == 1) {
-			listeAbsences = actionEtu.listeAbsences(id);
+		if(IdEtTypeCompte.typeCompte == 0) {
+			try {
+				listeAbsences = actionEtu.listeAbsences(IdEtTypeCompte.id);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			refresh();
 			JButton btnNewButton = new JButton("Declarer une absence physique");
 			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -171,7 +170,7 @@ public class ListeAbsencesEtuIHM {
 							ligneNum = i;
 					}
 					if(ligneNum != -1)
-						new DeposerJustificatifIHM(id, ligneNum);
+						new DeposerJustificatifIHM(ligneNum);
 					else {
 						JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
@@ -191,7 +190,7 @@ public class ListeAbsencesEtuIHM {
 			
 			quotaNonRespecte();
 		}
-		else if(typeCompte == 2) {
+		else if(IdEtTypeCompte.typeCompte == 1) {
 			JLabel lblNewLabel1 = new JLabel("Entrez un etudiant :");
 			lblNewLabel1.setForeground(Color.BLACK);
 			lblNewLabel1.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -263,7 +262,7 @@ public class ListeAbsencesEtuIHM {
 
 	public void quotaNonRespecte() {
 		try {
-			float calcul = actionEtu.quotaNonRespecte(id);
+			float calcul = actionEtu.quotaNonRespecte(IdEtTypeCompte.id);
 			if(calcul < 20)
 				lblNewLabel.setText("Vous avez " + calcul + " heures d'absence, le quota est respecte.");
 			else if(calcul >= 20 && calcul < 40)

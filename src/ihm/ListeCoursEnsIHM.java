@@ -26,7 +26,6 @@ import java.awt.Color;
 public class ListeCoursEnsIHM {
 	private JFrame frmAbsencesClassiquesEnseignant;
 	private JTable table;
-	private static int id = 1;
 
 	/**
 	 * Launch the application.
@@ -35,7 +34,7 @@ public class ListeCoursEnsIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListeCoursEnsIHM window = new ListeCoursEnsIHM(id);
+					ListeCoursEnsIHM window = new ListeCoursEnsIHM();
 					window.frmAbsencesClassiquesEnseignant.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,8 +47,7 @@ public class ListeCoursEnsIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public ListeCoursEnsIHM(int id) throws Exception {
-		ListeCoursEnsIHM.id = id;
+	public ListeCoursEnsIHM() {
 		initialize();
 	}
 
@@ -57,16 +55,22 @@ public class ListeCoursEnsIHM {
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
 	 */
-	private void initialize() throws Exception {
+	private void initialize() {
 		frmAbsencesClassiquesEnseignant = new JFrame();
 		frmAbsencesClassiquesEnseignant.setVisible(true);
 		frmAbsencesClassiquesEnseignant.setTitle("Liste cours professeur");
 		frmAbsencesClassiquesEnseignant.setBounds(100, 100, 1405, 700);
 		frmAbsencesClassiquesEnseignant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAbsencesClassiquesEnseignant.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEnseignant.getContentPane(), BoxLayout.Y_AXIS));
+		frmAbsencesClassiquesEnseignant.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
-		ArrayList<Cours> listeCours = actionProf.listeCoursProf(id);
+		ArrayList<Cours> listeCours = null;
+		try {
+			listeCours = actionProf.listeCoursProf(IdEtTypeCompte.id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -76,7 +80,7 @@ public class ListeCoursEnsIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new EnseignantIHM(id);
+				new EnseignantIHM();
 				frmAbsencesClassiquesEnseignant.dispose();
 			}
 		});

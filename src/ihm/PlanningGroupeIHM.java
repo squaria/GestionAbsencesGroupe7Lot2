@@ -23,7 +23,6 @@ import model.Planning;
 import model.PlanningGroupe;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 
 public class PlanningGroupeIHM {
@@ -34,8 +33,6 @@ public class PlanningGroupeIHM {
 	private JTextField textField_1;
 	private ArrayList<PlanningGroupe> planningGroupe;
 	private Planning planning = new Planning();
-	private static int id;
-	private static int typeCompte;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
@@ -49,7 +46,7 @@ public class PlanningGroupeIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PlanningGroupeIHM window = new PlanningGroupeIHM(id, typeCompte);
+					PlanningGroupeIHM window = new PlanningGroupeIHM();
 					window.frmCoursNonTraites.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,9 +60,7 @@ public class PlanningGroupeIHM {
 	 * @param id 
 	 * @throws Exception 
 	 */
-	public PlanningGroupeIHM(int id, int typeCompte) {
-		PlanningGroupeIHM.id = id;
-		PlanningGroupeIHM.typeCompte = typeCompte;
+	public PlanningGroupeIHM() {
 		initialize();
 		
 	}
@@ -81,6 +76,7 @@ public class PlanningGroupeIHM {
 		frmCoursNonTraites.setBounds(100, 100, 1409, 751);
 		frmCoursNonTraites.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
+		frmCoursNonTraites.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel_2 = new JPanel();
 		frmCoursNonTraites.getContentPane().add(panel_2);
@@ -94,10 +90,10 @@ public class PlanningGroupeIHM {
 		JButton btnNewButton = new JButton("Retour");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(typeCompte == 0)
-					new EtudiantIHM(id);
-				else if(typeCompte == 2)
-					new AdministratifIHM(id);
+				if(IdEtTypeCompte.typeCompte == 0)
+					new EtudiantIHM();
+				else if(IdEtTypeCompte.typeCompte == 2)
+					new AdministratifIHM();
 				frmCoursNonTraites.dispose();
 			}
 		});

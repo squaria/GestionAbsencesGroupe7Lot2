@@ -4,17 +4,12 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.regex.Pattern;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,7 +32,6 @@ public class PlanningEnseignantIHM {
 	private JTextField textField_1;
 	private ArrayList<PlanningEnseignant> planningProf;
 	private Planning planning = new Planning();
-	private static int profId = 1;
 	private float nbHeures;
 	private int groupe;
 	private JTextField textField_3;
@@ -53,7 +47,7 @@ public class PlanningEnseignantIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PlanningEnseignantIHM window = new PlanningEnseignantIHM(profId);
+					PlanningEnseignantIHM window = new PlanningEnseignantIHM();
 					window.frmCoursNonTraites.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,8 +61,7 @@ public class PlanningEnseignantIHM {
 	 * @param id 
 	 * @throws Exception 
 	 */
-	public PlanningEnseignantIHM(int profId) {
-		PlanningEnseignantIHM.profId = profId;
+	public PlanningEnseignantIHM() {
 		initialize();
 	}
 
@@ -83,6 +76,7 @@ public class PlanningEnseignantIHM {
 		frmCoursNonTraites.setBounds(100, 100, 1409, 751);
 		frmCoursNonTraites.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
+		frmCoursNonTraites.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel_2 = new JPanel();
 		frmCoursNonTraites.getContentPane().add(panel_2);
@@ -96,7 +90,7 @@ public class PlanningEnseignantIHM {
 		JButton btnNewButton = new JButton("Retour");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new EnseignantIHM(profId);
+				new EnseignantIHM();
 				frmCoursNonTraites.dispose();
 			}
 		});
@@ -279,7 +273,7 @@ public class PlanningEnseignantIHM {
 					}
 				}
 				if(ligneNum != -1) {
-					new DeclarerAbsenceIHM(profId, ligneNum, nbHeures, groupe);
+					new DeclarerAbsenceIHM(ligneNum, nbHeures, groupe);
 					frmCoursNonTraites.dispose();
 				}
 				else {
@@ -300,7 +294,7 @@ public class PlanningEnseignantIHM {
 		
 		try {
 			((DefaultTableModel) table.getModel()).setRowCount(1);
-			planningProf = planning.planningProf(profId, dateDebut, dateFin);
+			planningProf = planning.planningProf(IdEtTypeCompte.id, dateDebut, dateFin);
 			if(planningProf != null) {
 				for(int i = 0; i<planningProf.size(); i++) {
 					((DefaultTableModel) table.getModel()).addRow(

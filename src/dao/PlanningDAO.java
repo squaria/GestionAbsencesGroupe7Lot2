@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import model.Cours;
 import model.PlanningEnseignant;
 import model.PlanningGroupe;
 

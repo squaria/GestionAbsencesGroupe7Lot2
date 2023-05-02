@@ -50,7 +50,6 @@ public class GestionProfilProfesseurIHM {
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_3;
 	private JPanel panel_12;
-	private static int id;
 
 	
 	/**
@@ -60,7 +59,7 @@ public class GestionProfilProfesseurIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestionProfilProfesseurIHM window = new GestionProfilProfesseurIHM(id);
+					GestionProfilProfesseurIHM window = new GestionProfilProfesseurIHM();
 					window.frmMenuPrincipalProf.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,8 +71,7 @@ public class GestionProfilProfesseurIHM {
 	/**
 	 * Create the application.
 	 */
-	public GestionProfilProfesseurIHM(int id) {
-		GestionProfilProfesseurIHM.id = id;
+	public GestionProfilProfesseurIHM() {
 		initialize();
 	}
 
@@ -87,6 +85,7 @@ public class GestionProfilProfesseurIHM {
 		frmMenuPrincipalProf.setBounds(100, 100, 1400, 900);
 		frmMenuPrincipalProf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuPrincipalProf.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frmMenuPrincipalProf.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
@@ -106,7 +105,7 @@ public class GestionProfilProfesseurIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionnaireIHM(id);
+				new GestionnaireIHM();
 				frmMenuPrincipalProf.dispose();
 			}
 		});

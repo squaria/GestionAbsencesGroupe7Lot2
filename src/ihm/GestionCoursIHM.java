@@ -49,8 +49,6 @@ public class GestionCoursIHM {
 	private Cours cours = new Cours();
 	private JTable table;
 	private ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
-	private static int typeCompte;
-	private static int id;
 
 	/**
 	 * Launch the application.
@@ -59,7 +57,7 @@ public class GestionCoursIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestionCoursIHM window = new GestionCoursIHM(id, typeCompte);
+					GestionCoursIHM window = new GestionCoursIHM();
 					window.frmModificationDunCours.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,9 +69,7 @@ public class GestionCoursIHM {
 	/**
 	 * Create the application.
 	 */
-	public GestionCoursIHM(int id, int typeCompte) {
-		GestionCoursIHM.id = id;
-		GestionCoursIHM.typeCompte = typeCompte;
+	public GestionCoursIHM() {
 		initialize();
 	}
 
@@ -87,6 +83,7 @@ public class GestionCoursIHM {
 		frmModificationDunCours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmModificationDunCours.getContentPane().setLayout(new BoxLayout(frmModificationDunCours.getContentPane(), BoxLayout.Y_AXIS));
 		frmModificationDunCours.setVisible(true);
+		frmModificationDunCours.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -96,10 +93,10 @@ public class GestionCoursIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(typeCompte == 1)
-					new GestionnaireIHM(id);
-				else if(typeCompte == 2)
-					new AdministratifIHM(id);
+				if(IdEtTypeCompte.typeCompte == 3)
+					new GestionnaireIHM();
+				else if(IdEtTypeCompte.typeCompte == 2)
+					new AdministratifIHM();
 				frmModificationDunCours.dispose();
 			}
 		});

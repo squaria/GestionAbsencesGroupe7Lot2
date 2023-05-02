@@ -54,8 +54,6 @@ public class GestionProfilEtudiantIHM {
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_3;
 	private JPanel panel_12;
-	private static int id;
-
 	
 	/**
 	 * Launch the application.
@@ -64,7 +62,7 @@ public class GestionProfilEtudiantIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestionProfilEtudiantIHM window = new GestionProfilEtudiantIHM(id);
+					GestionProfilEtudiantIHM window = new GestionProfilEtudiantIHM();
 					window.frmMenuPrincipalEtu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -76,8 +74,7 @@ public class GestionProfilEtudiantIHM {
 	/**
 	 * Create the application.
 	 */
-	public GestionProfilEtudiantIHM(int id) {
-		GestionProfilEtudiantIHM.id = id;
+	public GestionProfilEtudiantIHM() {
 		initialize();
 	}
 
@@ -91,6 +88,7 @@ public class GestionProfilEtudiantIHM {
 		frmMenuPrincipalEtu.setBounds(100, 100, 1408, 900);
 		frmMenuPrincipalEtu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuPrincipalEtu.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frmMenuPrincipalEtu.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
@@ -110,7 +108,7 @@ public class GestionProfilEtudiantIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionnaireIHM(id);
+				new GestionnaireIHM();
 				frmMenuPrincipalEtu.dispose();
 			}
 		});

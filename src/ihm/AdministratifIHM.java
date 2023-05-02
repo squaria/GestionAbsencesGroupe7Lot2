@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class AdministratifIHM {
 
 	private JFrame frame;
-	private static int id;
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +23,7 @@ public class AdministratifIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdministratifIHM window = new AdministratifIHM(id);
+					AdministratifIHM window = new AdministratifIHM();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,8 +35,7 @@ public class AdministratifIHM {
 	/**
 	 * Create the application.
 	 */
-	public AdministratifIHM(int id) {
-		AdministratifIHM.id = id;
+	public AdministratifIHM() {
 		initialize();
 	}
 
@@ -51,6 +49,7 @@ public class AdministratifIHM {
 		frame.setBounds(100, 100, 1045, 741);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
@@ -91,7 +90,7 @@ public class AdministratifIHM {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new TraiterAbsencesIHM(id);
+					new TraiterAbsencesIHM();
 					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -106,7 +105,7 @@ public class AdministratifIHM {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new ListeAbsencesEnsIHM(id);
+					new ListeAbsencesEnsIHM();
 					frame.dispose();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -125,7 +124,7 @@ public class AdministratifIHM {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new GestionCoursIHM(id, 2);
+					new GestionCoursIHM();
 					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -139,7 +138,7 @@ public class AdministratifIHM {
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new PlanningGroupeIHM(id, 2);
+					new PlanningGroupeIHM();
 					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -157,7 +156,7 @@ public class AdministratifIHM {
 		btnGroupe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new GestionPlanningIHM(id, 2);
+					new GestionPlanningIHM();
 					frame.dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -166,6 +165,7 @@ public class AdministratifIHM {
 		});
 		btnGroupe.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_4.add(btnGroupe);
+
 	}
 
 }

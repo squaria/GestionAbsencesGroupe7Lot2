@@ -13,20 +13,27 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsProfesseurDAO;
+import dao.ActionsAdministratifDAO;
 import model.Absence;
+import model.Profil;
 
 import java.awt.Color;
 
 public class ListeAbsencesEnsIHM {
 	private JFrame frmAbsencesClassiquesEnseignant;
 	private JTable table;
-	private static int id;
+	private ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
+	private ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
+	private ArrayList<Absence> listeAbsencesP = null;
 
 	/**
 	 * Launch the application.
@@ -35,7 +42,7 @@ public class ListeAbsencesEnsIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListeAbsencesEnsIHM window = new ListeAbsencesEnsIHM(id);
+					ListeAbsencesEnsIHM window = new ListeAbsencesEnsIHM();
 					window.frmAbsencesClassiquesEnseignant.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,8 +55,7 @@ public class ListeAbsencesEnsIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public ListeAbsencesEnsIHM(int id) throws Exception {
-		ListeAbsencesEnsIHM.id = id;
+	public ListeAbsencesEnsIHM() {
 		initialize();
 	}
 
@@ -57,16 +63,14 @@ public class ListeAbsencesEnsIHM {
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
 	 */
-	private void initialize() throws Exception {
+	private void initialize() {
 		frmAbsencesClassiquesEnseignant = new JFrame();
 		frmAbsencesClassiquesEnseignant.setVisible(true);
 		frmAbsencesClassiquesEnseignant.setTitle("Absences classiques et physiques enseignant");
 		frmAbsencesClassiquesEnseignant.setBounds(100, 100, 1405, 700);
 		frmAbsencesClassiquesEnseignant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAbsencesClassiquesEnseignant.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEnseignant.getContentPane(), BoxLayout.Y_AXIS));
-		
-		ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
-		ArrayList<Absence> listeAbsencesP = actionProf.listeAbsencesProf();
+		frmAbsencesClassiquesEnseignant.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -76,7 +80,10 @@ public class ListeAbsencesEnsIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new EnseignantIHM(id);
+				if(IdEtTypeCompte.typeCompte == 1)
+					new EnseignantIHM();
+				else if(IdEtTypeCompte.typeCompte == 2)
+					new AdministratifIHM();
 				frmAbsencesClassiquesEnseignant.dispose();
 			}
 		});
@@ -113,10 +120,13 @@ public class ListeAbsencesEnsIHM {
 		table.getColumnModel().getColumn(1).setPreferredWidth(60);
 		table.getColumnModel().getColumn(2).setPreferredWidth(50);
 		
-		
-		for(int i = 0; i<listeAbsencesP.size(); i++) {
-			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeAbsencesP.get(i).getDate(), listeAbsencesP.get(i).getNbHeures(),
-									listeAbsencesP.get(i).getNomCours(),listeAbsencesP.get(i).getType()});
+		if(IdEtTypeCompte.typeCompte == 1) {
+			try {
+				listeAbsencesP = actionProf.listeAbsencesProf();
+				refresh();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
@@ -134,10 +144,66 @@ public class ListeAbsencesEnsIHM {
 		JPanel panel_1 = new JPanel();
 		frmAbsencesClassiquesEnseignant.getContentPane().add(panel_1);
 		
-		
-		
-		
-
+		if(IdEtTypeCompte.typeCompte == 2) {
+			JLabel lblNewLabel1 = new JLabel("Entrez un enseignant :");
+			lblNewLabel1.setForeground(Color.BLACK);
+			lblNewLabel1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			panel_1.add(lblNewLabel1);
+			
+			JLabel lblNewLabel2 = new JLabel("Nom :");
+			lblNewLabel2.setForeground(Color.BLACK);
+			lblNewLabel2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			panel_1.add(lblNewLabel2);
+			
+			JTextField textField = new JTextField();
+			textField.setColumns(20);
+			panel_1.add(textField);
+			
+			JLabel lblNewLabel3 = new JLabel("Prenom :");
+			lblNewLabel3.setForeground(Color.BLACK);
+			lblNewLabel3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			panel_1.add(lblNewLabel3);
+			
+			JTextField textField1 = new JTextField();
+			textField1.setColumns(20);
+			panel_1.add(textField1);
+			
+			JLabel lblNewLabel4 = new JLabel("Email :");
+			lblNewLabel4.setForeground(Color.BLACK);
+			lblNewLabel4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			panel_1.add(lblNewLabel4);
+			
+			JTextField textField2 = new JTextField();
+			textField2.setColumns(20);
+			panel_1.add(textField2);
+			
+			JButton btnNewButton = new JButton("Selectionner");
+			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
+			btnNewButton.setForeground(Color.BLACK);
+			panel_1.add(btnNewButton);
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (textField.getText().length() > 0 && textField1.getText().length() > 0 
+							&& textField2.getText().length() > 0) {
+						try {
+							listeAbsencesP = actionAdmin.listeAbsencesProf(new Profil(textField.getText(), textField1.getText(), textField2.getText()));
+							refresh();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes.", "Dialog",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
+		}		
+	}
+	public void refresh() {
+		for(int i = 0; i<listeAbsencesP.size(); i++) {
+			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeAbsencesP.get(i).getDate(), listeAbsencesP.get(i).getNbHeures(),
+									listeAbsencesP.get(i).getNomCours(),listeAbsencesP.get(i).getType()});
+		}
 	}
 }
 

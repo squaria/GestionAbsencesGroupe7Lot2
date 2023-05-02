@@ -47,8 +47,6 @@ public class GestionProfilAdministratifIHM {
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_3;
 	private JPanel panel_12;
-	private static int id;
-
 	
 	/**
 	 * Launch the application.
@@ -57,7 +55,7 @@ public class GestionProfilAdministratifIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestionProfilAdministratifIHM window = new GestionProfilAdministratifIHM(id);
+					GestionProfilAdministratifIHM window = new GestionProfilAdministratifIHM();
 					window.frmMenuPrincipalAdmin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,8 +67,7 @@ public class GestionProfilAdministratifIHM {
 	/**
 	 * Create the application.
 	 */
-	public GestionProfilAdministratifIHM(int id) {
-		GestionProfilAdministratifIHM.id = id;
+	public GestionProfilAdministratifIHM() {
 		initialize();
 	}
 
@@ -84,6 +81,7 @@ public class GestionProfilAdministratifIHM {
 		frmMenuPrincipalAdmin.setBounds(100, 100, 1408, 900);
 		frmMenuPrincipalAdmin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuPrincipalAdmin.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frmMenuPrincipalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
@@ -103,7 +101,7 @@ public class GestionProfilAdministratifIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GestionnaireIHM(id);
+				new GestionnaireIHM();
 				frmMenuPrincipalAdmin.dispose();
 			}
 		});
@@ -236,7 +234,7 @@ public class GestionProfilAdministratifIHM {
 		textField_3.setColumns(20);
 		panel_9.add(textField_3);
 		
-		JButton btnNewButton_2_1 = new JButton("Créer");
+		JButton btnNewButton_2_1 = new JButton("Creer");
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField.getText().length() > 0 && textField_1.getText().length() > 0 

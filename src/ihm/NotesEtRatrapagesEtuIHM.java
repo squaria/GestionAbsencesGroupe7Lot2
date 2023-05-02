@@ -4,8 +4,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsEtudiantDAO;
-import model.Absence;
 import model.Note;
 
 import javax.swing.ListSelectionModel;
@@ -26,7 +23,6 @@ import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 
 public class NotesEtRatrapagesEtuIHM {
@@ -34,7 +30,6 @@ public class NotesEtRatrapagesEtuIHM {
 	private JFrame frmAbsencesClassiquesEt;
 	private JTable table;
 	private JLabel lblNewLabel;
-	private static int id = 1;
 	private ActionsEtudiantDAO actionEtu = new ActionsEtudiantDAO();
 
 	/**
@@ -44,7 +39,7 @@ public class NotesEtRatrapagesEtuIHM {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NotesEtRatrapagesEtuIHM window = new NotesEtRatrapagesEtuIHM(id);
+					NotesEtRatrapagesEtuIHM window = new NotesEtRatrapagesEtuIHM();
 					window.frmAbsencesClassiquesEt.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,8 +52,7 @@ public class NotesEtRatrapagesEtuIHM {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public NotesEtRatrapagesEtuIHM(int id) throws Exception {
-		NotesEtRatrapagesEtuIHM.id = id;
+	public NotesEtRatrapagesEtuIHM() {
 		initialize();
 	}
 
@@ -66,16 +60,22 @@ public class NotesEtRatrapagesEtuIHM {
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
 	 */
-	private void initialize() throws Exception {
+	private void initialize() {
 		frmAbsencesClassiquesEt = new JFrame();
 		frmAbsencesClassiquesEt.setVisible(true);
 		frmAbsencesClassiquesEt.setTitle("Notes et rattrapages");
 		frmAbsencesClassiquesEt.setBounds(100, 100, 1400, 700);
 		frmAbsencesClassiquesEt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAbsencesClassiquesEt.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEt.getContentPane(), BoxLayout.Y_AXIS));
+		frmAbsencesClassiquesEt.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		
-		ArrayList<Note> listeNotes = actionEtu.listeNotes(id);
+		ArrayList<Note> listeNotes = null;
+		try {
+			listeNotes = actionEtu.listeNotes(IdEtTypeCompte.id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 
 		JPanel panel_3 = new JPanel();
@@ -86,7 +86,7 @@ public class NotesEtRatrapagesEtuIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new EtudiantIHM(id);
+				new EtudiantIHM();
 				frmAbsencesClassiquesEt.dispose();
 			}
 		});
