@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 /**
  * Classe modele java d'un profil etudiant
  * @author Loic OUASSA, Mael PAROT
@@ -19,84 +17,60 @@ public class Etudiant extends Profil {
 	 */
 	private int groupe;
 	
-	private ArrayList<Absence> abs;
-	
 	/**
+	 * Constructeur de la classe Etudiant fille de la classe Profil
 	 * @param nom
+	 * 			nom du profil Etudiant
 	 * @param prenom
+	 * 			prenom du profil Etudiant
 	 * @param email
+	 * 			email du profil Etudiant
 	 * @param filiere
+	 * 			filiere du profil Etudiant
 	 * @param groupe
+	 * 			groupe du profil Etudiant
 	 */
 	public Etudiant(String nom, String prenom, String email, String filiere, int groupe)
 	{
 		super(nom, prenom, email);
 		this.filiere = filiere;
 		this.groupe = groupe;
-		this.abs = new ArrayList<>();
 	}
 
 	/**
-	 * @return
+	 * Getter de la filiere du profil Etudiant
+	 * @return filiere
+	 * 			filiere du profil Etudiant
 	 */
 	public String getFiliere() {
 		return filiere;
 	}
 
 	/**
+	 * Setter de la filiere du profil Etudiant
 	 * @param filiere
+	 * 			filiere du profil Etudiant
 	 */
 	public void setFiliere(String filiere) {
 		this.filiere = filiere;
 	}
 
 	/**
-	 * @return
+	 * Getter du groupe du profil Etudiant
+	 * @return groupe
+	 * 			groupe du profil Etudiant
 	 */
 	public int getGroupe() {
 		return groupe;
 	}
 
 	/**
+	 * Setter du groupe du profil Etudiant
 	 * @param groupe
+	 * 			groupe du profil Etudiant
 	 */
 	public void setGroupe(int groupe) {
 		this.groupe = groupe;
 	}
-	
-	/**
-	 * @param date
-	 * @param nbHeures
-	 * @param nomCours
-	 * @param type
-	 * @param justificatif
-	 * @param valideeAdmin
-	 */
-	public void declarerUneAbsence(String date, Float nbHeures, String nomCours, String type, String justificatif, String valideeAdmin) {
-		Absence ab = new Absence(date, nbHeures, nomCours, type, justificatif, valideeAdmin);
-		abs.add(ab);
-	}
-	
-	/**
-	 * 
-	 */
-	public void ConsulterAbsencesEtudiant() {
-		System.out.println("Vos absences :");
-		for(int i=0; i< abs.size();i++) {
-			System.out.println( abs.get(i));
-		}
-	}
-	
-	/**
-	 * @param just
-	 * @param date
-	 */
-	public void deposerJustificatif(String just, String date) {
-		for(int i=0; i<abs.size();i++) {
-			if( date==abs.get(i).getDate())
-				abs.get(i).setJustificatif(just);
-		}
-	}
-	
 	
 }
