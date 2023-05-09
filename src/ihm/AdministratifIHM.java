@@ -86,7 +86,7 @@ public class AdministratifIHM {
 		panel_1.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_1);
 		
-		JButton btnNewButton_2 = new JButton("Gerer les absences");
+		JButton btnNewButton_2 = new JButton("Traiter les absences");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -100,6 +100,21 @@ public class AdministratifIHM {
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Traiter les absences physiques");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new TraiterAbsencesPhysiquesIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_3.setForeground(new Color(0, 0, 0));
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(btnNewButton_3);
 		
 		JButton btnNewButton = new JButton("Afficher les absences des professeurs");
 		btnNewButton.addActionListener(new ActionListener() {

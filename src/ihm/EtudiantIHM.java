@@ -126,6 +126,19 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_3.add(btnNewButton_1);
 		
+
+		JButton btnNewButton = new JButton("Declarer une absence physique");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				new DeposerJustificatifAbsPhysiqueIHM();
+				frmMenuPrincipalEtu.dispose();
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		btnNewButton.setForeground(Color.BLACK);
+		panel_1.add(btnNewButton);
+		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_4);

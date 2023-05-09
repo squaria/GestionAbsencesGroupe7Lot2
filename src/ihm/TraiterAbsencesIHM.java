@@ -83,7 +83,10 @@ public class TraiterAbsencesIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AdministratifIHM();
+				if(IdEtTypeCompte.typeCompte == 2)
+					new AdministratifIHM();
+				else if(IdEtTypeCompte.typeCompte == 3)
+					new GestionnaireIHM();
 				frame.dispose();
 			}
 		});

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import ihm.IdEtTypeCompte;
 import model.Absence;
 import model.Note;
 
@@ -74,6 +75,36 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 		}
 	}
 	
+
+	public int deposerJustificatifAbsPhysique(String justificatif, String dateDebut, String dateFin) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
+			int effectuee = 0;
+			int abs_id = actionGest.getLastIdTable(6);
+			PreparedStatement ps = con.prepareStatement("INSERT INTO Lot2_AbsencePhysique(absPhys_id, absPhys_dateDebut, "
+					+ "absPhys_dateFin, absPhys_justificatif, absPhys_valideeAdmin) "
+					+ "VALUES (?, ?, ?, ?, '') ");
+			
+			ps.setInt(1, abs_id+1);
+			ps.setString(2, dateDebut);
+			ps.setString(3, dateFin);
+			ps.setString(4, justificatif);
+			
+			effectuee = ps.executeUpdate();
+			
+			if(effectuee != 0) {
+				ps = con.prepareStatement("INSERT INTO Lot2_AbsencePhysiqueParEtudiant(absPhys_id, etu_id) "
+						+ "VALUES (?, ?) ");
+				ps.setInt(1, abs_id+1);
+				ps.setInt(2, IdEtTypeCompte.id);
+				
+				effectuee = ps.executeUpdate();
+			}
+			
+			return effectuee;
+		}
+	}
+	
 	public float quotaNonRespecte(int etuId) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -96,5 +127,6 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 			return calcul;
 		}
 	}
+
 
 }

@@ -155,10 +155,6 @@ public class ListeAbsencesEtuIHM {
 				e1.printStackTrace();
 			}
 			refresh();
-			JButton btnNewButton = new JButton("Declarer une absence physique");
-			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
-			btnNewButton.setForeground(Color.BLACK);
-			panel_1.add(btnNewButton);
 			
 			JButton btnNewButton_1 = new JButton("Deposer un justificatif");
 			btnNewButton_1.addActionListener(new ActionListener() {

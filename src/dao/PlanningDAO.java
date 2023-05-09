@@ -15,6 +15,7 @@ public class PlanningDAO extends IdentificationBdd {
 
 	public PlanningDAO() {
 	}
+	
 	public int getGroupeEtudiant(int etuId) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -30,62 +31,6 @@ public class PlanningDAO extends IdentificationBdd {
 			}
 			
 			return etuGrp;
-		}
-	}
-	
-	
-	public ArrayList<PlanningGroupe> listeCoursGroupe(int grpNum) throws Exception {
-		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
-			
-			ArrayList<PlanningGroupe> listeCours = new ArrayList<>();
-			PreparedStatement ps = con.prepareStatement("SELECT Lot2_Groupe.grp_id, "
-					+ "plan_date, plan_heureDebut, plan_heureFin, cours_nom "
-					+ "FROM Lot2_PlanningGroupe "
-					+ "JOIN Lot2_Cours ON Lot2_PlanningGroupe.cours_id = Lot2_Cours.cours_id "
-					+ "JOIN Lot2_Groupe ON Lot2_PlanningGroupe.grp_id = Lot2_Groupe.grp_id "
-					+ "WHERE Lot2_Groupe.grp_numero = ?");
-			
-			ps.setInt(1, grpNum);
-			
-			ResultSet rs = ps.executeQuery();
-
-			
-			while (rs.next()) {
-				String str = rs.getDate("plan_date").toString();
-				System.out.println(str);
-				java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				java.util.Date dte = null;
-				try {
-					dte = sdf.parse(str);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				sdf = new SimpleDateFormat("EEEE");
-				int jour = -1;
-				switch(sdf.format(dte)) {
-				case "lundi":
-					jour = 0;
-					break;
-				case "mardi":
-					jour = 1;
-					break;
-				case "mercredi":
-					jour = 2;
-					break;
-				case "jeudi":
-					jour = 3;
-					break;
-				case "vendredi":
-					jour = 4;
-					break;
-				default:
-					jour = -1;
-				}
-				listeCours.add(new PlanningGroupe(rs.getInt("grp_id"), rs.getString("cours_nom"),
-						str, jour, rs.getFloat("plan_heureDebut"), rs.getFloat("plan_heureFin")));
-			}
-			
-			return listeCours;
 		}
 	}
 	
@@ -142,7 +87,7 @@ public class PlanningDAO extends IdentificationBdd {
 			while (rs.next()) {
 
 				listeCours.add(new PlanningEnseignant(rs.getInt("grp_numero"), rs.getString("cours_nom"),
-						rs.getString("plan_date"), 0, rs.getFloat("plan_heureDebut"),
+						rs.getString("plan_date"), rs.getFloat("plan_heureDebut"),
 						rs.getFloat("plan_heureFin")));
 			}
 			

@@ -149,6 +149,36 @@ public class GestionnaireIHM {
 		});
 		btnGroupe.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_4.add(btnGroupe);
+		
+		JButton btnNewButton_21 = new JButton("Traiter les absences");
+		btnNewButton_21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new TraiterAbsencesIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_21.setForeground(new Color(0, 0, 0));
+		btnNewButton_21.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(btnNewButton_21);
+		
+		JButton btnNewButton_3 = new JButton("Traiter les absences physiques");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new TraiterAbsencesPhysiquesIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_3.setForeground(new Color(0, 0, 0));
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(btnNewButton_3);
 	}
 
 }

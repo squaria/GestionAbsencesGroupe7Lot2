@@ -319,6 +319,10 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 				break;
 			case 5:
 				ps = con.prepareStatement("SELECT grp_id FROM Lot2_Groupe");
+				break;
+			case 6:
+				ps = con.prepareStatement("SELECT absPhys_id FROM Lot2_AbsencePhysique");
+				break;				
 			}
 			
 			ResultSet rs = ps.executeQuery();

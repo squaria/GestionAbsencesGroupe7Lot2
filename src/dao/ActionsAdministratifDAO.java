@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import model.Absence;
+import model.AbsencePhysique;
 import model.Profil;
 
 public class ActionsAdministratifDAO extends IdentificationBdd {
@@ -34,6 +37,31 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 			}
 			
 			return listeAbsence;
+		}
+	}
+	
+	public ArrayList<AbsencePhysique> listeAbsencesPhysiquesAdmin() throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			ArrayList<AbsencePhysique> listeAbsencePhysique = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT absPhys_dateDebut, absPhys_dateFin, grp_numero, etu_nom, etu_prenom, absPhys_justificatif, absPhys_valideeAdmin "
+					+ "FROM Lot2_AbsencePhysique "
+					+ "JOIN Lot2_AbsencePhysiqueParEtudiant ON Lot2_AbsencePhysique.absPhys_id = Lot2_AbsencePhysiqueParEtudiant.absPhys_id "
+					+ "JOIN Lot2_Etudiant ON Lot2_AbsencePhysiqueParEtudiant.etu_id = Lot2_Etudiant.etu_id "
+					+ "JOIN Lot2_Groupe ON Lot2_Etudiant.etu_grp_id = Lot2_Groupe.grp_id "
+					+ "WHERE absPhys_valideeAdmin IS NULL "
+					+ "ORDER BY Lot2_AbsencePhysique.absPhys_id ASC");
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+				String dateDebut = formatter.format(rs.getDate("absPhys_dateDebut"));
+				String dateFin = formatter.format(rs.getDate("absPhys_dateFin"));
+				listeAbsencePhysique.add(new AbsencePhysique(dateDebut, dateFin,
+						rs.getInt("grp_numero"), rs.getString("etu_nom"), rs.getString("etu_prenom"), 
+						rs.getString("absPhys_justificatif"), rs.getString("absPhys_valideeAdmin")));
+			}
+			
+			return listeAbsencePhysique;
 		}
 	}
 	
@@ -77,6 +105,43 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 			ps.setInt(2, absId);
 			
 			effectuee = ps.executeUpdate();
+			
+			return effectuee;
+			}
+		}
+	
+	public int validerAbsencePhysique(int absId, int grpId, boolean validee,
+			String dateDebut, String dateFin, String lienVisio) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			int effectuee = 0;
+			PreparedStatement ps = con.prepareStatement("UPDATE Lot2_AbsencePhysique "
+					+ "SET absPhys_valideeAdmin = ? "
+					+ "WHERE absPhys_id = ? AND absPhys_valideeAdmin IS NULL");
+
+			if(validee)
+				ps.setString(1, "Validee");
+			else
+				ps.setString(1, "Invalidee");
+			
+			ps.setInt(2, absId);
+			
+			effectuee = ps.executeUpdate();
+			
+			if(effectuee != 0 && validee) {
+				System.out.println(lienVisio);
+				System.out.println(grpId);
+				System.out.println(dateDebut);
+				System.out.println(dateFin);
+				ps = con.prepareStatement("UPDATE Lot2_PlanningGroupe "
+						+ "SET plan_lienVisio = ? "
+						+ "WHERE grp_id = ? AND plan_date BETWEEN ? AND ? ");
+				ps.setString(1, lienVisio);
+				ps.setInt(2, grpId);
+				ps.setString(3, dateDebut);
+				ps.setString(4, dateFin);
+				
+				effectuee = ps.executeUpdate();
+			}
 			
 			return effectuee;
 			}

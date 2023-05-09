@@ -151,6 +151,24 @@ public class Absence {
 	}
 
 	/**
+	 * Constructeur de la classe absence pour la classe fille AbsencePhysique
+	 * @param nomEtu 
+	 * 			nom de l'etudiant de l'absence
+	 * @param prenomEtu 
+	 * 			prenom de l'etudiant de l'absence
+	 * @param justificatif 
+	 * 			justificatif de l'absence
+	 * @param valideeAdmin 
+	 * 			validation par l'administratif de l'absence
+	 */
+	public Absence(String nomEtu, String prenomEtu, String justificatif, String valideeAdmin) {
+		this.nomEtu = nomEtu;
+		this.prenomEtu = prenomEtu;
+		this.justificatif = justificatif;
+		this.valideeAdmin = valideeAdmin;
+	}
+
+	/**
 	 * Getter de la date de l'absence
 	 * @return date
 	 * 			date de l'absence
