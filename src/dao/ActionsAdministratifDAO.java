@@ -236,6 +236,8 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 	 * 			id de l'absence
 	 * @param grpId
 	 * 			id du groupe de l'etudiant
+	 * @param etuId
+	 * 			id de l'etudiant
 	 * @param validee
 	 * 			vrai si absence validee faux sinon
 	 * @param dateDebut

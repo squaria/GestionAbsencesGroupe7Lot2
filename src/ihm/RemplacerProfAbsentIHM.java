@@ -25,6 +25,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
 
+/**
+ * Classe interface du remplacement des professeurs absents
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class RemplacerProfAbsentIHM {
 
 	private JFrame frame;

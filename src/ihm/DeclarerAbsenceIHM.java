@@ -64,6 +64,12 @@ public class DeclarerAbsenceIHM {
 
 	/**
 	 * Create the application.
+	 * @param coursId
+	 * 			id du cours
+	 * @param nbHeures
+	 * 			nombre d'heures
+	 * @param groupe
+	 * 			numero du groupe
 	 */
 	public DeclarerAbsenceIHM(int coursId, float nbHeures, int groupe) {
 		DeclarerAbsenceIHM.coursId = coursId;

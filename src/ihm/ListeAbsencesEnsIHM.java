@@ -59,7 +59,6 @@ public class ListeAbsencesEnsIHM {
 
 	/**
 	 * Create the application.
-	 * @throws Exception 
 	 */
 	public ListeAbsencesEnsIHM() {
 		initialize();
@@ -67,7 +66,6 @@ public class ListeAbsencesEnsIHM {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws Exception 
 	 */
 	private void initialize() {
 		/**

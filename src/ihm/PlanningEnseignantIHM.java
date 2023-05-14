@@ -81,8 +81,6 @@ public class PlanningEnseignantIHM {
 
 	/**
 	 * Create the application.
-	 * @param id 
-	 * @throws Exception 
 	 */
 	public PlanningEnseignantIHM() {
 		initialize();
@@ -90,7 +88,6 @@ public class PlanningEnseignantIHM {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws Exception 
 	 */
 	private void initialize() {
 		/**

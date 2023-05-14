@@ -131,7 +131,7 @@ public class Cours {
 
 	/**
 	 * Setter de l'id de l'enseignant associe au cours
-	 * @param enseignant
+	 * @param enseignantId
 	 * 			id de l'enseignant associe au cours
 	 */
 	public void setEnseignantId(int enseignantId) {

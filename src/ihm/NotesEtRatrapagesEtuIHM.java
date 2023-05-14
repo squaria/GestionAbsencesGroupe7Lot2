@@ -57,7 +57,6 @@ public class NotesEtRatrapagesEtuIHM {
 
 	/**
 	 * Create the application.
-	 * @throws Exception 
 	 */
 	public NotesEtRatrapagesEtuIHM() {
 		initialize();
@@ -65,7 +64,6 @@ public class NotesEtRatrapagesEtuIHM {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws Exception 
 	 */
 	private void initialize() {
 		/**

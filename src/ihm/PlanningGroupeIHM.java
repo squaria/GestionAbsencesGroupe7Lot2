@@ -63,8 +63,6 @@ public class PlanningGroupeIHM {
 
 	/**
 	 * Create the application.
-	 * @param id 
-	 * @throws Exception 
 	 */
 	public PlanningGroupeIHM() {
 		initialize();

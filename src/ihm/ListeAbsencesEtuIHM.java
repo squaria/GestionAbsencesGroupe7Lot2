@@ -64,7 +64,6 @@ public class ListeAbsencesEtuIHM {
 
 	/**
 	 * Create the application.
-	 * @throws Exception 
 	 */
 	public ListeAbsencesEtuIHM() {
 		initialize();
@@ -72,7 +71,6 @@ public class ListeAbsencesEtuIHM {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws Exception 
 	 */
 	private void initialize() {
 		/**

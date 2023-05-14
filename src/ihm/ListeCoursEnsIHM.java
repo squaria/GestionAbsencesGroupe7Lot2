@@ -51,7 +51,6 @@ public class ListeCoursEnsIHM {
 
 	/**
 	 * Create the application.
-	 * @throws Exception 
 	 */
 	public ListeCoursEnsIHM() {
 		initialize();
@@ -59,7 +58,6 @@ public class ListeCoursEnsIHM {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws Exception 
 	 */
 	private void initialize() {
 		/**
