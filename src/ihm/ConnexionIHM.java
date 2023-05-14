@@ -96,6 +96,7 @@ public class ConnexionIHM extends JFrame {
 		panel_1.add(lblNewLabel_1);
 		
 		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel_1.add(textField);
 		textField.setColumns(20);
 		
@@ -109,6 +110,7 @@ public class ConnexionIHM extends JFrame {
 		panel_3.add(lblNewLabel_2);
 		
 		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		passwordField.setColumns(20);
 		panel_3.add(passwordField);
 		
@@ -131,7 +133,7 @@ public class ConnexionIHM extends JFrame {
 				}
 			}
 		});
-		btnProfil.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		btnProfil.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		panel_4.add(btnProfil);
 		
 		JPanel panel_5 = new JPanel();

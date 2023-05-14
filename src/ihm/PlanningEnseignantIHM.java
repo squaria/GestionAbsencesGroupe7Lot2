@@ -405,7 +405,7 @@ public class PlanningEnseignantIHM {
 						groupe = (int) table.getValueAt(i, 2);
 					}
 				}
-				if(ligneNum != -1 && IdEtTypeCompte.typeCompte == 0) {
+				if(ligneNum != -1 && IdEtTypeCompte.typeCompte == 1) {
 					new DeclarerAbsenceIHM(ligneNum, nbHeures, groupe);
 					frmCoursNonTraites.dispose();
 				}
@@ -482,10 +482,11 @@ public class PlanningEnseignantIHM {
 						ligneNum_1 = i+1;
 				}
 				listeObj = planning.planningProf(ligneNum_1, dateDebut, dateFin);
+
+				date = listeDate.get(ligneNum_1);
 			}
 			planningProf = (ArrayList<PlanningEnseignant>) listeObj[0];
 			listeDate = (ArrayList<Date>) listeObj[1];
-			date = listeDate.get(ligneNum_1-1);
 			if(planningProf != null) {
 
 				/**
