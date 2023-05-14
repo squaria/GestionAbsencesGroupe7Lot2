@@ -13,6 +13,12 @@ import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe interface utilisateur du menu d'un compte gestionnaire
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class GestionnaireIHM {
 
 	private JFrame frame;
@@ -44,6 +50,10 @@ public class GestionnaireIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frame = new JFrame();
 		frame.setVisible(true);
 		frame.setTitle("Menu Principal - Etudiant");
@@ -63,7 +73,10 @@ public class GestionnaireIHM {
 		panel.add(panel_10);
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,6 +103,9 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2 = new JButton("Gestion profil etudiant");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				new GestionProfilEtudiantIHM();
 				frame.dispose();
 			}
@@ -101,6 +117,9 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2_1 = new JButton("Gestion profil professeur");
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				new GestionProfilProfesseurIHM();
 				frame.dispose();
 			}
@@ -112,6 +131,9 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2_2 = new JButton("Gestion profil administratif");
 		btnNewButton_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				new GestionProfilAdministratifIHM();
 				frame.dispose();
 			}
@@ -128,6 +150,9 @@ public class GestionnaireIHM {
 		JButton btnNewButton_2_2_1 = new JButton("Gestion cours");
 		btnNewButton_2_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				new GestionCoursIHM();
 				frame.dispose();
 			}
@@ -136,6 +161,40 @@ public class GestionnaireIHM {
 		btnNewButton_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_3.add(btnNewButton_2_2_1);
 		
+		JButton btnNewButton1 = new JButton("Remplacer les professeurs absents");
+		btnNewButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
+					new RemplacerProfAbsentIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_3.add(btnNewButton1);
+		
+		JButton btnNewButton11 = new JButton("Declarer une absence d'un professeur");
+		btnNewButton11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
+					new PlanningEnseignantIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton11.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_3.add(btnNewButton11);
+		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(0, 128, 255));
 		panel_2.add(panel_4);
@@ -143,6 +202,9 @@ public class GestionnaireIHM {
 		JButton btnGroupe = new JButton("Gestion planning de Groupe");
 		btnGroupe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				new GestionPlanningIHM();
 				frame.dispose();
 			}
@@ -153,6 +215,9 @@ public class GestionnaireIHM {
 		JButton btnNewButton_21 = new JButton("Traiter les absences");
 		btnNewButton_21.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				try {
 					new TraiterAbsencesIHM();
 					frame.dispose();
@@ -168,6 +233,9 @@ public class GestionnaireIHM {
 		JButton btnNewButton_3 = new JButton("Traiter les absences physiques");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				try {
 					new TraiterAbsencesPhysiquesIHM();
 					frame.dispose();

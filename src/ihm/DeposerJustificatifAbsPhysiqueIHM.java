@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,6 +20,13 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe interface utilisateur du depot du justificatif 
+ * d'une absence physique par un etudiant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class DeposerJustificatifAbsPhysiqueIHM {
 
 	private JFrame frame;
@@ -62,6 +67,10 @@ public class DeposerJustificatifAbsPhysiqueIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frame = new JFrame();
 		frame.setVisible(true);
 		frame.setTitle("JUSTIFICATION");
@@ -74,7 +83,10 @@ public class DeposerJustificatifAbsPhysiqueIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frame.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -185,6 +197,10 @@ public class DeposerJustificatifAbsPhysiqueIHM {
 		JButton btnDeposer = new JButton("Deposer");
 		btnDeposer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField.getText().length() > 0 && textField.getText().length() > 0 && 
 						textField_1.getText().length() > 0 && textField_3.getText().length() > 0 && 
 						textField_4.getText().length() > 0 && textField_5.getText().length() > 0 && 
@@ -212,6 +228,15 @@ public class DeposerJustificatifAbsPhysiqueIHM {
 
 	}
 
+	/**
+	 * Methode pour le depot d'un justificatif d'une absence physique par un etudiant
+	 * @param justificatif
+	 * 			justificatif de l'absence d'un etudiant
+	 * @param dateDebut
+	 * 			date de debut de la periode de l'absence physique
+	 * @param dateFin
+	 * 			date de fin de la periode de l'absence physique
+	 */
 	public void deposerJustificatif(String justificatif, String dateDebut, String dateFin) {
 		ActionsEtudiantDAO actionEtu = new ActionsEtudiantDAO();
 		try {

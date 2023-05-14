@@ -10,12 +10,31 @@ import ihm.IdEtTypeCompte;
 import model.Absence;
 import model.Note;
 
+/**
+ * Classe DAO de lien avec la base de donnee 
+ * pour les actions de l'etudiant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ActionsEtudiantDAO extends IdentificationBdd {
 
+	/**
+	 * Constructeur de la classe ActionsEtudiantDAO
+	 */
 	public ActionsEtudiantDAO() {
-		super();
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des absences d'un etudiant
+	 * @param id
+	 * 			id de l'etudiant
+	 * @return listeAbsence
+	 * 			liste des absences d'un etudiant
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public ArrayList<Absence> listeAbsences(int id) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -37,6 +56,16 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des notes d'un etudiant
+	 * @param etuId
+	 * 			id d'un etudiant
+	 * @return listeNotes
+	 * 			liste des notes d'un etudiant
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public ArrayList<Note> listeNotes(int etuId) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -58,6 +87,18 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de deposer un justificatif par un etudiant
+	 * @param absenceId
+	 * 			id de l'absence
+	 * @param justificatif
+	 * 			justificatif de l'etudiant
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int deposerJustificatif(int absenceId, String justificatif) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -76,6 +117,22 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 	}
 	
 
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de deposer un justificatif par un etudiant
+	 * @param absenceId
+	 * 			id de l'absence
+	 * @param justificatif
+	 * 			justificatif de l'etudiant
+	 * @param dateDebut
+	 * 			date de debut de la periode de l'absence physique
+	 * @param dateFin
+	 * 			date de fin de la periode de l'absence physique
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int deposerJustificatifAbsPhysique(String justificatif, String dateDebut, String dateFin) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
@@ -105,6 +162,16 @@ public class ActionsEtudiantDAO extends IdentificationBdd {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de calculer le quota des absences d'un etudiant
+	 * @param etuId
+	 * 			id d'un etudiant
+	 * @return calcul
+	 * 			resultat du calcul du quota des absences d'un etudiant
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public float quotaNonRespecte(int etuId) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			

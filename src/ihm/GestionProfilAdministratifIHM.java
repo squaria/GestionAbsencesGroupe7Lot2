@@ -19,6 +19,13 @@ import model.Profil;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe interface utilisateur de la gestion
+ * des profils administratif (creation, suppression, modification, affichage)
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class GestionProfilAdministratifIHM {
 	private JFrame frmMenuPrincipalAdmin;
 	private JTextField textField;
@@ -75,6 +82,9 @@ public class GestionProfilAdministratifIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmMenuPrincipalAdmin = new JFrame();
 		frmMenuPrincipalAdmin.setVisible(true);
 		frmMenuPrincipalAdmin.setTitle("Gestion Profil - Etudiant");
@@ -97,7 +107,10 @@ public class GestionProfilAdministratifIHM {
 		panel_6.add(panel_10);
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -157,6 +170,10 @@ public class GestionProfilAdministratifIHM {
 		JButton btnNewButton_2_1_1_2 = new JButton("Supprimer");
 		btnNewButton_2_1_1_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField_18.getText().length() > 0 && textField_19.getText().length() > 0 
 						&& textField_20.getText().length() > 0) {
 					supprAdministratif(textField_18.getText(), textField_19.getText(), textField_20.getText());
@@ -237,6 +254,10 @@ public class GestionProfilAdministratifIHM {
 		JButton btnNewButton_2_1 = new JButton("Creer");
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField.getText().length() > 0 && textField_1.getText().length() > 0 
 						&& textField_2.getText().length() > 0 && textField_3.getText().length() > 0) {
 					creerAdministratif(new Administratif(textField.getText(), textField_1.getText(),
@@ -306,6 +327,10 @@ public class GestionProfilAdministratifIHM {
 		JButton btnNewButton_2_1_1 = new JButton("Afficher");
 		btnNewButton_2_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField_6.getText().length() > 0 && textField_7.getText().length() > 0 
 						&& textField_8.getText().length() > 0) {
 					affAdministratif(new Profil(textField_6.getText(), textField_7.getText(), textField_8.getText()));
@@ -461,6 +486,10 @@ public class GestionProfilAdministratifIHM {
 		JButton btnNewButton_2_1_2 = new JButton("Modifier");
 		btnNewButton_2_1_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField_9.getText().length() > 0 && textField_10.getText().length() > 0 
 						&& textField_11.getText().length() > 0) {
 					modAdministratif(new Profil(textField_9.getText(), textField_10.getText(), textField_11.getText()), 
@@ -486,6 +515,15 @@ public class GestionProfilAdministratifIHM {
 		panel_11.add(lblNewLabel_3_2);
 	}
 	
+	/**
+	 * Methode pour la suppression d'un compte administratif
+	 * @param nom
+	 * 			nom de l'administratif
+	 * @param prenom
+	 * 			prenom de l'administratif
+	 * @param email
+	 * 			email de l'administratif
+	 */
 	public void supprAdministratif(String nom, String prenom, String email)
 	{
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
@@ -496,6 +534,13 @@ public class GestionProfilAdministratifIHM {
 		}
 	}
 	
+	/**
+	 * Methode pour la creation d'un compte administratif
+	 * @param administratif
+	 * 			compte administratif
+	 * @param pwd
+	 * 			mot de passe du compte
+	 */
 	public void creerAdministratif(Administratif administratif, String pwd) {
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 		try {
@@ -509,6 +554,11 @@ public class GestionProfilAdministratifIHM {
 		}
 	}
 	
+	/**
+	 * Methode pour l'affichage du profil administratif
+	 * @param profil
+	 * 			profil d'un compte
+	 */
 	public void affAdministratif(Profil profil) {
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 		try {
@@ -531,6 +581,15 @@ public class GestionProfilAdministratifIHM {
 		}
 	}
 	
+	/**
+	 * Methode pour la modification d'un compte administratif
+	 * @param profil
+	 * 			profil d'un compte
+	 * @param administratif
+	 * 			compte administratif
+	 * @param pwd
+	 * 			mot de passe du compte
+	 */
 	public void modAdministratif(Profil profil, Administratif administratif, String pwd) {
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 		try {

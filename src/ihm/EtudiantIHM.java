@@ -12,6 +12,12 @@ import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe interface utilisateur du menu d'un compte etudiant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class EtudiantIHM extends JFrame {
 
 	/**
@@ -48,6 +54,10 @@ public class EtudiantIHM extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frmMenuPrincipalEtu = new JFrame();
 		frmMenuPrincipalEtu.setVisible(true);
 		frmMenuPrincipalEtu.setTitle("Menu Principal - Etudiant");
@@ -69,7 +79,10 @@ public class EtudiantIHM extends JFrame {
 		panel.add(panel_10);
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,6 +110,9 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new PlanningGroupeIHM();
 					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
@@ -116,6 +132,9 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new ListeAbsencesEtuIHM();
 					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {
@@ -131,6 +150,9 @@ public class EtudiantIHM extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				new DeposerJustificatifAbsPhysiqueIHM();
 				frmMenuPrincipalEtu.dispose();
 			}
@@ -147,6 +169,9 @@ public class EtudiantIHM extends JFrame {
 		btnGroupe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new NotesEtRatrapagesEtuIHM();
 					frmMenuPrincipalEtu.dispose();
 				} catch (Exception e1) {

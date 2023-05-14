@@ -13,6 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Classe interface utilisateur du menu d'un compte administratif
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class AdministratifIHM {
 
 	private JFrame frame;
@@ -43,6 +49,10 @@ public class AdministratifIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frame = new JFrame();
 		frame.setVisible(true);
 		frame.setTitle("Menu Principal - Administratif");
@@ -63,6 +73,10 @@ public class AdministratifIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,6 +104,9 @@ public class AdministratifIHM {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new TraiterAbsencesIHM();
 					frame.dispose();
 				} catch (Exception e1) {
@@ -105,6 +122,9 @@ public class AdministratifIHM {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new TraiterAbsencesPhysiquesIHM();
 					frame.dispose();
 				} catch (Exception e1) {
@@ -120,16 +140,52 @@ public class AdministratifIHM {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new ListeAbsencesEnsIHM();
 					frame.dispose();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton);
+		
+		JButton btnNewButton1 = new JButton("Remplacer les professeurs absents");
+		btnNewButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
+					new RemplacerProfAbsentIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(btnNewButton1);
+		
+		JButton btnNewButton11 = new JButton("Declarer une absence d'un professeur");
+		btnNewButton11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
+					new PlanningEnseignantIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton11.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_1.add(btnNewButton11);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(0, 128, 255));
@@ -139,6 +195,9 @@ public class AdministratifIHM {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new GestionCoursIHM();
 					frame.dispose();
 				} catch (Exception e1) {
@@ -153,6 +212,9 @@ public class AdministratifIHM {
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new PlanningGroupeIHM();
 					frame.dispose();
 				} catch (Exception e1) {
@@ -171,6 +233,9 @@ public class AdministratifIHM {
 		btnGroupe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new GestionPlanningIHM();
 					frame.dispose();
 				} catch (Exception e1) {

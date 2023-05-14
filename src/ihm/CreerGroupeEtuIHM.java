@@ -21,6 +21,12 @@ import dao.ActionsGestionnaireDAO;
 import model.Groupe;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * Classe interface utilisateur de la creation de nouveaux groupes d'etudiants
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class CreerGroupeEtuIHM {
 
 	private JFrame frmModificationDunCours;
@@ -60,6 +66,10 @@ public class CreerGroupeEtuIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frmModificationDunCours = new JFrame();
 		frmModificationDunCours.setTitle("Creer groupe etudiant");
 		frmModificationDunCours.setBounds(100, 100, 600, 300);
@@ -74,6 +84,9 @@ public class CreerGroupeEtuIHM {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frmModificationDunCours.getContentPane().add(panel_3);
 		
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -117,6 +130,11 @@ public class CreerGroupeEtuIHM {
 		JButton btnGroupe_1 = new JButton("Creer");
 		btnGroupe_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField.getText().length() > 0 && textField_1.getText().length() > 0 &&
 						isIntNumGrp(textField.getText())) {
 					try {
@@ -145,6 +163,12 @@ public class CreerGroupeEtuIHM {
 		
 	}
 	
+	/**
+	 * Methode de la creation d'un groupe a partir 
+	 * du groupe propose par l'utilisateur
+	 * @param groupe
+	 * 			groupe propose par l'utilisateur
+	 */
 	public void creerGroupe(Groupe groupe) {
 		try {
 			int effectuee = actionGest.creerGroupe(groupe);
@@ -157,10 +181,18 @@ public class CreerGroupeEtuIHM {
 		}
 	}
 	
-	public boolean isIntNumGrp(String text) {
+	/**
+	 * Methode de verification que le groupe 
+	 * entre par l'utilisateur est bien un entier
+	 * @param grp
+	 * 			groupe entre par l'utilisateur
+	 * @return isNum
+	 * 			vrai si le groupe est un entier, faux sinon
+	 */
+	public boolean isIntNumGrp(String grp) {
 		boolean isNum = true;
 		try {
-			Integer.parseInt(text);
+			Integer.parseInt(grp);
 		}
 		catch (NumberFormatException e) {
 			isNum = false;

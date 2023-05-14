@@ -25,6 +25,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 
+/**
+ * Classe interface du planning d'un groupe d'etudiant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class PlanningGroupeIHM {
 
 	private JFrame frmCoursNonTraites;
@@ -70,6 +76,9 @@ public class PlanningGroupeIHM {
 	 * @throws Exception 
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmCoursNonTraites = new JFrame();
 		frmCoursNonTraites.setVisible(true);
 		frmCoursNonTraites.setTitle("Planning de groupe");
@@ -86,7 +95,10 @@ public class PlanningGroupeIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_2.add(panel_1);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButton = new JButton("Retour");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -183,9 +195,17 @@ public class PlanningGroupeIHM {
 		textField_7.setColumns(5);
 		panel_3.add(textField_7);
 		
+		/**
+		 * Verification de textField non vierge 
+		 * et des donnees entrees au format correct
+		 */
 		JButton btnNewButton_1 = new JButton("Afficher planning");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField.getText().length() > 0 && textField_1.getText().length() > 0 && 
 						textField_3.getText().length() > 0 &&
 						textField_4.getText().length() > 0 && textField_5.getText().length() > 0 &&
@@ -223,6 +243,9 @@ public class PlanningGroupeIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage du planning d'un groupe
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -232,6 +255,9 @@ public class PlanningGroupeIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{"INTITULE", "NOM PROFESSEUR", "DATE", "DEBUT DU COURS", "FIN DU COURS"},
 			},
@@ -239,27 +265,30 @@ public class PlanningGroupeIHM {
 				"New column", "New column", "New column", "New column", "New column"
 			}
 		) {
-				private static final long serialVersionUID = 1L;
-				Class[] columnTypes = new Class[] {
-					Object.class, Object.class, Object.class, Object.class, Object.class
-				};
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-				
-				boolean[] isCellEditable = new boolean[]{
-	                    false, false, false, false, false
-	            };
+			/**
+			 * Fixation des types variables des colonnes
+			 */
+			private static final long serialVersionUID = 1L;
+			Class[] columnTypes = new Class[] {
+				Object.class, Object.class, Object.class, Object.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
 
-	            public boolean isCellEditable(int rowIndex, int columnIndex) {
-	                return isCellEditable[columnIndex];
-	            }
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
+			boolean[] isCellEditable = new boolean[]{
+                    false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return isCellEditable[columnIndex];
+            }
 		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
-		
-		
-
 		
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
@@ -278,6 +307,16 @@ public class PlanningGroupeIHM {
 		
 	}
 	
+	/**
+	 * Methode pour l'affichage du planning de groupe 
+	 * entre la date de debut et la date de fin des cours
+	 * @param groupe
+	 * 			groupe du planning selectionne
+	 * @param dateDebut
+	 * 			date de debut de selection
+	 * @param dateFin
+	 * 			date de fin de selection
+	 */
 	public void afficherPlanning(int groupe, String dateDebut, String dateFin) {
 		PlanningDAO planning = new PlanningDAO();
 		
@@ -285,6 +324,11 @@ public class PlanningGroupeIHM {
 			((DefaultTableModel) table.getModel()).setRowCount(1);
 			planningGroupe = planning.planningGroupe(groupe, dateDebut, dateFin);
 			if(planningGroupe != null) {
+
+				/**
+				 * Remplissage des lignes par la liste des cours du planning de groupe
+				 * avec transformation des heures decimales en heures sexagesimales
+				 */
 				for(int i = 0; i<planningGroupe.size(); i++) {
 					double heureDebutDecimal = planningGroupe.get(i).getHeureDebut();
 					double heureFinDecimal = planningGroupe.get(i).getHeureFin();

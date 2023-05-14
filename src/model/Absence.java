@@ -36,6 +36,16 @@ public class Absence {
 	 * Attribut du prenom de l'etudiant de l'absence
 	 */
 	private String prenomEtu;
+	
+	/**
+	 * Attribut du nom du professeur de l'absence
+	 */
+	private String nomProf;
+
+	/**
+	 * Attribut du prenom du professeur de l'absence
+	 */
+	private String prenomProf;
 
 	/**
 	 * Attribut du type de l'absence
@@ -167,7 +177,26 @@ public class Absence {
 		this.justificatif = justificatif;
 		this.valideeAdmin = valideeAdmin;
 	}
-
+	
+	/**
+	 * Constructeur de la classe absence pour le prof remplacant
+	 * @param nomProf
+	 * 			nom du professeur de l'absence
+	 * @param prenomProf
+	 * 			prenom du professeur de l'absence
+	 * @param nomCours 
+	 * 			nom du cours de l'absence
+	 * @param date
+	 * 			date de l'absence
+	 */
+	public Absence(String nomProf, String prenomProf, String nomCours, String date, int I) {
+		this.nomProf = nomProf;
+		this.prenomProf = prenomProf;
+		this.nomCours = nomCours;
+		this.date = date;
+		I = 0;
+	}
+	
 	/**
 	 * Getter de la date de l'absence
 	 * @return date
@@ -329,6 +358,42 @@ public class Absence {
 	 */
 	public void setPrenomEtu(String prenomEtu) {
 		this.prenomEtu = prenomEtu;
+	}
+
+	/**
+	 * Getter du nom du professeur de l'absence
+	 * @return nomProf
+	 * 			nom du professeur de l'absence
+	 */
+	public String getNomProf() {
+		return nomProf;
+	}
+
+	/**
+	 * Setter du nom du professeur de l'absence
+	 * @param nomProf
+	 * 			nom du professeur de l'absence
+	 */
+	public void setNomProf(String nomProf) {
+		this.nomProf = nomProf;
+	}
+
+	/**
+	 * Getter du prenom du professeur de l'absence
+	 * @return prenomProf
+	 * 			prenom du professeur de l'absence
+	 */
+	public String getPrenomProf() {
+		return prenomProf;
+	}
+
+	/**
+	 * Setter du prenom du professeur de l'absence
+	 * @param prenomProf
+	 * 			prenom du professeur de l'absence
+	 */
+	public void setPrenomProf(String prenomProf) {
+		this.prenomProf = prenomProf;
 	}
 
 }

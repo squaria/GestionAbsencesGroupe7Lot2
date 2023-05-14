@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -9,36 +10,58 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import dao.ActionsGestionnaireDAO;
+import dao.ActionsProfesseurDAO;
 import dao.PlanningDAO;
+import model.Absence;
 import model.Planning;
 import model.PlanningEnseignant;
+import model.Professeur;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * Classe interface du planning d'un enseignant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class PlanningEnseignantIHM {
 
 	private JFrame frmCoursNonTraites;
 	private JTable table;
 	private JTextField textField_1;
 	private ArrayList<PlanningEnseignant> planningProf;
+	private ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
+	private ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
+	private ArrayList<Date> listeDate = new ArrayList<>();
 	private Planning planning = new Planning();
 	private float nbHeures;
 	private int groupe;
+	private int ligneNum_1 = -1;
+	private Date date;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
+	private JTable table_1;
+	private JLabel lblNewLabel_3_5;
 
 	/**
 	 * Launch the application.
@@ -70,9 +93,12 @@ public class PlanningEnseignantIHM {
 	 * @throws Exception 
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmCoursNonTraites = new JFrame();
 		frmCoursNonTraites.setVisible(true);
-		frmCoursNonTraites.setTitle("Planning de groupe");
+		frmCoursNonTraites.setTitle("Planning enseignant");
 		frmCoursNonTraites.setBounds(100, 100, 1409, 751);
 		frmCoursNonTraites.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
@@ -86,11 +112,19 @@ public class PlanningEnseignantIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_2.add(panel_7);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButton = new JButton("Retour");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new EnseignantIHM();
+				if(IdEtTypeCompte.typeCompte == 1)
+					new EnseignantIHM();
+				else if(IdEtTypeCompte.typeCompte == 2)
+					new AdministratifIHM();
+				else if(IdEtTypeCompte.typeCompte == 3)
+					new GestionnaireIHM();
 				frmCoursNonTraites.dispose();
 			}
 		});
@@ -99,12 +133,93 @@ public class PlanningEnseignantIHM {
 		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
+
+		JPanel panel_6 = new JPanel();
+		panel_2.add(panel_6);
+		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.X_AXIS));
 		
 		JLabel lblEntrezLeGroupe = new JLabel("Selection du planning :  ");
 		lblEntrezLeGroupe.setForeground(Color.BLUE);
 		lblEntrezLeGroupe.setFont(new Font("Times New Roman", Font.BOLD, 26));
 		lblEntrezLeGroupe.setAlignmentX(0.5f);
 		panel_4.add(lblEntrezLeGroupe);
+		
+
+		if(IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3) {
+			/**
+			 * Table d'affichage de la liste des professeurs
+			 */
+			table_1 = new JTable();
+			table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+			table_1.setRowSelectionAllowed(false);
+			table_1.setCellSelectionEnabled(true);
+			table_1.setColumnSelectionAllowed(true);
+			table_1.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			table_1.setForeground(Color.DARK_GRAY);
+			table_1.setToolTipText("");
+			
+			table_1.setModel(new DefaultTableModel(
+				/**
+				 * Creation des titres des colonnes
+				 */
+				null,
+				new String[] {
+					"CHOIX", "NOM PROFESSEUR", "PRENOM PROFESSEUR", "EMAIL", "NUM TELEPHONE"
+				}
+			) {
+				/**
+				 * Fixation des types variables des colonnes
+				 */
+				private static final long serialVersionUID = 1L;
+				Class[] columnTypes = new Class[] {
+					Boolean.class, Object.class, Object.class, Object.class, Object.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+				
+				/**
+				 * Fixation des autorisations de modification par l'utilisateur
+				 */
+				boolean[] isCellEditable = new boolean[]{
+	                true, false, false, false, false
+				};
+
+		        public boolean isCellEditable(int rowIndex, int columnIndex) {
+		            return isCellEditable[columnIndex];
+		        }
+	        });
+			
+			ArrayList<Professeur> listeProf = null;
+			
+			try {
+				listeProf = actionGest.getListeProfesseur();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			/**
+			 * Remplissage des lignes par la liste des professeurs
+			 */
+			for(int i = 0; i<listeProf.size(); i++) {
+				((DefaultTableModel) table_1.getModel()).addRow(
+							new Object[]{Boolean.FALSE, listeProf.get(i).getNom(), 
+									listeProf.get(i).getPrenom(), listeProf.get(i).getEmail(), 
+									listeProf.get(i).getNumTelephone()});
+			}
+			ListSelectionModel tableSelectionModel = table_1.getSelectionModel();
+			tableSelectionModel.setSelectionInterval(0, 0);
+			table_1.setSelectionModel(tableSelectionModel);
+			table_1.repaint();
+			
+
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setViewportView(table_1);
+			scrollPane.setViewportBorder(null);
+			scrollPane.setPreferredSize(new Dimension(50,40));
+
+			panel_6.add(scrollPane);
+		}
 		
 		JLabel lblNewLabel_1 = new JLabel("Date de debut (JJ/MM/AAAA) : ");
 		lblNewLabel_1.setForeground(Color.BLACK);
@@ -172,6 +287,10 @@ public class PlanningEnseignantIHM {
 		JButton btnNewButton_1 = new JButton("Afficher planning");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField_1.getText().length() > 0 && textField_3.getText().length() > 0 &&
 						textField_4.getText().length() > 0 && textField_5.getText().length() > 0 &&
 						textField_6.getText().length() > 0 && textField_7.getText().length() > 0 &&
@@ -201,11 +320,14 @@ public class PlanningEnseignantIHM {
 		frmCoursNonTraites.getContentPane().add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {182, 10, 0};
-		gbl_panel.rowHeights = new int[] {20, 0, 0};
+		gbl_panel.rowHeights = new int[] {15, 0, 0};
 		gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage du planning d'un enseignant
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -215,6 +337,9 @@ public class PlanningEnseignantIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{Boolean.FALSE, "INTITULE", "GROUPE", "DATE", "DEBUT DU COURS", "FIN DU COURS"},
 			},
@@ -222,6 +347,9 @@ public class PlanningEnseignantIHM {
 				"New column", "New column", "New column", "New column", "New column", "New column"
 			}
 		) {
+			/**
+			 * Fixation des types variables des colonnes
+			 */
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class
@@ -229,7 +357,10 @@ public class PlanningEnseignantIHM {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			
+
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
 			boolean[] isCellEditable = new boolean[]{
                 true, false, false, false, false, false
             };
@@ -249,10 +380,11 @@ public class PlanningEnseignantIHM {
 		table.setSelectionModel(tableSelectionModel);
 		table.repaint();
 		GridBagConstraints gbc_table = new GridBagConstraints();
-		gbc_table.gridheight = 2;
+		gbc_table.fill = GridBagConstraints.HORIZONTAL;
+		gbc_table.gridheight = 1;
+		gbc_table.weighty = 0;
 		gbc_table.gridwidth = 2;
 		gbc_table.insets = new Insets(0, 0, 0, 5);
-		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 0;
 		panel.add(table, gbc_table);
@@ -264,17 +396,24 @@ public class PlanningEnseignantIHM {
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ligneNum = -1;
+				/**
+				 * Recuperation de la ligne de la case cochee par l'utilisateur
+				 * pour l'id SQL de la table corespondante
+				 */
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
 						ligneNum = i;
 						nbHeures = (float) table.getValueAt(i, 5) - (float) table.getValueAt(i, 4);
-						groupe =  (int) table.getValueAt(i, 2);
+						groupe = (int) table.getValueAt(i, 2);
 					}
 				}
-				if(ligneNum != -1) {
+				if(ligneNum != -1 && IdEtTypeCompte.typeCompte == 0) {
 					new DeclarerAbsenceIHM(ligneNum, nbHeures, groupe);
 					frmCoursNonTraites.dispose();
+				}
+				else if(ligneNum != -1 && (IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3)) {
+					declarerAbsenceProf(ligneNum);
 				}
 				else {
 					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
@@ -285,17 +424,76 @@ public class PlanningEnseignantIHM {
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_1.add(btnNewButton_1_1);
 		
-		
+
+		lblNewLabel_3_5 = new JLabel("");
+		lblNewLabel_3_5.setForeground(Color.RED);
+		lblNewLabel_3_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel_1.add(lblNewLabel_3_5);
 		
 	}
 	
-	public void afficherPlanning(String dateDebut, String dateFin) {
-		PlanningDAO planning = new PlanningDAO();
+	/**
+	 * Methode pour la declaration des absences d'un professeur
+	 * @param profId
+	 * 			id du professeur
+	 */
+	public void declarerAbsenceProf(int profId) {
+		/**
+		 * Recuperation de la date locale de l'ordinateur de l'utilisateur
+		 * et formatage de cette date pour la compatibilite SQL
+		 */
+		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String dateStr = formatter.format(date);
 		
 		try {
+			int effectuee = actionProf.creerAbsence(new Absence(dateStr, 
+					nbHeures, ligneNum_1, "Professeur", null, null), 0, profId);
+			if (effectuee == 1)
+				lblNewLabel_3_5.setText("Absence cree !");
+			else
+				lblNewLabel_3_5.setText("Erreur ce professeur n'existe pas !");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	/**
+	 * Methode pour l'affichage du planning d'un enseignant
+	 * entre la date de debut et la date de fin des cours
+	 * @param dateDebut
+	 * 			date de debut de selection
+	 * @param dateFin
+	 * 			date de fin de selection
+	 */
+	@SuppressWarnings("unchecked")
+	public void afficherPlanning(String dateDebut, String dateFin) {
+		PlanningDAO planning = new PlanningDAO();
+		Object[] listeObj = {-1,-1};
+		try {
 			((DefaultTableModel) table.getModel()).setRowCount(1);
-			planningProf = planning.planningProf(IdEtTypeCompte.id, dateDebut, dateFin);
+			if(IdEtTypeCompte.typeCompte == 1) {
+				listeObj = planning.planningProf(IdEtTypeCompte.id, dateDebut, dateFin);
+			}
+			else if(IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3) {
+				/**
+				 * Recuperation de la ligne de la case cochee par l'utilisateur
+				 * pour l'id SQL de la table corespondante
+				 */
+				for(int i = 0; i < table_1.getRowCount(); i++) {
+					Boolean CaseCochee = Boolean.valueOf(table_1.getValueAt(i, 0).toString());
+					if(CaseCochee)
+						ligneNum_1 = i+1;
+				}
+				listeObj = planning.planningProf(ligneNum_1, dateDebut, dateFin);
+			}
+			planningProf = (ArrayList<PlanningEnseignant>) listeObj[0];
+			listeDate = (ArrayList<Date>) listeObj[1];
+			date = listeDate.get(ligneNum_1-1);
 			if(planningProf != null) {
+
+				/**
+				 * Remplissage des lignes par la liste des cours du planning d'un enseignant
+				 */
 				for(int i = 0; i<planningProf.size(); i++) {
 					((DefaultTableModel) table.getModel()).addRow(
 							new Object[]{Boolean.FALSE, planningProf.get(i).getCoursNom(), planningProf.get(i).getGrpId(),

@@ -27,6 +27,13 @@ import model.PlanningGroupe;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * Classe interface utilisateur d'insertion dans un planning
+ * de groupe d'un cours pour une plage horaire definie
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class GestionPlanningIHM {
 
 	private JFrame frmCoursNonTraites;
@@ -70,6 +77,9 @@ public class GestionPlanningIHM {
 	 * @throws Exception 
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmCoursNonTraites = new JFrame();
 		frmCoursNonTraites.setVisible(true);
 		frmCoursNonTraites.setTitle("Cours non traites");
@@ -90,7 +100,10 @@ public class GestionPlanningIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frmCoursNonTraites.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,6 +127,9 @@ public class GestionPlanningIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage de la liste des cours
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -123,6 +139,9 @@ public class GestionPlanningIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{Boolean.FALSE, "INTITULE", "NOM PROFESSEUR", "NBHEURESAMPHI", "NBHEURESAMPHI", "NBHEURESAMPHI", "NBHEURESAMPHI", "GROUPE"},
 			},
@@ -130,6 +149,9 @@ public class GestionPlanningIHM {
 				"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
 			}
 		) {
+			/**
+			 * Fixation des types variables des colonnes
+			 */
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
@@ -137,7 +159,10 @@ public class GestionPlanningIHM {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			
+
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
 			boolean[] isCellEditable = new boolean[]{
                     true, false, false, false, false, false, false, false
             };
@@ -151,6 +176,10 @@ public class GestionPlanningIHM {
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		
+		/**
+		 * Remplissage des lignes par la liste des cours 
+		 * avec la liste des groupes pour ce cours
+		 */
 		for(int i = 0; i<listeCours.size(); i++) {
 			ArrayList<Groupe> listeGroupe = null;
 			try {
@@ -160,7 +189,12 @@ public class GestionPlanningIHM {
 				e1.printStackTrace();
 			}
 			String format = "";
+			/**
+			 * liste des groupes pour un cours donne
+			 */
 			for(int j = 0; j < listeGroupe.size(); j++) {
+				
+				
 				if(j != listeGroupe.size() - 1)
 					format = format + listeGroupe.get(j).getGrpNum() + ", ";
 				else
@@ -267,12 +301,21 @@ public class GestionPlanningIHM {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ligneNum = -1;
+
+				/**
+				 * Recuperation de la ligne de la case cochee par l'utilisateur
+				 * pour l'id SQL de la table corespondante
+				 */
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee)
 						ligneNum = i;
 				}
 				if(ligneNum != -1) {
+					/**
+					 * Verification de textField non vierge 
+					 * et des donnees entrees au format correct
+					 */
 					if(textField_5.getText().length() > 0 && textField_2.getText().length() > 0 &&
 						textField_3.getText().length() > 0 && textField_6.getText().length() > 0 && 
 						textField_7.getText().length() > 0 && textField.getText().length() > 0 &&
@@ -301,6 +344,11 @@ public class GestionPlanningIHM {
 		
 	}
 	
+	/**
+	 * Methode pour l'ajout d'un cours dans un planning de groupe
+	 * @param planningGroupe
+	 * 			planning de groupe
+	 */
 	public void ajouterCoursPlanning(PlanningGroupe planningGroupe) {
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 		try {

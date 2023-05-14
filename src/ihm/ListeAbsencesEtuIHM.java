@@ -31,6 +31,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 
+/**
+ * Classe interface de la liste des absences d'un etudiant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ListeAbsencesEtuIHM {
 
 	private JFrame frmAbsencesClassiquesEt;
@@ -69,6 +75,9 @@ public class ListeAbsencesEtuIHM {
 	 * @throws Exception 
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmAbsencesClassiquesEt = new JFrame();
 		frmAbsencesClassiquesEt.setVisible(true);
 		frmAbsencesClassiquesEt.setTitle("Absences classiques et physiques");
@@ -81,7 +90,10 @@ public class ListeAbsencesEtuIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frmAbsencesClassiquesEt.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -105,6 +117,9 @@ public class ListeAbsencesEtuIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage de la liste des absences d'un etudiant
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -114,6 +129,9 @@ public class ListeAbsencesEtuIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{Boolean.FALSE, "DATE", "NBHEURES", "COURS", "TYPE", "JUSTIFICATIF", "VALIDEE ADMIN"}
 			},
@@ -121,6 +139,9 @@ public class ListeAbsencesEtuIHM {
 				"New column", "New column", "New column", "New column", "New column", "New column", "New column"
 			}
 		) {
+			/**
+			 * Fixation des types variables des colonnes
+			 */
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
@@ -128,7 +149,10 @@ public class ListeAbsencesEtuIHM {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			
+
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
 			boolean[] isCellEditable = new boolean[]{
                     true, false, false, false, false, false, false
             };
@@ -148,6 +172,10 @@ public class ListeAbsencesEtuIHM {
 		JPanel panel_1 = new JPanel();
 		frmAbsencesClassiquesEt.getContentPane().add(panel_1);
 
+		/**
+		 * Affichage du bouton deposer un justificatif
+		 * si le type de compte est un etudiant
+		 */
 		if(IdEtTypeCompte.typeCompte == 0) {
 			try {
 				listeAbsences = actionEtu.listeAbsences(IdEtTypeCompte.id);
@@ -160,6 +188,10 @@ public class ListeAbsencesEtuIHM {
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int ligneNum = -1;
+					/**
+					 * Recuperation de la ligne de la case cochee par l'utilisateur
+					 * pour l'id SQL de la table corespondante
+					 */
 					for(int i = 0; i < table.getRowCount(); i++) {
 						Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 						if(CaseCochee)
@@ -186,6 +218,10 @@ public class ListeAbsencesEtuIHM {
 			
 			quotaNonRespecte();
 		}
+		/**
+		 * Affichage de la selection d'un etudiant
+		 * si le type de compte est un professeur
+		 */
 		else if(IdEtTypeCompte.typeCompte == 1) {
 			JLabel lblNewLabel1 = new JLabel("Entrez un etudiant :");
 			lblNewLabel1.setForeground(Color.BLACK);
@@ -225,6 +261,10 @@ public class ListeAbsencesEtuIHM {
 			panel_1.add(btnNewButton);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					/**
+					 * Verification de textField non vierge 
+					 * et des donnees entrees au format correct
+					 */
 					if (textField.getText().length() > 0 && textField1.getText().length() > 0 
 							&& textField2.getText().length() > 0) {
 						try {
@@ -256,6 +296,9 @@ public class ListeAbsencesEtuIHM {
 		panel.add(table, gbc_table);
 	}
 
+	/**
+	 * Calcul et affichage du quota des absences d'un etudiant
+	 */
 	public void quotaNonRespecte() {
 		try {
 			float calcul = actionEtu.quotaNonRespecte(IdEtTypeCompte.id);
@@ -272,6 +315,9 @@ public class ListeAbsencesEtuIHM {
 		}
 	}
 	
+	/**
+	 * Remplissage des lignes par la liste des etudiants
+	 */
 	public void refresh() {
 		for(int i = 0; i<listeAbsences.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(new Object[]{Boolean.FALSE, listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),

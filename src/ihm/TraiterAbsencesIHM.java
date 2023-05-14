@@ -24,6 +24,12 @@ import dao.ActionsAdministratifDAO;
 import model.Absence;
 import javax.swing.JLabel;
 
+/**
+ * Classe interface du traitement des absences
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class TraiterAbsencesIHM {
 
 	private JFrame frame;
@@ -58,6 +64,9 @@ public class TraiterAbsencesIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frame = new JFrame();
 		frame.setVisible(true);
 		frame.setTitle("Absences classiques et physiques");
@@ -79,7 +88,10 @@ public class TraiterAbsencesIHM {
 		frame.getContentPane().add(panel_7);
 		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,6 +115,9 @@ public class TraiterAbsencesIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage des absences
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -112,6 +127,9 @@ public class TraiterAbsencesIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{Boolean.FALSE, "DATE", "NBHEURES", "NOM ETUDIANT", "PRENOM ETUDIANT", "COURS", "TYPE", "JUSTIFICATIF", "VALIDEE ADMIN"},
 			},
@@ -121,6 +139,9 @@ public class TraiterAbsencesIHM {
 			
 			
 		) {
+			/**
+			 * Fixation des types variables des colonnes
+			 */
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
@@ -128,7 +149,10 @@ public class TraiterAbsencesIHM {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			
+
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
 			boolean[] isCellEditable = new boolean[]{
                 true, false, false, false, false, false, false, true, false
 			};
@@ -144,6 +168,9 @@ public class TraiterAbsencesIHM {
 		table.getColumnModel().getColumn(5).setPreferredWidth(40);
 		table.getColumnModel().getColumn(6).setPreferredWidth(200);
 		
+		/**
+		 * Remplissage des lignes par la liste des absences
+		 */
 		for(int i = 0; i<listeAbsences.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(
 						new Object[]{Boolean.FALSE, listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),
@@ -171,6 +198,10 @@ public class TraiterAbsencesIHM {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ligneNum = -1;
+				/**
+				 * Recuperation de la ligne de la case cochee par l'utilisateur
+				 * pour l'id SQL de la table correspondante
+				 */
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
@@ -191,6 +222,10 @@ public class TraiterAbsencesIHM {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ligneNum = -1;
+				/**
+				 * Recuperation de la ligne de la case cochee par l'utilisateur
+				 * pour l'id SQL de la table correspondante
+				 */
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
@@ -217,6 +252,13 @@ public class TraiterAbsencesIHM {
 		panel_1.add(lblNewLabel_3_3);
 	}
 
+	/**
+	 * Methode pour la validation ou non de l'absence par l'administratif
+	 * @param ligneNum
+	 * 			ligne cochee dans la table par l'utilisateur
+	 * @param isValidee
+	 * 			vrai si absence validee faux sinon
+	 */
 	public void validerAbsence(int ligneNum, boolean isValidee) {
 		ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
 		try {

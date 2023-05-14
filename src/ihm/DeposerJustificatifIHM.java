@@ -20,6 +20,13 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe interface utilisateur du depot du justificatif 
+ * d'une absence classique par un etudiant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class DeposerJustificatifIHM {
 
 	private JFrame frame;
@@ -57,6 +64,10 @@ public class DeposerJustificatifIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frame = new JFrame();
 		frame.setVisible(true);
 		frame.setTitle("JUSTIFICATION");
@@ -69,7 +80,10 @@ public class DeposerJustificatifIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frame.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,6 +128,9 @@ public class DeposerJustificatifIHM {
 		JButton btnDeposer = new JButton("Deposer");
 		btnDeposer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge
+				 */
 				if (textField.getText().length() > 0) {
 					deposerJustificatif(textField.getText());
 				} else {
@@ -132,6 +149,11 @@ public class DeposerJustificatifIHM {
 
 	}
 
+	/**
+	 * Methode pour le depot d'un justificatif par un etudiant
+	 * @param justificatif
+	 * 			justificatif de l'absence d'un etudiant
+	 */
 	public void deposerJustificatif(String justificatif) {
 		ActionsEtudiantDAO actionEtu = new ActionsEtudiantDAO();
 		try {

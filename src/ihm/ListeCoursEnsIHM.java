@@ -23,6 +23,12 @@ import model.Cours;
 
 import java.awt.Color;
 
+/**
+ * Classe interface de la liste des cours d'un enseignant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ListeCoursEnsIHM {
 	private JFrame frmAbsencesClassiquesEnseignant;
 	private JTable table;
@@ -56,6 +62,9 @@ public class ListeCoursEnsIHM {
 	 * @throws Exception 
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmAbsencesClassiquesEnseignant = new JFrame();
 		frmAbsencesClassiquesEnseignant.setVisible(true);
 		frmAbsencesClassiquesEnseignant.setTitle("Liste cours professeur");
@@ -76,7 +85,10 @@ public class ListeCoursEnsIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frmAbsencesClassiquesEnseignant.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,6 +109,9 @@ public class ListeCoursEnsIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage de la liste des cours d'un enseignant
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -106,6 +121,9 @@ public class ListeCoursEnsIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{"NOM COURS", "NBHEURES AMPHI", "NBHEURES TD", "NBHEURES TP", "NBHEURES EXAMEN"},
 			},
@@ -115,7 +133,10 @@ public class ListeCoursEnsIHM {
 			) {
 			
 				private static final long serialVersionUID = 1L;
-				
+
+				/**
+				 * Fixation des autorisations de modification par l'utilisateur
+				 */
 				boolean[] isCellEditable = new boolean[]{
 	                    false, false, false, false, false
 	            };
@@ -125,7 +146,9 @@ public class ListeCoursEnsIHM {
 	            }
 		});
 		
-		
+		/**
+		 * Remplissage des lignes par la liste des cours d'un enseignant
+		 */
 		for(int i = 0; i<listeCours.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeCours.get(i).getNom(),
 					listeCours.get(i).getNbHeuresAmphi(), listeCours.get(i).getNbHeuresTD(),

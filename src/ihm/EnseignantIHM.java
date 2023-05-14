@@ -13,6 +13,12 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe interface utilisateur du menu d'un compte enseignant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class EnseignantIHM {
 
 	private JFrame frmMenuPrincipal;
@@ -43,6 +49,10 @@ public class EnseignantIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frmMenuPrincipal = new JFrame();
 		frmMenuPrincipal.setVisible(true);
 		frmMenuPrincipal.setTitle("Menu Principal - Enseignant");
@@ -62,7 +72,10 @@ public class EnseignantIHM {
 		panel.add(panel_10);
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,6 +102,10 @@ public class EnseignantIHM {
 		JButton btnNewButton_2 = new JButton("Planning et declarer absence etudiant");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
 				new PlanningEnseignantIHM();
 				frmMenuPrincipal.dispose();
 			}
@@ -105,6 +122,9 @@ public class EnseignantIHM {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new ListeAbsencesEnsIHM();
 					frmMenuPrincipal.dispose();
 				} catch (Exception e1) {
@@ -123,6 +143,9 @@ public class EnseignantIHM {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new ListeCoursEnsIHM();
 					frmMenuPrincipal.dispose();
 				} catch (Exception e1) {
@@ -137,6 +160,9 @@ public class EnseignantIHM {
 		btnNewButton_31.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
 					new ListeAbsencesEtuIHM();
 					frmMenuPrincipal.dispose();
 				} catch (Exception e1) {

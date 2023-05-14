@@ -6,36 +6,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import ihm.IdEtTypeCompte;
 import model.Absence;
 import model.Cours;
 import model.Etudiant;
 import model.Note;
 import model.Profil;
 
+/**
+ * Classe DAO de lien avec la base de donnee 
+ * pour les actions du professeur
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ActionsProfesseurDAO extends IdentificationBdd {
+	
+	/**
+	 * Constructeur de la classe ActionsProfesseurDAO
+	 */
 	public ActionsProfesseurDAO() {
 	}
 	
-	public int getEtuId(Profil profil) throws Exception {
-		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
-			int etudiant = 0;
-			
-			PreparedStatement ps = con.prepareStatement("SELECT etu_id "
-						+ "FROM Lot2_Etudiant "
-						+ "WHERE etu_nom = ? AND etu_prenom = ? AND etu_email = ?");
-			ps.setString(1, profil.getNom());
-			ps.setString(2, profil.getPrenom());
-			ps.setString(3, profil.getEmail());
-			
-			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next()) {
-				etudiant = rs.getInt("etu_id");
-			}
-		return etudiant;
-		}
-	}
-	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des absences des professeurs
+	 * @return listeAbsence
+	 * 			liste des absences des professeurs
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public ArrayList<Absence> listeAbsencesProf() throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -55,6 +55,16 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des absences d'un etudiant
+	 * @param profil
+	 * 			profil d'un etudiant
+	 * @return listeAbsence
+	 * 			liste des absences d'un etudiant
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public ArrayList<Absence> listeAbsencesEtu(Profil profil) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -80,6 +90,16 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des cours d'un professeur
+	 * @param profId
+	 * 			id du professeur
+	 * @return listeCours
+	 * 			liste des cours d'un professeur
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public ArrayList<Cours> listeCoursProf(int profId) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -102,6 +122,20 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de creer une absence pour un etudiant
+	 * @param absence
+	 * 			informations de l'absence
+	 * @param etuIdGrp
+	 * 			id de l'etudiant du groupe
+	 * @param groupe
+	 * 			numero du groupe
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int creerAbsence(Absence absence, int etuIdGrp, int groupe) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
@@ -120,12 +154,21 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 			
 			effectuee = ps.executeUpdate();
 			
+			if(IdEtTypeCompte.typeCompte == 0) {
 			int etuId = getEtuId(etuIdGrp, groupe);
 			
 			ps = con.prepareStatement("INSERT INTO Lot2_AbsenceParEtudiant "
 					+ "VALUES (?,?)");
 			ps.setInt(1, actionGest.getLastIdTable(4));
 			ps.setInt(2, etuId);
+			}
+			else if(IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3) {
+				ps.close();
+				ps = con.prepareStatement("INSERT INTO Lot2_AbsenceParEnseignant "
+						+ "VALUES (?,?)");
+				ps.setInt(1, actionGest.getLastIdTable(4));
+				ps.setInt(2, groupe);
+			}
 			
 			effectuee = ps.executeUpdate();
 			
@@ -133,6 +176,18 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir id d'un etudiant par son groupe
+	 * @param etuIdGrp
+	 * 			id de l'etudiant du groupe
+	 * @param groupe
+	 * 			numero du groupe
+	 * @return etuId
+	 * 			id de l'etudiant
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int getEtuId(int etuIdGrp, int groupe) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int etuId = 0;
@@ -157,6 +212,16 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 		}
 	}
 
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de fixer la note a zero pour une absence a un examen
+	 * @param note
+	 * 			informations de la note
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int noteZero(Note note) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -177,6 +242,16 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des etudiants
+	 * @param groupe
+	 * 			numero du groupe
+	 * @return listeEtudiant
+	 * 			liste des etudiants
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public ArrayList<Etudiant> listeEtudiant(int groupe) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			
@@ -197,24 +272,6 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 			}
 			
 			return listeEtudiant;
-		}
-	}
-	
-	public String getNbHeures(int coursId) throws Exception {
-		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
-			PreparedStatement ps = null;
-			String coursNom = null;
-			ps = con.prepareStatement("SELECT cours_nom FROM Lot2_Cours "
-					+ "WHERE cours_id = ?");
-			ps.setInt(1, coursId);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			if (rs.next()) {
-				coursNom = rs.getString("cours_nom");
-			}
-			
-			return coursNom;
 		}
 	}
 }

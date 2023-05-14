@@ -28,6 +28,13 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
+/**
+ * Classe interface utilisateur de la gestion
+ * des cours (creation, suppression, modification)
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class GestionCoursIHM {
 
 	private JFrame frmModificationDunCours;
@@ -77,6 +84,10 @@ public class GestionCoursIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frmModificationDunCours = new JFrame();
 		frmModificationDunCours.setTitle("Gestion des Cours");
 		frmModificationDunCours.setBounds(100, 100, 1127, 731);
@@ -89,7 +100,10 @@ public class GestionCoursIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frmModificationDunCours.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,6 +117,9 @@ public class GestionCoursIHM {
 		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_3.add(btnNewButtonRetour);
 		
+		/**
+		 * Table d'affichage de la liste des professeurs
+		 */
 		table = new JTable();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setRowSelectionAllowed(false);
@@ -113,6 +130,9 @@ public class GestionCoursIHM {
 		table.setToolTipText("");
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			null,
 			new String[] {
 				"CHOIX", "NOM PROFESSEUR", "PRENOM PROFESSEUR", "EMAIL", "NUM TELEPHONE"
@@ -120,6 +140,9 @@ public class GestionCoursIHM {
 			
 			
 		) {
+			/**
+			 * Fixation des types variables des colonnes
+			 */
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Boolean.class, Object.class, Object.class, Object.class, Object.class
@@ -128,6 +151,9 @@ public class GestionCoursIHM {
 				return columnTypes[columnIndex];
 			}
 			
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
 			boolean[] isCellEditable = new boolean[]{
                 true, false, false, false, false
 			};
@@ -145,6 +171,9 @@ public class GestionCoursIHM {
 			e1.printStackTrace();
 		}
 		
+		/**
+		 * Remplissage des lignes par la liste des professeurs
+		 */
 		for(int i = 0; i<listeProf.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(
 						new Object[]{Boolean.FALSE, listeProf.get(i).getNom(), 
@@ -192,6 +221,10 @@ public class GestionCoursIHM {
 		JButton btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField_6.getText().length() > 0) {
 					supprCours(textField_6.getText());
 				} else {
@@ -299,18 +332,30 @@ public class GestionCoursIHM {
 				String[] tabTxt = new String[] {textField_9.getText(), 
 						textField_10.getText(), textField_11.getText(), 
 						textField_12.getText()};
+
+				/**
+				 * Verification que les donnees entrees par l'utilisateur
+				 * sont bien des nombres reels
+				 */
 				for(int i = 0; i < 4; i++) {
 					if(!tabTxt[i].equals("") && cours.isFloatHeure(tabTxt[i]))
 						tab[i] = Float.parseFloat(tabTxt[i]);
 				}
 				
+				/**
+				 * Recuperation de la ligne de la case cochee par l'utilisateur
+				 * pour l'id SQL de la table corespondante
+				 */
 				int ligneNum = -1;
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee)
 						ligneNum = i;
 				}
-				
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField_7.getText().length() > 0 && ligneNum != -1) {
 					creerCours(new Cours(textField_7.getText(), ligneNum+1, tab[0], tab[1],
 							tab[2], tab[3]));
@@ -432,6 +477,11 @@ public class GestionCoursIHM {
 				String[] tabTxt = new String[] {textField_2.getText(), 
 						textField_3.getText(), textField_4.getText(), 
 						textField_5.getText()};
+
+				/**
+				 * Recuperation de la ligne de la case cochee par l'utilisateur
+				 * pour l'id SQL de la table corespondante
+				 */
 				for(int i = 0; i < 4; i++) {
 					if(!tabTxt[i].equals("") && cours.isFloatHeure(tabTxt[i]))
 						tab[i] = Float.parseFloat(tabTxt[i]);
@@ -443,7 +493,10 @@ public class GestionCoursIHM {
 					if(CaseCochee)
 						ligneNum = i;
 				}
-				
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField_13.getText().length() > 0) {
 					modCours(new Cours(textField.getText(), ligneNum+1, tab[0], tab[1],
 							tab[2], tab[3]), textField_13.getText());
@@ -462,6 +515,12 @@ public class GestionCoursIHM {
 		panel_9.add(lblNewLabel_3_5);
 	}
 	
+	/**
+	 * Methode pour la suppression d'un cours 
+	 * par le nom du cours
+	 * @param nomCours
+	 * 			nom du cours
+	 */
 	public void supprCours(String nomCours)
 	{
 		try {
@@ -475,6 +534,11 @@ public class GestionCoursIHM {
 		}
 	}	
 	
+	/**
+	 * Methode pour la creation d'un cours
+	 * @param cours
+	 * 			cours contenant les informations donnees par l'utilisateur
+	 */
 	public void creerCours(Cours cours) {
 		try {
 			int effectuee = actionGest.creerCours(cours);
@@ -487,6 +551,13 @@ public class GestionCoursIHM {
 		}
 	}
 	
+	/**
+	 * Methode pour la modification d'un cours
+	 * @param cours
+	 * 			cours contenant les informations donnees par l'utilisateur
+	 * @param nomCours
+	 * 			nom du cours
+	 */
 	public void modCours(Cours cours, String nomCours) {
 		try {
 			int effectuee = actionGest.modCours(cours, nomCours);

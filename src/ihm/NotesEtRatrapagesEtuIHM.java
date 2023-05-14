@@ -25,6 +25,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 
+/**
+ * Classe interface de la liste des notes 
+ * d'un etudiant avec les eventuels rattrapages
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class NotesEtRatrapagesEtuIHM {
 
 	private JFrame frmAbsencesClassiquesEt;
@@ -61,6 +68,9 @@ public class NotesEtRatrapagesEtuIHM {
 	 * @throws Exception 
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmAbsencesClassiquesEt = new JFrame();
 		frmAbsencesClassiquesEt.setVisible(true);
 		frmAbsencesClassiquesEt.setTitle("Notes et rattrapages");
@@ -82,7 +92,10 @@ public class NotesEtRatrapagesEtuIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frmAbsencesClassiquesEt.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,6 +116,9 @@ public class NotesEtRatrapagesEtuIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage de la liste des notes d'un etudiant
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -112,6 +128,9 @@ public class NotesEtRatrapagesEtuIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{"DATE", "COURS", "VALEUR", "RATTRAPAGE DECLANCHE"}
 			},
@@ -119,6 +138,9 @@ public class NotesEtRatrapagesEtuIHM {
 				"New column", "New column", "New column", "New column"
 			}
 		) {
+			/**
+			 * Fixation des types variables des colonnes
+			 */
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Object.class, Object.class, Object.class, Object.class
@@ -127,6 +149,9 @@ public class NotesEtRatrapagesEtuIHM {
 				return columnTypes[columnIndex];
 			}
 			
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
 			boolean[] isCellEditable = new boolean[]{
                     false, false, false, false
             };
@@ -135,7 +160,10 @@ public class NotesEtRatrapagesEtuIHM {
                 return isCellEditable[columnIndex];
             }
 		});
-		
+
+		/**
+		 * Remplissage des lignes par la liste des notes d'un etudiant
+		 */
 		for(int i = 0; i<listeNotes.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeNotes.get(i).getDate(),
 					listeNotes.get(i).getCoursNom(), listeNotes.get(i).getValeur(), listeNotes.get(i).getRattrapage()});

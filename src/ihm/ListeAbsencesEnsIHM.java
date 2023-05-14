@@ -28,6 +28,12 @@ import model.Profil;
 
 import java.awt.Color;
 
+/**
+ * Classe interface de la liste des absences d'un enseignant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ListeAbsencesEnsIHM {
 	private JFrame frmAbsencesClassiquesEnseignant;
 	private JTable table;
@@ -64,6 +70,9 @@ public class ListeAbsencesEnsIHM {
 	 * @throws Exception 
 	 */
 	private void initialize() {
+		/**
+		 * Creation de la JFrame
+		 */
 		frmAbsencesClassiquesEnseignant = new JFrame();
 		frmAbsencesClassiquesEnseignant.setVisible(true);
 		frmAbsencesClassiquesEnseignant.setTitle("Absences classiques et physiques enseignant");
@@ -76,7 +85,10 @@ public class ListeAbsencesEnsIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frmAbsencesClassiquesEnseignant.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,6 +112,9 @@ public class ListeAbsencesEnsIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+		/**
+		 * Table d'affichage de la liste des absences d'un enseignant
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -109,6 +124,9 @@ public class ListeAbsencesEnsIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{"DATE", "NBHEURES", "NOM COURS", "TYPE"},
 			},
@@ -143,7 +161,11 @@ public class ListeAbsencesEnsIHM {
 		
 		JPanel panel_1 = new JPanel();
 		frmAbsencesClassiquesEnseignant.getContentPane().add(panel_1);
-		
+
+		/**
+		 * Affichage de la selection d'un enseignant 
+		 * si le type de compte est un administratif
+		 */
 		if(IdEtTypeCompte.typeCompte == 2) {
 			JLabel lblNewLabel1 = new JLabel("Entrez un enseignant :");
 			lblNewLabel1.setForeground(Color.BLACK);
@@ -183,6 +205,10 @@ public class ListeAbsencesEnsIHM {
 			panel_1.add(btnNewButton);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					/**
+					 * Verification de textField non vierge 
+					 * et des donnees entrees au format correct
+					 */
 					if (textField.getText().length() > 0 && textField1.getText().length() > 0 
 							&& textField2.getText().length() > 0) {
 						try {
@@ -199,6 +225,10 @@ public class ListeAbsencesEnsIHM {
 			});
 		}		
 	}
+	
+	/**
+	 * Remplissage des lignes par la liste des absences enseignants
+	 */
 	public void refresh() {
 		for(int i = 0; i<listeAbsencesP.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeAbsencesP.get(i).getDate(), listeAbsencesP.get(i).getNbHeures(),

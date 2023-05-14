@@ -2,12 +2,35 @@ package dao;
 
 import java.sql.*;
 
+/**
+ * Classe DAO de lien avec la base de donnee 
+ * pour la connexion utilisateur
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ConnexionUtilisateurDAO extends IdentificationBdd {
 	
+	/**
+	 * Constructeur de la classe ConnexionUtilisateurDAO
+	 */
 	public ConnexionUtilisateurDAO() {
-		super();
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de comparer les identifiants de connexion entres par
+	 * l'utilisateur a ceux dans la BDD
+	 * @param email
+	 * 			email entre par l'utilisateur
+	 * @param pwd
+	 * 			mot de passe entre par l'utilisateur
+	 * @return returnValue
+	 * 			tableau de valeurs dont la premiere represente le type de compte
+	 * 			et la deuxieme l'id de l'utilisateur
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int[] checkConnexion(String email, String pwd) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int[] returnValue = {-1,-1};

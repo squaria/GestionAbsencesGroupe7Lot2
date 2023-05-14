@@ -14,12 +14,33 @@ import model.PlanningGroupe;
 import model.Professeur;
 import model.Profil;
 
+/**
+ * Classe DAO de lien avec la base de donnee 
+ * pour les actions du gestionnaire
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ActionsGestionnaireDAO extends IdentificationBdd {
 	
+	/**
+	 * Constructeur de la classe ActionsGestionnaireDAO
+	 */
 	public ActionsGestionnaireDAO() {
-		super();
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de supprimer un utilisateur
+	 * @param profil
+	 * 			profil d'un utilisateur
+	 * @param typeUtilisateur
+	 * 			type de l'utilisateur
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int suppr(Profil profil, int typeUtilisateur) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -50,6 +71,16 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de supprimer un cours
+	 * @param nomCours
+	 * 			nom du cours
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int supprCours(String nomCours) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int effectuee = 0;
@@ -64,6 +95,14 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des cours
+	 * @return listeCours
+	 * 			liste des cours
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public ArrayList<Cours> listeCours() throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			ArrayList<Cours> listeCours = new ArrayList<>();
@@ -86,48 +125,76 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 			}
 		}
 	
-public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des groupes pour un cours
+	 * @param coursId
+	 * 			id du cours
+	 * @return listeGroupe
+	 * 			liste des groupes pour un cours
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
+	public ArrayList<Groupe> getListeGroupeCours(int coursId) throws Exception {
+			
+			try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+				ArrayList<Groupe> listeGroupe = new ArrayList<>();
+				PreparedStatement ps = con.prepareStatement("SELECT DISTINCT grp_numero, grp_capaciteMax "
+						+ "FROM Lot2_Cours "
+						+ "JOIN Lot2_PlanningGroupe ON Lot2_PlanningGroupe.cours_id = Lot2_Cours.cours_id "
+						+ "JOIN Lot2_Groupe ON Lot2_PlanningGroupe.grp_id = Lot2_Groupe.grp_id "
+						+ "WHERE Lot2_Cours.cours_id = ? "
+						+ "ORDER BY grp_numero ASC");
+				ps.setInt(1, coursId);
+	
+				
+				ResultSet rs = ps.executeQuery();
+	
+				while(rs.next()) {
+					listeGroupe.add(new Groupe(rs.getInt("grp_numero"), rs.getInt("grp_capaciteMax")));
+				}
+			return listeGroupe;
+			}
+		}
+	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des professeurs
+	 * @return listeProf
+	 * 			liste des professeurs
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
+	public ArrayList<Professeur> getListeProfesseur() throws Exception {
 		
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
-			ArrayList<Groupe> listeGroupe = new ArrayList<>();
-			PreparedStatement ps = con.prepareStatement("SELECT DISTINCT grp_numero, grp_capaciteMax "
-					+ "FROM Lot2_Cours "
-					+ "JOIN Lot2_PlanningGroupe ON Lot2_PlanningGroupe.cours_id = Lot2_Cours.cours_id "
-					+ "JOIN Lot2_Groupe ON Lot2_PlanningGroupe.grp_id = Lot2_Groupe.grp_id "
-					+ "WHERE Lot2_Cours.cours_id = ? "
-					+ "ORDER BY grp_numero ASC");
-			ps.setInt(1, coursId);
-
+			ArrayList<Professeur> listeProf = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT prof_id, prof_nom, prof_prenom, prof_email, prof_numTelephone "
+					+ "FROM Lot2_Professeur "
+					+ "ORDER BY prof_id ASC");
+	
 			
 			ResultSet rs = ps.executeQuery();
-
+	
 			while(rs.next()) {
-				listeGroupe.add(new Groupe(rs.getInt("grp_numero"), rs.getInt("grp_capaciteMax")));
+				listeProf.add(new Professeur(rs.getString("prof_nom"), rs.getString("prof_prenom"), 
+						rs.getString("prof_email"), rs.getString("prof_numTelephone")));
 			}
-		return listeGroupe;
+		return listeProf;
 		}
 	}
 
-public ArrayList<Professeur> getListeProfesseur() throws Exception {
 	
-	try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
-		ArrayList<Professeur> listeProf = new ArrayList<>();
-		PreparedStatement ps = con.prepareStatement("SELECT prof_id, prof_nom, prof_prenom, prof_email, prof_numTelephone "
-				+ "FROM Lot2_Professeur "
-				+ "ORDER BY prof_id ASC");
-
-		
-		ResultSet rs = ps.executeQuery();
-
-		while(rs.next()) {
-			listeProf.add(new Professeur(rs.getString("prof_nom"), rs.getString("prof_prenom"), 
-					rs.getString("prof_email"), rs.getString("prof_numTelephone")));
-		}
-	return listeProf;
-	}
-}
-
-	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir les informations d'un etudiant
+	 * @param profil
+	 * 			profil d'un etudiant
+	 * @return etudiant
+	 * 			informations d'un etudiant
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public Etudiant getEtudiant(Profil profil) throws Exception {
 		
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
@@ -151,6 +218,16 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir les informations d'un professeur
+	 * @param profil
+	 * 			profil d'un professeur
+	 * @return professeur
+	 * 			informations d'un professeur
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public Professeur getProfesseur(Profil profil) throws Exception {
 		
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
@@ -173,6 +250,16 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir les informations d'un administratif
+	 * @param profil
+	 * 			profil d'un administratif
+	 * @return administratif
+	 * 			informations d'un administratif
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public Administratif getAdministratif(Profil profil) throws Exception {
 		
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
@@ -194,6 +281,20 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 		}
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de modifier un profil etudiant
+	 * @param profil
+	 * 			profil d'un etudiant
+	 * @param etudiant
+	 * 			informations d'un etudiant
+	 * @param pwd
+	 * 			mot de passe du compte
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int modEtudiant(Profil profil, Etudiant etudiant, String pwd) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int effectuee = 0;
@@ -224,6 +325,20 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de modifier un profil professeur
+	 * @param profil
+	 * 			profil d'un professeur
+	 * @param professeur
+	 * 			informations d'un professeur
+	 * @param pwd
+	 * 			mot de passe du compte
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int modProfesseur(Profil profil, Professeur professeur, String pwd) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int effectuee = 0;
@@ -249,6 +364,20 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de modifier un profil administratif
+	 * @param profil
+	 * 			profil d'un administratif
+	 * @param administratif
+	 * 			informations d'un administratif
+	 * @param pwd
+	 * 			mot de passe du compte
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int modAdministratif(Profil profil, Administratif administratif, String pwd) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int effectuee = 0;
@@ -273,6 +402,18 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de modifier un cours
+	 * @param cours
+	 * 			informations d'un cours
+	 * @param nomCours
+	 * 			nom du cours
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int modCours(Cours cours, String nomCours) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int effectuee = 0;
@@ -296,6 +437,16 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir le dernier id d'une table
+	 * @param table
+	 * 			selection de la table
+	 * @return lastIdTable
+	 * 			dernier id d'une table
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int getLastIdTable(int table) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -336,6 +487,18 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 		
 	}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de creer un compte etudiant
+	 * @param etudiant
+	 * 			information d'un compte etudiant
+	 * @param pwd
+	 * 			mot de passe du compte
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int creerEtudiant(Etudiant etudiant, String pwd) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -363,6 +526,18 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de creer un compte professeur
+	 * @param professeur
+	 * 			information d'un compte professeur
+	 * @param pwd
+	 * 			mot de passe du compte
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int creerProfesseur(Professeur professeur, String pwd) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -385,6 +560,18 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de creer un compte administratif
+	 * @param administratif
+	 * 			information d'un compte administratif
+	 * @param pwd
+	 * 			mot de passe du compte
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int creerAdministratif(Administratif administratif, String pwd) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -406,6 +593,16 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de creer un cours
+	 * @param cours
+	 * 			informations d'un cours
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int creerCours(Cours cours) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -429,6 +626,16 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de creer un groupe
+	 * @param groupe
+	 * 			informations d'un groupe d'etudiants
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int creerGroupe(Groupe groupe) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			PreparedStatement ps = null;
@@ -448,6 +655,16 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 			}
 		}
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de savoir si un groupe est deja cree
+	 * @param grp
+	 * 			le groupe a tester
+	 * @return grpExiste
+	 * 			faux s'il n'existe pas deja, vrai sinon
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public boolean isGrpDejaCree(int grp) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			boolean grpExiste = false;
@@ -466,11 +683,21 @@ public ArrayList<Professeur> getListeProfesseur() throws Exception {
 		
 	} 
 	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'ajouter un cours a un planning de groupe
+	 * @param planningGroupe
+	 * 			planning de groupe
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
 	public int ajouterCoursPlanning(PlanningGroupe planningGroupe) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int effectuee = 0;
 			PreparedStatement ps = con.prepareStatement("INSERT INTO Lot2_PlanningGroupe "
-					+ "VALUES (?,?,?,?,?)");
+					+ "VALUES (?,?,?,?,?,'')");
 			
 			ps.setInt(1, planningGroupe.getCoursId());
 			ps.setInt(2, planningGroupe.getGrpId());

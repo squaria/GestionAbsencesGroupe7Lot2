@@ -29,6 +29,12 @@ import model.Etudiant;
 import model.Note;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * Classe interface utilisateur de la declaration d'une absence selectionnee par l'etudiant
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class DeclarerAbsenceIHM {
 
 	private JFrame frame;
@@ -70,6 +76,10 @@ public class DeclarerAbsenceIHM {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frame = new JFrame();
 		frame.setTitle("Gestion des Cours");
 		frame.setBounds(100, 100, 1427, 731);
@@ -81,7 +91,10 @@ public class DeclarerAbsenceIHM {
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		frame.getContentPane().add(panel_3);
-		
+
+		/**
+		 * Bouton retour pour la navigation du logiciel
+		 */
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,6 +175,7 @@ public class DeclarerAbsenceIHM {
 		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panel_5.add(lblNewLabel_3_2, "cell 4 2,alignx left,aligny center");
 		
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		frame.getContentPane().add(panel);
@@ -172,6 +186,10 @@ public class DeclarerAbsenceIHM {
 		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
+
+		/**
+		 * Table d'affichage de la liste des etudiants
+		 */
 		table = new JTable();
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(false);
@@ -181,6 +199,9 @@ public class DeclarerAbsenceIHM {
 		table.setDragEnabled(true);
 		
 		table.setModel(new DefaultTableModel(
+			/**
+			 * Creation des titres des colonnes
+			 */
 			new Object[][] {
 				{Boolean.FALSE, "NOM ETUDIANT", "PRENOM ETUDIANT", "EMAIL", "FILIERE", "GROUPE"},
 			},
@@ -190,6 +211,9 @@ public class DeclarerAbsenceIHM {
 			
 			
 		) {
+			/**
+			 * Fixation des types variables des colonnes
+			 */
 			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class
@@ -198,6 +222,9 @@ public class DeclarerAbsenceIHM {
 				return columnTypes[columnIndex];
 			}
 			
+			/**
+			 * Fixation des autorisations de modification par l'utilisateur
+			 */
 			boolean[] isCellEditable = new boolean[]{
                 true, false, false, false, false, false
 			};
@@ -207,6 +234,9 @@ public class DeclarerAbsenceIHM {
 	        }
         });
 		
+		/**
+		 * Remplissage des lignes par la liste des etudiants
+		 */
 		for(int i = 0; i<listeEtudiant.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(
 						new Object[]{Boolean.FALSE, listeEtudiant.get(i).getNom(), 
@@ -230,6 +260,14 @@ public class DeclarerAbsenceIHM {
 		
 	}
 
+	/**
+	 * Methode pour la creation des absences sur la base de donnee
+	 * a partir des interactions utilisateurs dans l'interface
+	 * @param absence
+	 * 			absence d'un etudiant
+	 * @param etuIdGrp
+	 * 			id du groupe de l'etudiant
+	 */
 	public void creerAbsence(Absence absence, int etuIdGrp) {
 		
 		try {
@@ -243,6 +281,12 @@ public class DeclarerAbsenceIHM {
 		}
 	}
 	
+	/**
+	 * Methode pour la fixation a zero de la note
+	 * associee au cours et a l'absence de l'etudiant
+	 * @param note
+	 * 			note associee au cours et a l'absence de l'etudiant
+	 */
 	public void noteZero(Note note) {
 			try {
 				int effectuee = actionProf.noteZero(note);
@@ -255,16 +299,33 @@ public class DeclarerAbsenceIHM {
 			}
 	}
 
+	/**
+	 * Methode pour la declaration d'une absence en fonction du type
+	 * @param type
+	 * 			type de l'absence (Classique, Physique, Examen)
+	 */
 	public void declarer(String type) {
+		/**
+		 * Recuperation de la date locale de l'ordinateur de l'utilisateur
+		 * et formatage de cette date pour la compatibilite SQL
+		 */
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate localDate = LocalDate.now();
 		int ligneNum = -1;
+		/**
+		 * Recuperation de la ligne de la case cochee par l'utilisateur
+		 * pour l'id SQL de la table corespondante
+		 */
 		for(int i = 0; i < table.getRowCount(); i++) {
 			Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 			if(CaseCochee) {
 				ligneNum = i;
 				creerAbsence(new Absence(dtf.format(localDate), 
 						nbHeures, coursId, type, null, null), ligneNum);
+				/**
+				 * Si le type est un examen alors on fixe la note 
+				 * associee au cours et a l'absence de l'etudiant a zero
+				 */
 				if(type.equals("Examen"))
 					noteZero(new Note(ligneNum, coursId, 0, dtf.format(localDate), null));
 			}

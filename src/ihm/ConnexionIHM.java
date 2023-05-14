@@ -17,11 +17,14 @@ import dao.ConnexionUtilisateurDAO;
 import java.awt.Color;
 import javax.swing.JPasswordField;
 
+/**
+ * Classe interface utilisateur de la connexion au compte utilisateur
+ * 
+ * @author Loic OUASSA, Mael PAROT
+ * @version 1.0
+ */
 public class ConnexionIHM extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frmConnexion;
 	private JTextField textField;
@@ -55,6 +58,10 @@ public class ConnexionIHM extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		/**
+		 * Creation de la JFrame
+		 */
 		frmConnexion = new JFrame();
 		frmConnexion.setTitle("Connexion");
 		frmConnexion.setVisible(true);
@@ -112,6 +119,10 @@ public class ConnexionIHM extends JFrame {
 		JButton btnProfil = new JButton("Connexion");
 		btnProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Verification de textField non vierge 
+				 * et des donnees entrees au format correct
+				 */
 				if (textField.getText().length() > 0 && passwordField.getPassword().length > 0) {
 					connexion(textField.getText(), String.valueOf(passwordField.getPassword()));
 				} else {
@@ -133,18 +144,39 @@ public class ConnexionIHM extends JFrame {
 		panel_5.add(lblNewLabel_3);
 	}
 	
+	
+	/**
+	 * Methode de connexion utilisateur quelconque en fonction 
+	 * de l'email et du mot de passe entre par l'utilisateur
+	 * @param email
+	 * 			email entre par l'utilisateur
+	 * @param pwd
+	 * 			mot de passe entre par l'utilisateur
+	 */
 	public void connexion(String email, String pwd)
 	{
+		/**
+		 * Instanciation du DAO de connexion et du tableau des resultats
+		 */
 		ConnexionUtilisateurDAO connDAO = new ConnexionUtilisateurDAO();
 		int[] res = {-1,-1};
 		try {
 			res = connDAO.checkConnexion(email, pwd);
+
+			/**
+			 * Enregistrement de l'id SQL du compte desormais connecte et son type de compte
+			 */
 			IdEtTypeCompte.id = res[1];
 			IdEtTypeCompte.typeCompte = res[0];
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		/**
+		 * Ouvre une nouveau menu principal et ferme 
+		 * la fenetre de connexion en fonction du type de compte
+		 */
 		switch(IdEtTypeCompte.typeCompte) {
 		case -1:
 			lblNewLabel_3.setText("Mauvais mot de passe ou email !");
