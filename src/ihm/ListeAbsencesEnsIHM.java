@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -23,10 +24,13 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.ActionsProfesseurDAO;
 import dao.ActionsAdministratifDAO;
+import dao.ActionsGestionnaireDAO;
 import model.Absence;
+import model.Professeur;
 import model.Profil;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 /**
  * Classe interface de la liste des absences d'un enseignant
@@ -39,7 +43,9 @@ public class ListeAbsencesEnsIHM {
 	private JTable table;
 	private ActionsProfesseurDAO actionProf = new ActionsProfesseurDAO();
 	private ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
+	private ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 	private ArrayList<Absence> listeAbsencesP = null;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -197,12 +203,103 @@ public class ListeAbsencesEnsIHM {
 			textField2.setColumns(20);
 			panel_1.add(textField2);
 			
+			/**
+			 * Table d'affichage de la liste des professeurs
+			 */
+			table_1 = new JTable();
+			table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+			table_1.setRowSelectionAllowed(false);
+			table_1.setCellSelectionEnabled(true);
+			table_1.setColumnSelectionAllowed(true);
+			table_1.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			table_1.setForeground(Color.DARK_GRAY);
+			table_1.setToolTipText("");
+			
+			table_1.setModel(new DefaultTableModel(
+				/**
+				 * Creation des titres des colonnes
+				 */
+				null,
+				new String[] {
+					"CHOIX", "NOM PROFESSEUR", "PRENOM PROFESSEUR", "EMAIL", "NUM TELEPHONE"
+				}
+				
+				
+			) {
+				/**
+				 * Fixation des types variables des colonnes
+				 */
+				private static final long serialVersionUID = 1L;
+				Class[] columnTypes = new Class[] {
+					Boolean.class, Object.class, Object.class, Object.class, Object.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+				
+				/**
+				 * Fixation des autorisations de modification par l'utilisateur
+				 */
+				boolean[] isCellEditable = new boolean[]{
+	                true, false, false, false, false
+				};
+
+		        public boolean isCellEditable(int rowIndex, int columnIndex) {
+		            return isCellEditable[columnIndex];
+		        }
+	        });
+			
+			ArrayList<Professeur> listeProf = null;
+			
+			try {
+				listeProf = actionGest.getListeProfesseur();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			/**
+			 * Remplissage des lignes par la liste des professeurs
+			 */
+			for(int i = 0; i<listeProf.size(); i++) {
+				((DefaultTableModel) table_1.getModel()).addRow(
+							new Object[]{Boolean.FALSE, listeProf.get(i).getNom(), 
+									listeProf.get(i).getPrenom(), listeProf.get(i).getEmail(), 
+									listeProf.get(i).getNumTelephone()});
+			}
+			ListSelectionModel tableSelectionModel1 = table_1.getSelectionModel();
+			tableSelectionModel1.setSelectionInterval(0, 0);
+			table_1.setSelectionModel(tableSelectionModel1);
+			table_1.repaint();
+			
+
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setViewportView(table_1);
+			scrollPane.setViewportBorder(null);
+			scrollPane.setPreferredSize(new Dimension(50,40));
+
+			frmAbsencesClassiquesEnseignant.getContentPane().add(scrollPane);
+			
+			JPanel panel_31 = new JPanel();
+			frmAbsencesClassiquesEnseignant.getContentPane().add(panel_31);
+			
 			JButton btnNewButton = new JButton("Selectionner");
 			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
 			btnNewButton.setForeground(Color.BLACK);
-			panel_1.add(btnNewButton);
+			panel_31.add(btnNewButton);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					/**
+					 * Recuperation de la ligne de la case cochee par l'utilisateur
+					 * pour l'id SQL de la table corespondante
+					 */
+					int ligneNum = -1;
+					for(int i = 0; i < table_1.getRowCount(); i++) {
+						Boolean CaseCochee = Boolean.valueOf(table_1.getValueAt(i, 0).toString());
+						if(CaseCochee)
+							ligneNum = i;
+					}
+					
+					((DefaultTableModel) table.getModel()).setRowCount(1);
 					/**
 					 * Verification de textField non vierge 
 					 * et des donnees entrees au format correct
@@ -215,7 +312,16 @@ public class ListeAbsencesEnsIHM {
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
-					} else {
+					} else if(ligneNum != -1) {
+						try {
+							listeAbsencesP = actionAdmin.listeAbsencesProf(new Profil(table_1.getValueAt(ligneNum, 1).toString(), 
+									table_1.getValueAt(ligneNum, 2).toString(), table_1.getValueAt(ligneNum, 3).toString()));
+							refresh();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}
+					else {
 						JOptionPane.showMessageDialog(new JFrame(), "Tous les champs ne sont pas completes.", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
@@ -228,6 +334,7 @@ public class ListeAbsencesEnsIHM {
 	 * Remplissage des lignes par la liste des absences enseignants
 	 */
 	public void refresh() {
+		((DefaultTableModel) table.getModel()).setRowCount(1);
 		for(int i = 0; i<listeAbsencesP.size(); i++) {
 			((DefaultTableModel) table.getModel()).addRow(new Object[]{listeAbsencesP.get(i).getDate(), listeAbsencesP.get(i).getNbHeures(),
 									listeAbsencesP.get(i).getNomCours(),listeAbsencesP.get(i).getType()});

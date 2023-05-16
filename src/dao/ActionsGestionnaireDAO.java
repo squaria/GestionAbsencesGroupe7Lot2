@@ -183,6 +183,35 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 		return listeProf;
 		}
 	}
+	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant d'obtenir la liste des etudiants
+	 * @return listeEtudiant
+	 * 			liste des etudiants
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
+	public ArrayList<Etudiant> getListeEtudiant() throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			
+			ArrayList<Etudiant> listeEtudiant = new ArrayList<>();
+			PreparedStatement ps = con.prepareStatement("SELECT etu_id, etu_nom, etu_prenom, etu_email, fil_nom, grp_numero "
+					+ "FROM Lot2_Etudiant "
+					+ "JOIN Lot2_Filiere ON fil_id = etu_fil_id "
+					+ "JOIN Lot2_Groupe ON grp_id = etu_grp_id "
+					+ "ORDER BY etu_id ASC");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				listeEtudiant.add(new Etudiant(rs.getString("etu_nom"), rs.getString("etu_prenom"),
+						rs.getString("etu_email"), rs.getString("fil_nom"), rs.getInt("grp_numero")));
+			}
+			
+			return listeEtudiant;
+		}
+	}
 
 	
 	/**
