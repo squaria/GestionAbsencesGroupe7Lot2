@@ -70,7 +70,6 @@ public class ConnexionIHM extends JFrame {
 		frmConnexion.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		frmConnexion.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 255));
 		frmConnexion.getContentPane().add(panel);

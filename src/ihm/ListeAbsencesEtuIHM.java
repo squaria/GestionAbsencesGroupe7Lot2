@@ -95,10 +95,20 @@ public class ListeAbsencesEtuIHM {
 		JButton btnNewButtonRetour = new JButton("Retour");
 		btnNewButtonRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(IdEtTypeCompte.typeCompte == 0)
+				switch(IdEtTypeCompte.typeCompte) {
+				case 0 :
 					new EtudiantIHM();
-				else if(IdEtTypeCompte.typeCompte == 1)
+					break;
+				case 1 : 
 					new EnseignantIHM();
+					break;
+				case 2 :
+					new AdministratifIHM();
+					break;
+				case 3 :
+					new GestionnaireIHM();
+					break;
+				}
 				frmAbsencesClassiquesEt.dispose();
 			}
 		});
@@ -195,8 +205,10 @@ public class ListeAbsencesEtuIHM {
 						if(CaseCochee)
 							ligneNum = i;
 					}
-					if(ligneNum != -1)
+					if(ligneNum != -1) {
+						frmAbsencesClassiquesEt.dispose();
 						new DeposerJustificatifIHM(ligneNum);
+					}
 					else {
 						JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
@@ -218,9 +230,9 @@ public class ListeAbsencesEtuIHM {
 		}
 		/**
 		 * Affichage de la selection d'un etudiant
-		 * si le type de compte est un professeur
+		 * si le type de compte est un administratif ou un gestionnaire
 		 */
-		else if(IdEtTypeCompte.typeCompte == 1) {
+		else {
 			JLabel lblNewLabel1 = new JLabel("Entrez un etudiant :");
 			lblNewLabel1.setForeground(Color.BLACK);
 			lblNewLabel1.setFont(new Font("Tahoma", Font.PLAIN, 18));

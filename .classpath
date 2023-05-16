@@ -20,6 +20,7 @@
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/com.ibm.icu_72.1.0.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/com.ibm.icu_72.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.ui.forms_3.11.600.v20230220-0932.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.ui.forms_3.11.600.v20230220-0932.jar"/>
 	-->
+	<!--
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.osgi_3.18.100.v20220817-1601.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.osgi_3.18.100.v20220817-1601.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.core.commands_3.10.200.v20220512-0851.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.core.commands_3.10.200.v20220512-0851.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.equinox.common_3.16.200.v20220817-1601.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.equinox.common_3.16.200.v20220817-1601.jar"/>
@@ -32,7 +33,7 @@
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.ui.workbench_3.126.0.v20220823-0718.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.ui.workbench_3.126.0.v20220823-0718.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/com.ibm.icu_67.1.0.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/com.ibm.icu_67.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.ui.forms_3.11.400.v20220817-1444.jar" sourcepath="C:/Users/Squaria/.p2/pool/plugins/org.eclipse.ui.forms_3.11.400.v20220817-1444.jar"/>
-	
+	-->
 	<classpathentry kind="lib" path="lib/ojdbc7_g.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="lib" path="jgoodies-common-1.8.0.jar" sourcepath="jgoodies-common-1.8.0-sources.jar"/>

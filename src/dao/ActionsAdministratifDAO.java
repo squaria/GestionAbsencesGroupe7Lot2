@@ -231,6 +231,42 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 	
 	/**
 	 * Methode de jointure entre le logiciel java et la BDD Oracle 
+	 * permettant de creer un lien visio pour un cours
+	 * @param coursId
+	 * 			id du cours
+	 * @param groupeId
+	 * 			id du groupe
+	 * @param dateDebut
+	 * 			date de debut de l'absence physique
+	 * @param dateFin
+	 * 			date de fin de l'absence physique
+	 * @param lienVisio
+	 * 			lien visio a creer
+	 * @return effectuee
+	 * 			nombre de lignes retournee par l'execution de la requete SQL
+	 * @throws Exception
+	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
+	 */
+	public int creerLienVisio(int coursId, int groupeId, String dateDebut, String dateFin, String lienVisio) throws Exception {
+		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
+			int effectuee = 0;
+			PreparedStatement ps = con.prepareStatement("UPDATE Lot2_PlanningGroupe "
+					+ "SET plan_lienVisio = ? "
+					+ "WHERE grp_id = ? AND cours_id = ? AND plan_date BETWEEN ? AND ? ");
+			ps.setString(1, lienVisio);
+			ps.setInt(2, groupeId);
+			ps.setInt(3, coursId);
+			ps.setString(4, dateDebut);
+			ps.setString(5, dateFin);
+			
+			effectuee = ps.executeUpdate();
+			
+			return effectuee;
+			}
+		}
+	
+	/**
+	 * Methode de jointure entre le logiciel java et la BDD Oracle 
 	 * permettant de valider ou non une absence physique
 	 * @param absId
 	 * 			id de l'absence
@@ -252,7 +288,7 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 	 * 			dans le cas d'une erreur SQL ou d'une erreur de connexion a la BDD
 	 */
 	public int validerAbsencePhysique(int absId, int grpId, int etuId, boolean validee,
-			String dateDebut, String dateFin, String lienVisio) throws Exception {
+			String dateDebut, String dateFin) throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			int effectuee = 0;
 			ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
@@ -269,18 +305,7 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 			
 			effectuee = ps.executeUpdate();
 			
-			if(effectuee != 0 && validee) {
-				ps = con.prepareStatement("UPDATE Lot2_PlanningGroupe "
-						+ "SET plan_lienVisio = ? "
-						+ "WHERE grp_id = ? AND plan_date BETWEEN ? AND ? ");
-				ps.setString(1, lienVisio);
-				ps.setInt(2, grpId);
-				ps.setString(3, dateDebut);
-				ps.setString(4, dateFin);
-				
-				effectuee = ps.executeUpdate();
-			}
-			else if(effectuee != 0 && !validee) {
+			if(effectuee != 0 && !validee) {
 				ps.close();
 				ps = con.prepareStatement("SELECT Lot2_Cours.cours_id, plan_date, plan_heureDebut, plan_heureFin "
 						+ "FROM Lot2_Cours "

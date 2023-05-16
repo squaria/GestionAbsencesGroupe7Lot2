@@ -245,6 +245,23 @@ public class AdministratifIHM {
 		});
 		btnGroupe.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_4.add(btnGroupe);
+		
+		JButton btnGroupe1 = new JButton("Afficher les absences d'un etudiant");
+		btnGroupe1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
+					new ListeAbsencesEtuIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnGroupe1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_4.add(btnGroupe1);
 
 	}
 

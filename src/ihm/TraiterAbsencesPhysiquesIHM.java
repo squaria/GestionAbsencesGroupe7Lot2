@@ -40,7 +40,6 @@ public class TraiterAbsencesPhysiquesIHM {
 	private JTable table;
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_3;
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -189,19 +188,6 @@ public class TraiterAbsencesPhysiquesIHM {
 		gbc_table.gridy = 0;
 		panel.add(table, gbc_table);
 		
-		JPanel panel_2 = new JPanel();
-		frame.getContentPane().add(panel_2);
-		
-		JLabel lblNewLabel_7 = new JLabel("Lien pour la visio : ");
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_2.add(lblNewLabel_7);
-		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField.setColumns(50);
-		panel_2.add(textField);
-		
 		JPanel panel_1 = new JPanel();
 		frame.getContentPane().add(panel_1);
 		
@@ -217,8 +203,7 @@ public class TraiterAbsencesPhysiquesIHM {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
 						validerAbsencePhysique(i, (int) table.getValueAt(i, 3), (int) table.getValueAt(i, 4), false,
-								table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString(), 
-								textField.getText());
+								table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString());
 						ligneNum = 1;
 					}
 				}
@@ -239,23 +224,21 @@ public class TraiterAbsencesPhysiquesIHM {
 				 * Verification de textField non vierge 
 				 * et des donnees entrees au format correct
 				 */
-				if(textField.getText().length() > 0) {
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
 						validerAbsencePhysique(i, (int) table.getValueAt(i, 3), (int) table.getValueAt(i, 4), true, 
-								table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString(), 
-								textField.getText());
+								table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString());
 						ligneNum = 1;
+						new LienVisioAEntrerIHM((int) table.getValueAt(i, 3), table.getValueAt(i, 1).toString(),
+								 table.getValueAt(i, 2).toString());
+						frame.dispose();
 					}
 				}
-				if(ligneNum == -1)
+				if(ligneNum == -1) {
 					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				else
-					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas entre de lien visio.", "Dialog",
-							JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -290,10 +273,10 @@ public class TraiterAbsencesPhysiquesIHM {
 	 * 			lien visio pour l'acces au cours a distance
 	 */
 	public void validerAbsencePhysique(int ligneNum, int grpId, int etuId, boolean isValidee,
-			String dateDebut, String dateFin, String lienVisio) {
+			String dateDebut, String dateFin) {
 		ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
 		try {
-			int effectuee = actionAdmin.validerAbsencePhysique(ligneNum, grpId, etuId, isValidee, dateDebut, dateFin, lienVisio);
+			int effectuee = actionAdmin.validerAbsencePhysique(ligneNum, grpId, etuId, isValidee, dateDebut, dateFin);
 			if (effectuee >= 1 && isValidee)
 				lblNewLabel_3_2.setText("Absence validee !");
 			else if (effectuee >= 1 && !isValidee)
