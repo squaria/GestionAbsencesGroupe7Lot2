@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import dao.ActionsGestionnaireDAO;
 import dao.PlanningDAO;
 import model.Planning;
 import model.PlanningGroupe;
@@ -317,30 +318,37 @@ public class PlanningGroupeIHM {
 	 */
 	public void afficherPlanning(int groupe, String dateDebut, String dateFin) {
 		PlanningDAO planning = new PlanningDAO();
+		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 		
 		try {
 			((DefaultTableModel) table.getModel()).setRowCount(1);
+			if(actionGest.isGrpDejaCree(groupe)) {
 			planningGroupe = planning.planningGroupe(groupe, dateDebut, dateFin);
-			if(planningGroupe != null) {
-
-				/**
-				 * Remplissage des lignes par la liste des cours du planning de groupe
-				 * avec transformation des heures decimales en heures sexagesimales
-				 */
-				for(int i = 0; i<planningGroupe.size(); i++) {
-					double heureDebutDecimal = planningGroupe.get(i).getHeureDebut();
-					double heureFinDecimal = planningGroupe.get(i).getHeureFin();
-					int heureDebutHeures = (int) heureDebutDecimal;
-					int heureDebutMinutes = (int) (heureDebutDecimal * 60) % 60;
-					String heureDebut = String.format("%sH%s", heureDebutHeures, heureDebutMinutes);
-					int heureFinHeures = (int) heureFinDecimal;
-					int heureFinMinutes = (int) (heureFinDecimal * 60) % 60;
-					String finDebut = String.format("%sH%s", heureFinHeures, heureFinMinutes);
-					
-					((DefaultTableModel) table.getModel()).addRow(
-							new Object[]{planningGroupe.get(i).getCoursNom(), planningGroupe.get(i).getProfNom(),
-									planningGroupe.get(i).getDate(), heureDebut, finDebut});
+				if(planningGroupe != null) {
+	
+					/**
+					 * Remplissage des lignes par la liste des cours du planning de groupe
+					 * avec transformation des heures decimales en heures sexagesimales
+					 */
+					for(int i = 0; i<planningGroupe.size(); i++) {
+						double heureDebutDecimal = planningGroupe.get(i).getHeureDebut();
+						double heureFinDecimal = planningGroupe.get(i).getHeureFin();
+						int heureDebutHeures = (int) heureDebutDecimal;
+						int heureDebutMinutes = (int) (heureDebutDecimal * 60) % 60;
+						String heureDebut = String.format("%sH%s", heureDebutHeures, heureDebutMinutes);
+						int heureFinHeures = (int) heureFinDecimal;
+						int heureFinMinutes = (int) (heureFinDecimal * 60) % 60;
+						String finDebut = String.format("%sH%s", heureFinHeures, heureFinMinutes);
+						
+						((DefaultTableModel) table.getModel()).addRow(
+								new Object[]{planningGroupe.get(i).getCoursNom(), planningGroupe.get(i).getProfNom(),
+										planningGroupe.get(i).getDate(), heureDebut, finDebut});
+					}
 				}
+			}
+			else {
+				JOptionPane.showMessageDialog(new JFrame(), "Ce groupe n'existe pas.", "Dialog",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();

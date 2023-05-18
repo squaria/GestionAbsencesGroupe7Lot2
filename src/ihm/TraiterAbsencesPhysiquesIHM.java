@@ -40,6 +40,8 @@ public class TraiterAbsencesPhysiquesIHM {
 	private JTable table;
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_3;
+	ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
+	ArrayList<AbsencePhysique> listeAbsences = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -79,16 +81,12 @@ public class TraiterAbsencesPhysiquesIHM {
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
-		ArrayList<AbsencePhysique> listeAbsences = null;
-		try {
-			listeAbsences = actionAdmin.listeAbsencesPhysiquesAdmin();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		JPanel panel_91 = new JPanel();
+		frame.getContentPane().add(panel_91);
+		panel_91.setLayout(new BoxLayout(panel_91, BoxLayout.X_AXIS));
 		
 		JPanel panel_7 = new JPanel();
-		frame.getContentPane().add(panel_7);
+		panel_91.add(panel_7);
 		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 
@@ -107,6 +105,20 @@ public class TraiterAbsencesPhysiquesIHM {
 		});
 		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_7.add(btnNewButtonRetour);
+		
+		JPanel panel_32 = new JPanel();
+		FlowLayout flowLayout2 = (FlowLayout) panel_32.getLayout();
+		flowLayout2.setAlignment(FlowLayout.RIGHT);
+		panel_91.add(panel_32);
+		
+		JButton btnNewButtonRefresh = new JButton("Rafraichir");
+		btnNewButtonRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		btnNewButtonRefresh.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_32.add(btnNewButtonRefresh);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -165,16 +177,7 @@ public class TraiterAbsencesPhysiquesIHM {
 	        }
         });
 
-		/**
-		 * Remplissage des lignes par la liste des absences physiques
-		 */
-		for(int i = 0; i<listeAbsences.size(); i++) {
-			((DefaultTableModel) table.getModel()).addRow(
-						new Object[]{Boolean.FALSE, listeAbsences.get(i).getDateDebut(), listeAbsences.get(i).getDateFin(), 
-									listeAbsences.get(i).getGrpId(), listeAbsences.get(i).getEtuId(), listeAbsences.get(i).getNomEtu(), 
-									listeAbsences.get(i).getPrenomEtu(), listeAbsences.get(i).getJustificatif(), 
-									listeAbsences.get(i).getValideeAdmin()});
-		}
+		refresh();
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
 		table.setSelectionModel(tableSelectionModel);
@@ -204,6 +207,7 @@ public class TraiterAbsencesPhysiquesIHM {
 					if(CaseCochee) {
 						validerAbsencePhysique(i, (int) table.getValueAt(i, 3), (int) table.getValueAt(i, 4), false,
 								table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString());
+						refresh();
 						ligneNum = 1;
 					}
 				}
@@ -285,6 +289,27 @@ public class TraiterAbsencesPhysiquesIHM {
 				lblNewLabel_3_2.setText("Erreur cette absence n'existe pas ou a deja ete traitee !");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void refresh() {
+		((DefaultTableModel) table.getModel()).setRowCount(1);
+		
+		try {
+			listeAbsences = actionAdmin.listeAbsencesPhysiquesAdmin();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		/**
+		 * Remplissage des lignes par la liste des absences physiques
+		 */
+		for(int i = 0; i<listeAbsences.size(); i++) {
+			((DefaultTableModel) table.getModel()).addRow(
+						new Object[]{Boolean.FALSE, listeAbsences.get(i).getDateDebut(), listeAbsences.get(i).getDateFin(), 
+									listeAbsences.get(i).getGrpId(), listeAbsences.get(i).getEtuId(), listeAbsences.get(i).getNomEtu(), 
+									listeAbsences.get(i).getPrenomEtu(), listeAbsences.get(i).getJustificatif(), 
+									listeAbsences.get(i).getValideeAdmin()});
 		}
 	}
 

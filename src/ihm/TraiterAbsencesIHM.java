@@ -36,6 +36,8 @@ public class TraiterAbsencesIHM {
 	private JTable table;
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_3;
+	ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
+	ArrayList<Absence> listeAbsences = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -75,17 +77,12 @@ public class TraiterAbsencesIHM {
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
-		ArrayList<Absence> listeAbsences = null;
-		try {
-			listeAbsences = actionAdmin.listeAbsencesAdmin();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		JPanel panel_91 = new JPanel();
+		frame.getContentPane().add(panel_91);
+		panel_91.setLayout(new BoxLayout(panel_91, BoxLayout.X_AXIS));
 		
 		JPanel panel_7 = new JPanel();
-		frame.getContentPane().add(panel_7);
+		panel_91.add(panel_7);
 		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 
@@ -104,6 +101,20 @@ public class TraiterAbsencesIHM {
 		});
 		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_7.add(btnNewButtonRetour);
+		
+		JPanel panel_32 = new JPanel();
+		FlowLayout flowLayout2 = (FlowLayout) panel_32.getLayout();
+		flowLayout2.setAlignment(FlowLayout.RIGHT);
+		panel_91.add(panel_32);
+		
+		JButton btnNewButtonRefresh = new JButton("Rafraichir");
+		btnNewButtonRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		btnNewButtonRefresh.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_32.add(btnNewButtonRefresh);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -168,16 +179,7 @@ public class TraiterAbsencesIHM {
 		table.getColumnModel().getColumn(5).setPreferredWidth(40);
 		table.getColumnModel().getColumn(6).setPreferredWidth(200);
 		
-		/**
-		 * Remplissage des lignes par la liste des absences
-		 */
-		for(int i = 0; i<listeAbsences.size(); i++) {
-			((DefaultTableModel) table.getModel()).addRow(
-						new Object[]{Boolean.FALSE, listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),
-									listeAbsences.get(i).getNomEtu(), listeAbsences.get(i).getPrenomEtu(), 
-									listeAbsences.get(i).getNomCours(), listeAbsences.get(i).getType(),
-									listeAbsences.get(i).getJustificatif(), listeAbsences.get(i).getValideeAdmin()});
-		}
+		
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
 		table.setSelectionModel(tableSelectionModel);
@@ -190,6 +192,8 @@ public class TraiterAbsencesIHM {
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 0;
 		panel.add(table, gbc_table);
+		
+		refresh();
 		
 		JPanel panel_1 = new JPanel();
 		frame.getContentPane().add(panel_1);
@@ -205,7 +209,8 @@ public class TraiterAbsencesIHM {
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
-						validerAbsence(i, false);
+						validerAbsence(listeAbsences.get(i-1).getAbsId(), false);
+						refresh();
 						ligneNum = 1;
 					}
 				}
@@ -229,7 +234,8 @@ public class TraiterAbsencesIHM {
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
-						validerAbsence(i, true);
+						validerAbsence(listeAbsences.get(i-1).getAbsId(), true);
+						refresh();
 						ligneNum = 1;
 					}
 				}
@@ -254,21 +260,21 @@ public class TraiterAbsencesIHM {
 
 	/**
 	 * Methode pour la validation ou non de l'absence par l'administratif
-	 * @param ligneNum
-	 * 			ligne cochee dans la table par l'utilisateur
+	 * @param absId
+	 * 			id de l'absence cochee
 	 * @param isValidee
 	 * 			vrai si absence validee faux sinon
 	 */
-	public void validerAbsence(int ligneNum, boolean isValidee) {
+	public void validerAbsence(int absId, boolean isValidee) {
 		ActionsAdministratifDAO actionAdmin = new ActionsAdministratifDAO();
 		try {
-			int effectuee = actionAdmin.validerAbsence(ligneNum, isValidee);
+			int effectuee = actionAdmin.validerAbsence(absId, isValidee);
 			if (effectuee == 1)
 				lblNewLabel_3_2.setText("Absence validee ou non validee !");
 			else
 				lblNewLabel_3_2.setText("Erreur cette absence n'existe pas ou a deja ete traitee !");
-			if(actionAdmin.absenceExamenValidee(ligneNum)) {
-				int effectuee2 = actionAdmin.declancherRatrapages(ligneNum);
+			if(actionAdmin.absenceExamenValidee(absId)) {
+				int effectuee2 = actionAdmin.declancherRatrapages(absId);
 				if(effectuee2 == 1)
 					lblNewLabel_3_3.setText("Note zero supprimee et rattrapage declanche !");
 				else
@@ -277,6 +283,27 @@ public class TraiterAbsencesIHM {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void refresh() {
+		((DefaultTableModel) table.getModel()).setRowCount(1);
+		
+		try {
+			listeAbsences = actionAdmin.listeAbsencesAdmin();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		/**
+		 * Remplissage des lignes par la liste des absences
+		 */
+		for(int i = 0; i<listeAbsences.size(); i++) {
+			((DefaultTableModel) table.getModel()).addRow(
+						new Object[]{Boolean.FALSE, listeAbsences.get(i).getDate(), listeAbsences.get(i).getNbHeures(),
+									listeAbsences.get(i).getNomEtu(), listeAbsences.get(i).getPrenomEtu(), 
+									listeAbsences.get(i).getNomCours(), listeAbsences.get(i).getType(),
+									listeAbsences.get(i).getJustificatif(), listeAbsences.get(i).getValideeAdmin()});
 		}
 	}
 

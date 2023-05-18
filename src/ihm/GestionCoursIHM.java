@@ -138,7 +138,6 @@ public class GestionCoursIHM {
 				"CHOIX", "NOM PROFESSEUR", "PRENOM PROFESSEUR", "EMAIL", "NUM TELEPHONE"
 			}
 			
-			
 		) {
 			/**
 			 * Fixation des types variables des colonnes

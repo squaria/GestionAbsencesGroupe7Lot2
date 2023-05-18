@@ -340,9 +340,5 @@ public class DeclarerAbsenceIHM {
 			JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'etudiant.", "Dialog",
 					JOptionPane.ERROR_MESSAGE);
 	}
-
-	public void refresh() {
-		
-	}
 }
 

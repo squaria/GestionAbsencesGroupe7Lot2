@@ -241,7 +241,7 @@ public class RemplacerProfAbsentIHM {
 				for(int i = 0; i < table.getRowCount(); i++) {
 					Boolean CaseCochee = Boolean.valueOf(table.getValueAt(i, 0).toString());
 					if(CaseCochee) {
-						date = table.getValueAt(i, 3).toString();
+						date = table.getValueAt(i, 4).toString();
 						ligneNum = i+1;
 					}
 				}

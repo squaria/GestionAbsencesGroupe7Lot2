@@ -409,7 +409,7 @@ public class PlanningEnseignantIHM {
 					new DeclarerAbsenceIHM(ligneNum, nbHeures, groupe);
 					frmCoursNonTraites.dispose();
 				}
-				else if(ligneNum != -1 && (IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3)) {
+				else if(ligneNum != -1 && IdEtTypeCompte.typeCompte != 1) {
 					declarerAbsenceProf(ligneNum);
 				}
 				else {
@@ -434,7 +434,8 @@ public class PlanningEnseignantIHM {
 	 * @param profId
 	 * 			id du professeur
 	 */
-	public void declarerAbsenceProf(int profId) {
+	public void declarerAbsenceProf(int coursId) {
+		date = listeDate.get(coursId);
 		/**
 		 * Recuperation de la date locale de l'ordinateur de l'utilisateur
 		 * et formatage de cette date pour la compatibilite SQL
@@ -444,7 +445,7 @@ public class PlanningEnseignantIHM {
 		
 		try {
 			int effectuee = actionProf.creerAbsence(new Absence(dateStr, 
-					nbHeures, ligneNum_1, "Professeur", null, null), 0, profId);
+					nbHeures, coursId, "Professeur", null, null), 0, ligneNum_1);
 			if (effectuee == 1)
 				lblNewLabel_3_5.setText("Absence cree !");
 			else
@@ -471,7 +472,7 @@ public class PlanningEnseignantIHM {
 			if(IdEtTypeCompte.typeCompte == 1) {
 				listeObj = planning.planningProf(IdEtTypeCompte.id, dateDebut, dateFin);
 			}
-			else if(IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3) {
+			else {
 				/**
 				 * Recuperation de la ligne de la case cochee par l'utilisateur
 				 * pour l'id SQL de la table corespondante
@@ -483,7 +484,6 @@ public class PlanningEnseignantIHM {
 				}
 				listeObj = planning.planningProf(ligneNum_1, dateDebut, dateFin);
 
-				date = listeDate.get(ligneNum_1);
 			}
 			planningProf = (ArrayList<PlanningEnseignant>) listeObj[0];
 			listeDate = (ArrayList<Date>) listeObj[1];

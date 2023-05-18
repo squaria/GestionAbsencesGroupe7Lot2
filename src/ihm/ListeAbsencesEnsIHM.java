@@ -85,10 +85,15 @@ public class ListeAbsencesEnsIHM {
 		frmAbsencesClassiquesEnseignant.getContentPane().setLayout(new BoxLayout(frmAbsencesClassiquesEnseignant.getContentPane(), BoxLayout.Y_AXIS));
 		frmAbsencesClassiquesEnseignant.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
+
+		JPanel panel_91 = new JPanel();
+		frmAbsencesClassiquesEnseignant.getContentPane().add(panel_91);
+		panel_91.setLayout(new BoxLayout(panel_91, BoxLayout.X_AXIS));
+		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		frmAbsencesClassiquesEnseignant.getContentPane().add(panel_3);
+		panel_91.add(panel_3);
 
 		/**
 		 * Bouton retour pour la navigation du logiciel
@@ -105,6 +110,20 @@ public class ListeAbsencesEnsIHM {
 		});
 		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_3.add(btnNewButtonRetour);
+		
+		JPanel panel_32 = new JPanel();
+		FlowLayout flowLayout2 = (FlowLayout) panel_32.getLayout();
+		flowLayout2.setAlignment(FlowLayout.RIGHT);
+		panel_91.add(panel_32);
+		
+		JButton btnNewButtonRefresh = new JButton("Rafraichir");
+		btnNewButtonRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		btnNewButtonRefresh.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_32.add(btnNewButtonRefresh);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLUE);

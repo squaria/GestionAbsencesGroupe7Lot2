@@ -18,5 +18,5 @@ public class IdEtTypeCompte {
 	 * Attribut statique du type de compte connecte
 	 * 0 : etu, 1 : prof, 2: admin, 3: gest
 	 */
-	public static int typeCompte = 2;
+	public static int typeCompte = 1;
 }

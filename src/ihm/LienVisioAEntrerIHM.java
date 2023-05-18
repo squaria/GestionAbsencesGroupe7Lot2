@@ -86,14 +86,14 @@ public class LienVisioAEntrerIHM {
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
 		frmCoursNonTraites.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		JPanel panel_2 = new JPanel();
-		frmCoursNonTraites.getContentPane().add(panel_2);
-		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+		JPanel panel_91 = new JPanel();
+		frmCoursNonTraites.getContentPane().add(panel_91);
+		panel_91.setLayout(new BoxLayout(panel_91, BoxLayout.X_AXIS));
 
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_2.add(panel_1);
+		panel_91.add(panel_1);
 
 		/**
 		 * Bouton retour pour la navigation du logiciel
@@ -108,14 +108,19 @@ public class LienVisioAEntrerIHM {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_1.add(btnNewButton);
 		
-		JPanel panel_4 = new JPanel();
-		panel_2.add(panel_4);
+		JPanel panel_32 = new JPanel();
+		FlowLayout flowLayout2 = (FlowLayout) panel_32.getLayout();
+		flowLayout2.setAlignment(FlowLayout.RIGHT);
+		panel_91.add(panel_32);
 		
-		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3);
-
-		afficherPlanning(idGroupe, dateDebut, dateFin);
-		
+		JButton btnNewButtonRefresh = new JButton("Rafraichir");
+		btnNewButtonRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				afficherPlanning(idGroupe, dateDebut, dateFin);
+			}
+		});
+		btnNewButtonRefresh.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_32.add(btnNewButtonRefresh);		
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -187,6 +192,8 @@ public class LienVisioAEntrerIHM {
 		gbc_table.gridy = 0;
 		panel.add(table, gbc_table);
 		
+		afficherPlanning(idGroupe, dateDebut, dateFin);
+		
 		JPanel panel_21 = new JPanel();
 		frmCoursNonTraites.getContentPane().add(panel_21);
 		
@@ -247,7 +254,7 @@ public class LienVisioAEntrerIHM {
 		try {
 			planningGroupe = planning.planningGroupe(groupe, dateDebut, dateFin);
 			if(planningGroupe != null) {
-
+				((DefaultTableModel) table.getModel()).setRowCount(1);
 				/**
 				 * Remplissage des lignes par la liste des cours du planning de groupe
 				 * avec transformation des heures decimales en heures sexagesimales

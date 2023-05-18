@@ -727,9 +727,8 @@ public class ActionsGestionnaireDAO extends IdentificationBdd {
 			int effectuee = 0;
 			PreparedStatement ps = con.prepareStatement("INSERT INTO Lot2_PlanningGroupe "
 					+ "VALUES (?,?,?,?,?,'')");
-			
-			ps.setInt(1, planningGroupe.getCoursId());
-			ps.setInt(2, planningGroupe.getGrpId());
+			ps.setInt(1, planningGroupe.getGrpId());
+			ps.setInt(2, planningGroupe.getCoursId());
 			ps.setString(3, planningGroupe.getDate());
 			ps.setFloat(4, planningGroupe.getHeureDebut());
 			ps.setFloat(5, planningGroupe.getHeureFin());

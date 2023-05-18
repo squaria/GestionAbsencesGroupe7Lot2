@@ -26,6 +26,8 @@ import model.Planning;
 import model.PlanningGroupe;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.GridLayout;
+import net.miginfocom.swing.MigLayout;
 
 /**
  * Classe interface utilisateur d'insertion dans un planning
@@ -40,6 +42,8 @@ public class GestionPlanningIHM {
 	private JTable table;
 	private Planning planning = new Planning();
 	private Cours cours = new Cours();
+	ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
+	ArrayList<Cours> listeCours = new ArrayList<>();
 	private JTextField textField;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -86,19 +90,21 @@ public class GestionPlanningIHM {
 		frmCoursNonTraites.getContentPane().setLayout(new BoxLayout(frmCoursNonTraites.getContentPane(), BoxLayout.Y_AXIS));
 		frmCoursNonTraites.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
-		ArrayList<Cours> listeCours = null;
 		try {
 			listeCours = actionGest.listeCours();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		JPanel panel_91 = new JPanel();
+		frmCoursNonTraites.getContentPane().add(panel_91);
+		panel_91.setLayout(new BoxLayout(panel_91, BoxLayout.X_AXIS));
+
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		frmCoursNonTraites.getContentPane().add(panel_3);
-
+		panel_91.add(panel_3);
+		
 		/**
 		 * Bouton retour pour la navigation du logiciel
 		 */
@@ -114,6 +120,20 @@ public class GestionPlanningIHM {
 		});
 		btnNewButtonRetour.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_3.add(btnNewButtonRetour);
+		
+		JPanel panel_32 = new JPanel();
+		FlowLayout flowLayout2 = (FlowLayout) panel_32.getLayout();
+		flowLayout2.setAlignment(FlowLayout.RIGHT);
+		panel_91.add(panel_32);
+		
+		JButton btnNewButtonRefresh = new JButton("Rafraichir");
+		btnNewButtonRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		btnNewButtonRefresh.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_32.add(btnNewButtonRefresh);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -174,35 +194,6 @@ public class GestionPlanningIHM {
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		
-		/**
-		 * Remplissage des lignes par la liste des cours 
-		 * avec la liste des groupes pour ce cours
-		 */
-		for(int i = 0; i<listeCours.size(); i++) {
-			ArrayList<Groupe> listeGroupe = null;
-			try {
-				listeGroupe = actionGest.getListeGroupeCours(i+1);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			String format = "";
-			/**
-			 * liste des groupes pour un cours donne
-			 */
-			for(int j = 0; j < listeGroupe.size(); j++) {
-				
-				
-				if(j != listeGroupe.size() - 1)
-					format = format + listeGroupe.get(j).getGrpNum() + ", ";
-				else
-					format = format + listeGroupe.get(j).getGrpNum() + " ";
-			}
-			((DefaultTableModel) table.getModel()).addRow(new Object[]{
-					Boolean.FALSE, listeCours.get(i).getNom(), listeCours.get(i).getEnseignantNom(),
-					listeCours.get(i).getNbHeuresAmphi(),listeCours.get(i).getNbHeuresTD(),
-					listeCours.get(i).getNbHeuresTP(), listeCours.get(i).getNbHeuresExamen(), format});
-		}
 		ListSelectionModel tableSelectionModel = table.getSelectionModel();
 		tableSelectionModel.setSelectionInterval(0, 0);
 		table.setSelectionModel(tableSelectionModel);
@@ -215,6 +206,8 @@ public class GestionPlanningIHM {
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 0;
 		panel.add(table, gbc_table);
+		
+		refresh();
 		
 		JPanel panel_2 = new JPanel();
 		frmCoursNonTraites.getContentPane().add(panel_2);
@@ -310,6 +303,7 @@ public class GestionPlanningIHM {
 						ligneNum = i;
 				}
 				if(ligneNum != -1) {
+					System.out.println(ligneNum);
 					/**
 					 * Verification de textField non vierge 
 					 * et des donnees entrees au format correct
@@ -327,7 +321,7 @@ public class GestionPlanningIHM {
 					}
 				}
 				else {
-					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche d'absence.", "Dialog",
+					JOptionPane.showMessageDialog(new JFrame(), "Vous n'avez pas coche de cours.", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -350,13 +344,46 @@ public class GestionPlanningIHM {
 	public void ajouterCoursPlanning(PlanningGroupe planningGroupe) {
 		ActionsGestionnaireDAO actionGest = new ActionsGestionnaireDAO();
 		try {
-			int effectuee = actionGest.ajouterCoursPlanning(planningGroupe);
-			if (effectuee == 1)
-				lblNewLabel_3_2.setText("Cours insere dans le planning de groupe !");
+			if(actionGest.isGrpDejaCree(planningGroupe.getGrpId())) {
+				int effectuee = actionGest.ajouterCoursPlanning(planningGroupe);
+				if (effectuee == 1)
+					lblNewLabel_3_2.setText("Cours insere dans le planning de groupe !");
+			}
 			else
 				lblNewLabel_3_2.setText("Erreur ce groupe n'existe pas !");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void refresh() {
+		((DefaultTableModel) table.getModel()).setRowCount(1);
+		/**
+		 * Remplissage des lignes par la liste des cours 
+		 * avec la liste des groupes pour ce cours
+		 */
+		for(int i = 0; i<listeCours.size(); i++) {
+			ArrayList<Groupe> listeGroupe = null;
+			try {
+				listeGroupe = actionGest.getListeGroupeCours(i+1);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String format = "";
+			/**
+			 * liste des groupes pour un cours donne
+			 */
+			for(int j = 0; j < listeGroupe.size(); j++) {
+				if(j != listeGroupe.size() - 1)
+					format = format + listeGroupe.get(j).getGrpNum() + ", ";
+				else
+					format = format + listeGroupe.get(j).getGrpNum() + " ";
+			}
+			((DefaultTableModel) table.getModel()).addRow(new Object[]{
+					Boolean.FALSE, listeCours.get(i).getNom(), listeCours.get(i).getEnseignantNom(),
+					listeCours.get(i).getNbHeuresAmphi(),listeCours.get(i).getNbHeuresTD(),
+					listeCours.get(i).getNbHeuresTP(), listeCours.get(i).getNbHeuresExamen(), format});
 		}
 	}
 }

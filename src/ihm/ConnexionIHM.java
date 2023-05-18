@@ -71,13 +71,13 @@ public class ConnexionIHM extends JFrame {
 		frmConnexion.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 255));
+		panel.setBackground(new Color(224, 158, 60));
 		frmConnexion.getContentPane().add(panel);
 		FlowLayout fl_panel = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panel.setLayout(fl_panel);
 		
 		JLabel lblNewLabel = new JLabel("Connexion");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(new Color(45, 62, 78));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		panel.add(lblNewLabel);
 		
@@ -86,12 +86,12 @@ public class ConnexionIHM extends JFrame {
 		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(0, 128, 255));
+		panel_1.setBackground(new Color(224, 158, 60));
 		panel_2.add(panel_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("Email : ");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setForeground(new Color(45, 62, 78));
 		panel_1.add(lblNewLabel_1);
 		
 		textField = new JTextField();
@@ -100,12 +100,12 @@ public class ConnexionIHM extends JFrame {
 		textField.setColumns(20);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(0, 128, 255));
+		panel_3.setBackground(new Color(224, 158, 60));
 		panel_2.add(panel_3);
 		
 		JLabel lblNewLabel_2 = new JLabel("Mot de passe : ");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setForeground(new Color(45, 62, 78));
 		panel_3.add(lblNewLabel_2);
 		
 		passwordField = new JPasswordField();
@@ -114,7 +114,7 @@ public class ConnexionIHM extends JFrame {
 		panel_3.add(passwordField);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(0, 128, 255));
+		panel_4.setBackground(new Color(224, 158, 60));
 		panel_2.add(panel_4);
 		
 		JButton btnProfil = new JButton("Connexion");
@@ -136,7 +136,7 @@ public class ConnexionIHM extends JFrame {
 		panel_4.add(btnProfil);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(0, 128, 255));
+		panel_5.setBackground(new Color(224, 158, 60));
 		panel_2.add(panel_5);
 		
 		lblNewLabel_3 = new JLabel("");

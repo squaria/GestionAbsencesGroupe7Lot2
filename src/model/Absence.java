@@ -26,6 +26,8 @@ public class Absence {
 	 * Attribut de l'id du cours de l'absence
 	 */
 	private int coursId;
+	
+	private int absId;
 
 	/**
 	 * Attribut du nom de l'etudiant de l'absence
@@ -130,8 +132,9 @@ public class Absence {
 	 * @param valideeAdmin 
 	 * 			validation par l'administratif de l'absence
 	 */
-	public Absence(String date, Float nbHeures, String nomCours, String nomEtu, String prenomEtu, String type,
+	public Absence(int absId, String date, Float nbHeures, String nomCours, String nomEtu, String prenomEtu, String type,
 			String justificatif, String valideeAdmin) {
+		this.absId = absId;
 		this.date = date;
 		this.nbHeures = nbHeures;
 		this.nomCours = nomCours;
@@ -394,6 +397,24 @@ public class Absence {
 	 */
 	public void setPrenomProf(String prenomProf) {
 		this.prenomProf = prenomProf;
+	}
+
+	/**
+	 * Getter du prenom de l'id de l'absence
+	 * @return the absId
+	 * 			id de l'absence
+	 */
+	public int getAbsId() {
+		return absId;
+	}
+
+	/**
+	 * Setter du prenom de l'id de l'absence
+	 * @param absId
+	 * 			id de l'absence
+	 */
+	public void setAbsId(int absId) {
+		this.absId = absId;
 	}
 
 }

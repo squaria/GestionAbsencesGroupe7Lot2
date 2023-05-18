@@ -94,16 +94,16 @@ public class GestionProfilAdministratifIHM {
 		frmMenuPrincipalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 255));
+		panel.setBackground(new Color(135, 189, 185));
 		frmMenuPrincipalAdmin.getContentPane().add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 20));
 		
 		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(new Color(0, 128, 255));
+		panel_6.setBackground(new Color(135, 189, 185));
 		panel.add(panel_6);
 		
 		JPanel panel_10 = new JPanel();
-		panel_10.setBackground(new Color(0, 128, 255));
+		panel_10.setBackground(new Color(135, 189, 185));
 		panel_6.add(panel_10);
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
@@ -122,26 +122,26 @@ public class GestionProfilAdministratifIHM {
 		panel_10.add(btnNewButtonRetour);
 		
 		JLabel lblNewLabel = new JLabel("Gestion Profil Administratif");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(new Color(45, 62, 78));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		panel_6.add(lblNewLabel);
 		
 		JPanel panel_7_2 = new JPanel();
-		panel_7_2.setBackground(new Color(0, 128, 255));
+		panel_7_2.setBackground(new Color(135, 189, 185));
 		panel.add(panel_7_2);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("Supprimer un profil administratif");
-		lblNewLabel_1_1_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1_1_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_7_2.add(lblNewLabel_1_1_2);
 		
 		JPanel panel_2_1_2 = new JPanel();
-		panel_2_1_2.setBackground(new Color(0, 128, 255));
+		panel_2_1_2.setBackground(new Color(135, 189, 185));
 		panel.add(panel_2_1_2);
 		panel_2_1_2.setLayout(new FlowLayout(FlowLayout.LEFT, 6, 6));
 		
 		JLabel lblNewLabel_2_5_2 = new JLabel("Nom : ");
-		lblNewLabel_2_5_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_5_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_5_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1_2.add(lblNewLabel_2_5_2);
 		
@@ -150,7 +150,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1_2.add(textField_18);
 		
 		JLabel lblNewLabel_2_1_1_2 = new JLabel("Prenom : ");
-		lblNewLabel_2_1_1_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_1_1_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1_2.add(lblNewLabel_2_1_1_2);
 		
@@ -159,7 +159,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1_2.add(textField_19);
 		
 		JLabel lblNewLabel_2_3_1_2 = new JLabel("Email : ");
-		lblNewLabel_2_3_1_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_3_1_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_3_1_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1_2.add(lblNewLabel_2_3_1_2);
 		
@@ -193,26 +193,26 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1_2.add(lblNewLabel_3);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(0, 128, 255));
+		panel_5.setBackground(new Color(135, 189, 185));
 		frmMenuPrincipalAdmin.getContentPane().add(panel_5);
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 		
 		JPanel panel_8 = new JPanel();
-		panel_8.setBackground(new Color(0, 128, 255));
+		panel_8.setBackground(new Color(135, 189, 185));
 		panel_5.add(panel_8);
 		
 		JLabel lblNewLabel_1 = new JLabel("Creer nouveau profil administratif");
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_8.add(lblNewLabel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(0, 128, 255));
+		panel_2.setBackground(new Color(135, 189, 185));
 		panel_5.add(panel_2);
 		panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 6, 6));
 		
 		JLabel lblNewLabel_2 = new JLabel("Nom : ");
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2.add(lblNewLabel_2);
 		
@@ -221,7 +221,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2.add(textField);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("Prenom : ");
-		lblNewLabel_2_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2.add(lblNewLabel_2_1);
 		
@@ -230,7 +230,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2.add(textField_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("Mot de passe : ");
-		lblNewLabel_2_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2.add(lblNewLabel_2_2);
 		
@@ -239,11 +239,11 @@ public class GestionProfilAdministratifIHM {
 		panel_2.add(textField_2);
 		
 		JPanel panel_9 = new JPanel();
-		panel_9.setBackground(new Color(0, 128, 255));
+		panel_9.setBackground(new Color(135, 189, 185));
 		panel_5.add(panel_9);
 		
 		JLabel lblNewLabel_2_3 = new JLabel("Email : ");
-		lblNewLabel_2_3.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_3.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_3.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_9.add(lblNewLabel_2_3);
 		
@@ -280,25 +280,26 @@ public class GestionProfilAdministratifIHM {
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
 		flowLayout_1.setVgap(20);
-		panel_1.setBackground(new Color(0, 128, 255));
+		panel_1.setBackground(new Color(135, 189, 185));
 		frmMenuPrincipalAdmin.getContentPane().add(panel_1);
 		
 		JPanel panel_7 = new JPanel();
-		panel_7.setBackground(new Color(0, 128, 255));
+		panel_7.setForeground(new Color(45, 62, 78));
+		panel_7.setBackground(new Color(135, 189, 185));
 		panel_1.add(panel_7);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Afficher un profil administratif");
-		lblNewLabel_1_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_7.add(lblNewLabel_1_1);
 		
 		JPanel panel_2_1 = new JPanel();
-		panel_2_1.setBackground(new Color(0, 128, 255));
+		panel_2_1.setBackground(new Color(135, 189, 185));
 		panel_1.add(panel_2_1);
 		panel_2_1.setLayout(new FlowLayout(FlowLayout.LEFT, 6, 6));
 		
 		JLabel lblNewLabel_2_5 = new JLabel("Nom : ");
-		lblNewLabel_2_5.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_5.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_5.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1.add(lblNewLabel_2_5);
 		
@@ -307,7 +308,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1.add(textField_6);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("Prenom : ");
-		lblNewLabel_2_1_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_1_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1.add(lblNewLabel_2_1_1);
 		
@@ -316,7 +317,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1.add(textField_7);
 		
 		JLabel lblNewLabel_2_3_1 = new JLabel("Email : ");
-		lblNewLabel_2_3_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_3_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_3_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1.add(lblNewLabel_2_3_1);
 		
@@ -345,45 +346,45 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1.add(btnNewButton_2_1_1);
 		
 		panel_10 = new JPanel();
-		panel_10.setBackground(new Color(0, 128, 255));
+		panel_10.setBackground(new Color(135, 189, 185));
 		panel_1.add(panel_10);
 		panel_10.setVisible(false);
 		
 		JLabel lblNewLabel_12 = new JLabel("Nom : ");
-		lblNewLabel_12.setForeground(Color.WHITE);
+		lblNewLabel_12.setForeground(new Color(45, 62, 78));
 		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_10.add(lblNewLabel_12);
 		
 		lblNewLabel_13 = new JLabel("");
 		lblNewLabel_13.setBackground(new Color(255, 255, 255));
-		lblNewLabel_13.setForeground(new Color(255, 128, 0));
+		lblNewLabel_13.setForeground(new Color(45, 62, 78));
 		lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_10.add(lblNewLabel_13);
 		
 		JLabel lblNewLabel_14 = new JLabel("| Prenom : ");
-		lblNewLabel_14.setForeground(Color.WHITE);
+		lblNewLabel_14.setForeground(new Color(45, 62, 78));
 		lblNewLabel_14.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_10.add(lblNewLabel_14);
 		
 		lblNewLabel_15 = new JLabel("");
 		lblNewLabel_15.setBackground(new Color(255, 255, 255));
-		lblNewLabel_15.setForeground(new Color(255, 128, 0));
+		lblNewLabel_15.setForeground(new Color(45, 62, 78));
 		lblNewLabel_15.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_10.add(lblNewLabel_15);
 		
 		JLabel lblNewLabel_16 = new JLabel("| Email : ");
-		lblNewLabel_16.setForeground(Color.WHITE);
+		lblNewLabel_16.setForeground(new Color(45, 62, 78));
 		lblNewLabel_16.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_10.add(lblNewLabel_16);
 		
 		lblNewLabel_17 = new JLabel("");
 		lblNewLabel_17.setBackground(new Color(255, 255, 255));
-		lblNewLabel_17.setForeground(new Color(255, 128, 0));
+		lblNewLabel_17.setForeground(new Color(45, 62, 78));
 		lblNewLabel_17.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_10.add(lblNewLabel_17);
 		
 		panel_12 = new JPanel();
-		panel_12.setBackground(new Color(0, 128, 255));
+		panel_12.setBackground(new Color(135, 189, 185));
 		panel_1.add(panel_12);
 		
 		lblNewLabel_3_3 = new JLabel("");
@@ -394,25 +395,25 @@ public class GestionProfilAdministratifIHM {
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setVgap(10);
-		panel_3.setBackground(new Color(0, 128, 255));
+		panel_3.setBackground(new Color(135, 189, 185));
 		frmMenuPrincipalAdmin.getContentPane().add(panel_3);
 		
 		JPanel panel_7_1 = new JPanel();
-		panel_7_1.setBackground(new Color(0, 128, 255));
+		panel_7_1.setBackground(new Color(135, 189, 185));
 		panel_3.add(panel_7_1);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Modifier un profil administratif");
-		lblNewLabel_1_1_1.setForeground(new Color(255, 255, 255));
+		JLabel lblNewLabel_1_1_1 = new JLabel("Modifier un profil administratif (entrez une ou plusieures modifications)");
+		lblNewLabel_1_1_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_7_1.add(lblNewLabel_1_1_1);
 		
 		JPanel panel_2_1_1 = new JPanel();
-		panel_2_1_1.setBackground(new Color(0, 128, 255));
+		panel_2_1_1.setBackground(new Color(135, 189, 185));
 		panel_3.add(panel_2_1_1);
 		panel_2_1_1.setLayout(new FlowLayout(FlowLayout.LEFT, 6, 6));
 		
 		JLabel lblNewLabel_2_5_1 = new JLabel("Nom : ");
-		lblNewLabel_2_5_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_5_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_5_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1_1.add(lblNewLabel_2_5_1);
 		
@@ -421,7 +422,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1_1.add(textField_9);
 		
 		JLabel lblNewLabel_2_1_1_1 = new JLabel("Prenom : ");
-		lblNewLabel_2_1_1_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_1_1_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1_1.add(lblNewLabel_2_1_1_1);
 		
@@ -430,7 +431,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1_1.add(textField_10);
 		
 		JLabel lblNewLabel_2_3_1_1 = new JLabel("Email : ");
-		lblNewLabel_2_3_1_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2_3_1_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_3_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_1_1.add(lblNewLabel_2_3_1_1);
 		
@@ -439,12 +440,12 @@ public class GestionProfilAdministratifIHM {
 		panel_2_1_1.add(textField_11);
 		
 		JPanel panel_2_2 = new JPanel();
-		panel_2_2.setBackground(new Color(0, 128, 255));
+		panel_2_2.setBackground(new Color(135, 189, 185));
 		panel_3.add(panel_2_2);
 		panel_2_2.setLayout(new FlowLayout(FlowLayout.LEFT, 6, 6));
 		
 		JLabel lblNewLabel_2_6 = new JLabel("Nv Nom : ");
-		lblNewLabel_2_6.setForeground(Color.WHITE);
+		lblNewLabel_2_6.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_6.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_2.add(lblNewLabel_2_6);
 		
@@ -453,7 +454,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_2.add(textField_12);
 		
 		JLabel lblNewLabel_2_1_2 = new JLabel("Nv Prenom : ");
-		lblNewLabel_2_1_2.setForeground(Color.WHITE);
+		lblNewLabel_2_1_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_1_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_2.add(lblNewLabel_2_1_2);
 		
@@ -462,7 +463,7 @@ public class GestionProfilAdministratifIHM {
 		panel_2_2.add(textField_13);
 		
 		JLabel lblNewLabel_2_2_1 = new JLabel("Nv Mot de passe : ");
-		lblNewLabel_2_2_1.setForeground(Color.WHITE);
+		lblNewLabel_2_2_1.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_2_2.add(lblNewLabel_2_2_1);
 		
@@ -471,11 +472,11 @@ public class GestionProfilAdministratifIHM {
 		panel_2_2.add(textField_14);
 		
 		JPanel panel_9_1 = new JPanel();
-		panel_9_1.setBackground(new Color(0, 128, 255));
+		panel_9_1.setBackground(new Color(135, 189, 185));
 		panel_3.add(panel_9_1);
 		
 		JLabel lblNewLabel_2_3_2 = new JLabel("Nv Email : ");
-		lblNewLabel_2_3_2.setForeground(Color.WHITE);
+		lblNewLabel_2_3_2.setForeground(new Color(45, 62, 78));
 		lblNewLabel_2_3_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_9_1.add(lblNewLabel_2_3_2);
 		
@@ -506,7 +507,7 @@ public class GestionProfilAdministratifIHM {
 		panel_9_1.add(btnNewButton_2_1_2);
 		
 		JPanel panel_11 = new JPanel();
-		panel_11.setBackground(new Color(0, 128, 255));
+		panel_11.setBackground(new Color(135, 189, 185));
 		panel_3.add(panel_11);
 		
 		lblNewLabel_3_2 = new JLabel("");

@@ -267,7 +267,7 @@ public class Planning {
 	public int intMonth(String text) {
 		int month = 0;
 		try {
-			if(Integer.parseInt(text) > 1 && Integer.parseInt(text) < 12)
+			if(Integer.parseInt(text) >= 1 && Integer.parseInt(text) <= 12)
 				month = Integer.parseInt(text);
 		}
 		catch (NumberFormatException e) {

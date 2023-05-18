@@ -39,17 +39,16 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 	public ArrayList<Absence> listeAbsencesAdmin() throws Exception {
 		try (Connection con = DriverManager.getConnection(URL, LOGIN, PWD);) {
 			ArrayList<Absence> listeAbsence = new ArrayList<>();
-			PreparedStatement ps = con.prepareStatement("SELECT abs_date, abs_nbHeures, etu_nom, etu_prenom, cours_nom, abs_type, abs_justificatif, abs_valideeAdmin "
+			PreparedStatement ps = con.prepareStatement("SELECT Lot2_Absence.abs_id, abs_date, abs_nbHeures, etu_nom, etu_prenom, cours_nom, abs_type, abs_justificatif, abs_valideeAdmin "
 					+ "FROM Lot2_Absence "
 					+ "JOIN Lot2_Cours ON Lot2_Absence.abs_cours_id = Lot2_Cours.cours_id "
 					+ "JOIN Lot2_AbsenceParEtudiant ON Lot2_Absence.abs_id = Lot2_AbsenceParEtudiant.abs_id "
 					+ "JOIN Lot2_Etudiant ON Lot2_AbsenceParEtudiant.etu_id = Lot2_Etudiant.etu_id "
-					+ "WHERE abs_valideeAdmin IS NULL "
-					+ "ORDER BY Lot2_Absence.abs_id ASC");
+					+ "ORDER BY Lot2_Absence.abs_id ASC ");
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				listeAbsence.add(new Absence(rs.getString("abs_date"), rs.getFloat("abs_nbHeures"), 
+				listeAbsence.add(new Absence(rs.getInt(1), rs.getString("abs_date"), rs.getFloat("abs_nbHeures"), 
 				rs.getString("cours_nom"), rs.getString("etu_nom"), rs.getString("etu_prenom"),
 				rs.getString("abs_type"), rs.getString("abs_justificatif"), rs.getString("abs_valideeAdmin")));
 			}
@@ -77,7 +76,6 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 					+ "JOIN Lot2_AbsencePhysiqueParEtudiant ON Lot2_AbsencePhysique.absPhys_id = Lot2_AbsencePhysiqueParEtudiant.absPhys_id "
 					+ "JOIN Lot2_Etudiant ON Lot2_AbsencePhysiqueParEtudiant.etu_id = Lot2_Etudiant.etu_id "
 					+ "JOIN Lot2_Groupe ON Lot2_Etudiant.etu_grp_id = Lot2_Groupe.grp_id "
-					+ "WHERE absPhys_valideeAdmin IS NULL "
 					+ "ORDER BY Lot2_AbsencePhysique.absPhys_id ASC");
 			ResultSet rs = ps.executeQuery();
 			
@@ -186,7 +184,6 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 					+ "( SELECT cours_id "
 					+ "FROM Lot2_PlanningGroupe "
 					+ "WHERE cours_prof_id = ? AND plan_date = ? )");
-
 			ps.setInt(1, profIdRemp);
 			ps.setInt(2, profId);
 			ps.setString(3, date);
@@ -214,7 +211,7 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 			int effectuee = 0;
 			PreparedStatement ps = con.prepareStatement("UPDATE Lot2_Absence "
 					+ "SET abs_valideeAdmin = ? "
-					+ "WHERE abs_id = ? AND abs_valideeAdmin IS NULL");
+					+ "WHERE abs_id = ? ");
 
 			if(validee)
 				ps.setString(1, "Validee");

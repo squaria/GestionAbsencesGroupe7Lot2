@@ -154,13 +154,13 @@ public class ActionsProfesseurDAO extends IdentificationBdd {
 			
 			effectuee = ps.executeUpdate();
 			
-			if(IdEtTypeCompte.typeCompte == 0) {
-			int etuId = getEtuId(etuIdGrp, groupe);
-			
-			ps = con.prepareStatement("INSERT INTO Lot2_AbsenceParEtudiant "
-					+ "VALUES (?,?)");
-			ps.setInt(1, actionGest.getLastIdTable(4));
-			ps.setInt(2, etuId);
+			if(IdEtTypeCompte.typeCompte == 1) {
+				int etuId = getEtuId(etuIdGrp, groupe);
+				
+				ps = con.prepareStatement("INSERT INTO Lot2_AbsenceParEtudiant "
+						+ "VALUES (?,?)");
+				ps.setInt(1, actionGest.getLastIdTable(4));
+				ps.setInt(2, etuId);
 			}
 			else if(IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3) {
 				ps.close();
