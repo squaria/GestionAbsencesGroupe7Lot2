@@ -105,6 +105,8 @@ public class ListeAbsencesEnsIHM {
 					new EnseignantIHM();
 				else if(IdEtTypeCompte.typeCompte == 2)
 					new AdministratifIHM();
+				else if(IdEtTypeCompte.typeCompte == 3)
+					new GestionnaireIHM();
 				frmAbsencesClassiquesEnseignant.dispose();
 			}
 		});
@@ -189,7 +191,7 @@ public class ListeAbsencesEnsIHM {
 		 * Affichage de la selection d'un enseignant 
 		 * si le type de compte est un administratif
 		 */
-		if(IdEtTypeCompte.typeCompte == 2) {
+		if(IdEtTypeCompte.typeCompte == 2 || IdEtTypeCompte.typeCompte == 3) {
 			JLabel lblNewLabel1 = new JLabel("Entrez un enseignant :");
 			lblNewLabel1.setForeground(Color.BLACK);
 			lblNewLabel1.setFont(new Font("Tahoma", Font.PLAIN, 18));

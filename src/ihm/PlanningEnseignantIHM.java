@@ -435,7 +435,7 @@ public class PlanningEnseignantIHM {
 	 * 			id du professeur
 	 */
 	public void declarerAbsenceProf(int coursId) {
-		date = listeDate.get(coursId);
+		date = listeDate.get(coursId-1);
 		/**
 		 * Recuperation de la date locale de l'ordinateur de l'utilisateur
 		 * et formatage de cette date pour la compatibilite SQL

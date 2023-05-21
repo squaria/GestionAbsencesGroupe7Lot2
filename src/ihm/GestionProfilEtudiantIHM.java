@@ -109,7 +109,7 @@ public class GestionProfilEtudiantIHM {
 		panel_6.setBackground(new Color(224, 158, 60));
 		panel.add(panel_6);
 		
-		JPanel panel_10 = new JPanel();
+		panel_10 = new JPanel();
 		panel_10.setBackground(new Color(224, 158, 60));
 		panel_6.add(panel_10);
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
@@ -550,7 +550,7 @@ public class GestionProfilEtudiantIHM {
 		panel_9_1.add(textField_17);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(0, 128, 255));
+		panel_4.setBackground(new Color(224, 158, 60));
 		panel_3.add(panel_4);
 		
 		JButton btnNewButton_2_1_2 = new JButton("Modifier");
@@ -580,7 +580,7 @@ public class GestionProfilEtudiantIHM {
 		panel_4.add(btnNewButton_2_1_2);
 		
 		JPanel panel_11 = new JPanel();
-		panel_11.setBackground(new Color(0, 128, 255));
+		panel_11.setBackground(new Color(224, 158, 60));
 		panel_3.add(panel_11);
 		
 		lblNewLabel_3_2 = new JLabel("");

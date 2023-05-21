@@ -102,7 +102,7 @@ public class GestionProfilAdministratifIHM {
 		panel_6.setBackground(new Color(135, 189, 185));
 		panel.add(panel_6);
 		
-		JPanel panel_10 = new JPanel();
+		panel_10 = new JPanel();
 		panel_10.setBackground(new Color(135, 189, 185));
 		panel_6.add(panel_10);
 		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();

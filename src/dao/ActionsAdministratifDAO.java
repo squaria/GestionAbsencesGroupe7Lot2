@@ -397,14 +397,14 @@ public class ActionsAdministratifDAO extends IdentificationBdd {
 			PreparedStatement ps = con.prepareStatement("SELECT Lot2_AbsenceParEtudiant.etu_id, abs_cours_id "
 					+ "FROM Lot2_Absence "
 					+ "JOIN Lot2_AbsenceParEtudiant ON Lot2_Absence.abs_id = Lot2_AbsenceParEtudiant.abs_id "
-					+ "WHERE abs_id = ? "
+					+ "WHERE Lot2_Absence.abs_id = ? "
 					+ "ORDER BY Lot2_Absence.abs_id ASC");
 			ps.setInt(1, absId);
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				etuId = rs.getInt("Lot2_AbsenceParEtudiant.etu_id");
+				etuId = rs.getInt("etu_id");
 				coursId = rs.getInt("abs_cours_id");
 			}
 			

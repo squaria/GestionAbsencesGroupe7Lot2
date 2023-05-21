@@ -105,6 +105,8 @@ public class PlanningGroupeIHM {
 					new EtudiantIHM();
 				else if(IdEtTypeCompte.typeCompte == 2)
 					new AdministratifIHM();
+				else if(IdEtTypeCompte.typeCompte == 3)
+					new GestionnaireIHM();
 				frmCoursNonTraites.dispose();
 			}
 		});

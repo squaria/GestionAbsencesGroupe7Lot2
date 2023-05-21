@@ -174,19 +174,22 @@ public class GestionnaireIHM {
 		panel_3.setBackground(new Color(45, 62, 78));
 		panel_2.add(panel_3);
 		
-		JButton btnNewButton_2_2_1 = new JButton("Gestion cours");
-		btnNewButton_2_2_1.addActionListener(new ActionListener() {
+		JButton btnNewButton = new JButton("Afficher les absences des professeurs");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/**
-				 * Ouvre une nouvelle fenetre et ferme l'ancienne
-				 */
-				new GestionCoursIHM();
-				frame.dispose();
+				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
+					new ListeAbsencesEnsIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
-		btnNewButton_2_2_1.setForeground(Color.BLACK);
-		btnNewButton_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_3.add(btnNewButton_2_2_1);
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_3.add(btnNewButton);
 		
 		JButton btnNewButton1 = new JButton("Remplacer les professeurs absents");
 		btnNewButton1.addActionListener(new ActionListener() {
@@ -222,9 +225,41 @@ public class GestionnaireIHM {
 		btnNewButton11.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel_3.add(btnNewButton11);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(45, 62, 78));
-		panel_2.add(panel_4);
+
+		JPanel panel_41 = new JPanel();
+		panel_41.setBackground(new Color(45, 62, 78));
+		panel_2.add(panel_41);
+		
+		JButton btnNewButton_2_2_1 = new JButton("Gestion cours");
+		btnNewButton_2_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Ouvre une nouvelle fenetre et ferme l'ancienne
+				 */
+				new GestionCoursIHM();
+				frame.dispose();
+			}
+		});
+		btnNewButton_2_2_1.setForeground(Color.BLACK);
+		btnNewButton_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_41.add(btnNewButton_2_2_1);
+		
+		JButton btnNewButton_1_1 = new JButton("Afficher planning de groupe");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					/**
+					 * Ouvre une nouvelle fenetre et ferme l'ancienne
+					 */
+					new PlanningGroupeIHM();
+					frame.dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panel_41.add(btnNewButton_1_1);
 		
 		JButton btnGroupe = new JButton("Gestion planning de Groupe");
 		btnGroupe.addActionListener(new ActionListener() {
@@ -237,7 +272,11 @@ public class GestionnaireIHM {
 			}
 		});
 		btnGroupe.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panel_4.add(btnGroupe);
+		panel_41.add(btnGroupe);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(new Color(45, 62, 78));
+		panel_2.add(panel_4);
 		
 		JButton btnNewButton_21 = new JButton("Traiter les absences");
 		btnNewButton_21.addActionListener(new ActionListener() {
